@@ -8,13 +8,16 @@
 
 clear all
 set more off
-cd C:/Users/garret/Documents/Research/Military
+cd $dir
 
 cap log close
 log using ./Logs/buildcounty90.smcl, replace
 
+//HUGE ASS LOOP OVER BOTH APPS AND CON
+foreach FILE in APP CON{
+
 /*MERGE THE RECRUIT DATA WITH THE ZIP-CODE CROSSWALK*/
-use ./Apps/APP_all.dta, clear
+use ./Apps/`FILE'_all.dta, clear
 drop if date>20060731 /*Must rebuild APPS so as to include 1990-2006 OBS*/
 sort zip
 count
@@ -125,7 +128,7 @@ count
 duplicates drop monthcounty, force
 count
 compress
-save ./Apps/APPbymonthcounty90.dta, replace
+save ./Apps/`FILE'bymonthcounty90.dta, replace
 
 
 /*BUILD DEATHS*/
@@ -366,7 +369,7 @@ sort monthcounty
 save temp_90deathsjustbeforeappmerge.dta, replace
 /*MERGE IN RECRUITS*/
 
-merge 1:1 monthcounty using ./Apps/APPbymonthcounty90.dta /*Use same set of apps and main, the only thing that's different to compare the non-combat deaths
+merge 1:1 monthcounty using ./Apps/`FILE'bymonthcounty90.dta /*Use same set of apps and main, the only thing that's different to compare the non-combat deaths
 is the death data*/
 rename _merge merge_apps
 drop original-type countyfp-county
@@ -484,4 +487,6 @@ foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHA
 }
 
 compress
-sa ./Data/county90_raw.dta, replace
+sa ./Data/county`FILE'90_raw.dta, replace
+
+} //END HUGE ASS LOOP OF BOTH APPS AND CONS

@@ -1,5 +1,5 @@
 set more off
-cd /Users/garret/Documents/Research/Military/
+cd $dir
 clear
 
 *This file is the first file necessary to reconstruct the entire project from scratch.
@@ -39,10 +39,10 @@ set mem 2g
 foreach type in APP CON ACC{
  clear
  foreach year in 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 {
-  append using ./New/A_FY`year'_`type'.dta
+  append using ./Apps/A_FY`year'_`type'.dta
  }
  compress
- sa ./New/`type'_all.dta, replace
+ sa ./Apps/`type'_all.dta, replace
 } 
 
 /*2015/7/4 Collapsing by date isn't useful, so I'm commenting this out.

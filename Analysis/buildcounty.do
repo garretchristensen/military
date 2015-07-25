@@ -1,18 +1,22 @@
 /*THIS FILE RUNS THE INTERMEDIATE STEPS OF DATASET CONSTRUCTION*/
 /*YOU MUST ALREADY HAVE TURNED THE FOIA .TXT APPLICATION DATA INTO COMPILED APPS
+(done in buildfromFOIA.do)
 AND YOU MUST ALSO TURN THE RAW DEATH DATA INTO A MASTER LIST OF US DEATHS*/
 /*This file take the apps and deaths, puts those together by county, then also merges in
 unemployment, recruiters, and mortality data.*/
 
 clear all
 set more off
-cd C:/Users/garret/Documents/Research/Military
+cd $dir
 
 cap log close
 log using ./Logs/buildcounty.smcl, replace
 
+*HUGE ASS LOOP OVER BOTH APP AND CON!
+foreach FILE in APP CON{
+
 /*MERGE THE RECRUIT DATA WITH THE ZIP-CODE CROSSWALK*/
-use ./Apps/APP_all.dta, clear
+use ./Apps/`FILE'_all.dta, clear
 drop if date<20011000|date>20060731
 sort zip
 count
@@ -141,7 +145,7 @@ count
 duplicates drop monthcounty, force
 count
 compress
-save ./Apps/APPbymonthcounty.dta, replace
+save ./Apps/`FILE'bymonthcounty.dta, replace
 
 /*BUILD DEATHS*/
 use ./Deaths/allUS, clear
@@ -406,7 +410,7 @@ merge m:1 stab county using ./Apps/temp_crosswalk.dta
 drop if _merge!=3 /*MASTER IS DEATHS FILE. USING IS CROSSWALK*/
 /*IDEALLY THERE SHOULD BE NO _merge==1. THAT'S USING EVERY DEATH*/
 *Currently looks like (2725)/(2725+161)=94% matching
-stop
+
 rename _merge mergedeathcounty
 gen monthcounty=month+countyfp
 /*BUILD MONTHLY COUNTY DEATHS BY SERVICE*/
@@ -454,6 +458,7 @@ count
 duplicates drop monthcounty, force
 count
 keep monthstate monthstatedeath monthtotaldeath monthcounty *monthcountydeath *monthstatedeath *monthtotaldeath 
+compress
 sa ./Deaths/deathsbymonthcounty.dta, replace
 
 /*HAVE TO START WITH ALL COUNTY-MONTHS SO I HAVE COUNTY 
@@ -508,7 +513,7 @@ sort monthcounty
 /*STARTED WITH LIST OF EVERY COUNTY MONTH, THEN MERGED IN DEATHS, NOW MERGE IN RECRUITS.*/
 /*NOT ALL COUNTY-MONTHS HAVE A RECRUIT, SO THEY DON'T ALL GET THE TOTALS FOR STATE AND COUNTRY THEY DESERVE*/
 /*(THOUGH THE COUNTY IS ZERO IF IT'S ZERO)*/
-merge 1:1 monthcounty using ./Apps/APPbymonthcounty.dta
+merge 1:1 monthcounty using ./Apps/`FILE'bymonthcounty.dta
 rename _merge merge_apps
 drop original-type countyfp-county
 foreach var of varlist monthstaterecruit-NVHQ75monthstate {
@@ -526,6 +531,8 @@ destring fips, replace
 sort fips
 compress
 drop if month<"200110"|month>"200607"
+*Here I just use a renamed version of the ICPSR county data.
+*A fresh downloaded version (July 25 2015) appears identical
 merge m:1 fips using ./Data/icpsrcounties.dta
 drop if _merge==2 /*Hawaii county from ICPSR combined with other county*/
 	/* TWO PERCENT OF OBSERVATIONS _merge==3. ICPSR HAS NO PUERTO RICO DATA*/
@@ -563,6 +570,7 @@ rename state statefips
 sort statefips year qtr
 drop if year<2001
 drop if year==2001 & qtr<4
+compress
 save ./Recruiters/Warner.dta, replace
 
 /* INCLUDE GELBER'S WAGE/SALARY DATA ONCE I CAN IDENTIFY STATES
@@ -628,4 +636,6 @@ foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHA
 }
 
 compress
-sa ./Data/county_raw.dta, replace
+sa ./Data/county`FILE'_raw.dta, replace
+
+} //END HUGE LOOP OVER BOTH TYPES OF APPLICANTS
