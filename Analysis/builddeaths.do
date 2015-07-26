@@ -7,6 +7,10 @@ The original data files are oef_coalition, oef_list_of_names, oif_coalition, and
 /*This script builds oef_coalition, oef_all, oif_coalition, oif_all, and allUS*/
 /*allUS is the only file that I actually use in the analysis, as of July 2015*/
 
+//It also collapses 2001-on deaths by date, and 1990-on deaths by date. 
+//These files (deathsbydate, deathsbydate90) are used to make `Table 1' in DataSummaryTable.do
+//The 1990-on death file starts from the raw FOIA data.
+
 clear
 set mem 20m
 cd $dir\Deaths
@@ -90,10 +94,11 @@ count
 keep if homecountry=="US"
 count
 compress
+note: This is the major deaths dataset, featuring only US deaths. Built in builddeaths.do
 save allUS, replace
 
-/*July 2015
-Deaths collapsed by date don't get used--commenting this out.
+*Deaths are collapsed by date here.
+*This is used in Table 1 construction by DataSummaryTable.do
 
 /*COLLAPSE ALL DEATHS BY DATE*/
 bysort dateofdeath: egen totaldeaths=count(dateofdeath)
@@ -107,7 +112,48 @@ rename dateofdeath date
 sort date
 save deathsbydate, replace
 
+
+
+/*CREATE THE DATASET OF US DEATHS FROM 1990 ON USING DATA FROM FOIA 10-F-1140*/
+/*RECEIVED VIA USPS MARCH 2011*/
+
+clear
+cd $dir/FOIA/DeathsSince1990
+insheet using ./raw/Worldwide.csv
+/*EDIT THE WORLDWIDE DEATHS SO THEY'RE IN THE SAME FORMAT AS ORIGINAL OEF/OIF DEATHS*/
+replace service="M" if service=="USMC"
+replace service="N" if service=="USN"
+replace service="A" if service=="USA"
+replace service="F" if service=="USAF"
+replace component="R" if component=="USA"|component=="USAF"|component=="USMC"|component=="USN"
+replace component="G" if component=="ANG"|component=="ARNG"
+replace component="V" if component=="USAFR"|component=="USMCR"|component=="USNR"|component=="USAR"
+rename hostilenonhostileindicator hostile
+replace hostile="" if hostile=="NH"
+gen war="Worldwide"
+sa Worldwide.dta, replace
+
+insheet using ./raw/OEF.csv, clear
+gen war="Afghanistan"
+sa OEF.dta, replace
+
+insheet using ./raw/OIF.csv, clear
+gen war="Iraq"
+sa OIF.dta, replace
+
+insheet using ./raw/OND.csv, clear
+gen war="Iraq"
+sa OND.dta, replace
+
+use Worldwide.dta, clear
+append using OEF.dta
+append using OIF.dta
+append using OND.dta
+note: This is the complete set of 1990-on US deaths, built in builddeaths.do
+sa post90deaths.dta, replace
+
 /*COLLAPSE ALL (POST90) DEATHS BY DATE*/
+cd $dir/Deaths
 use post90deaths.dta, clear
 rename homeofrecordstate homestate
 rename homeofrecordcounty homecounty
@@ -122,6 +168,8 @@ rename dateofdeath date
 sort date
 save deathsbydate90, replace
 
-*/
+cd $dir //Put yourself back in main dir so other builds work.
+
+
 
 

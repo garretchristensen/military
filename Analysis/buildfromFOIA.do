@@ -42,15 +42,16 @@ foreach type in APP CON ACC{
   append using ./Apps/A_FY`year'_`type'.dta
  }
  compress
+ note: all applicants of type `type'
  sa ./Apps/`type'_all.dta, replace
 } 
 
-/*2015/7/4 Collapsing by date isn't useful, so I'm commenting this out.
+
 /*COLLAPSE GIANT SETS BY DATE*/
+/*This is used by table1graph to make the simple graph of deaths/recruits over time*/
 clear
-set mem 2g
 foreach type in APP CON ACC{
- use ./App/`type'_all.dta, clear
+ use ./Apps/`type'_all.dta, clear
  bysort date: egen totapp=count(date)
  count 
  foreach var in AG AR AV AZ CR CV CZ FG FR FV FZ MR MV MZ NR NV NZ ZV ZZ{
@@ -64,7 +65,9 @@ foreach type in APP CON ACC{
  duplicates drop date, force
  count
  keep date type totapp AG AR AV AZ CR CV CZ FG FR FV FZ MR MV MZ NR NV NZ ZV ZZ
- save ./App/`type'_bydate.dta, replace
+ note: Dataset of applicants of type `type' on every day.
+ save ./Apps/`type'_bydate.dta, replace
+ 
  /*DO A SIMPLE GRAPH*/
  /*tostring date, replace
  generate fancydate=date(date, "YMD")
@@ -72,7 +75,8 @@ foreach type in APP CON ACC{
  graph twoway line totapp fancydate*/
  /*SAVE JUST RECENT YEARS*/
  keep if date>20000100
- save ./New/`type'_bydate2000.dta, replace
+ note: Dataset of applicants of type `type' on every day, starting with 2000.
+ save ./Apps/`type'_bydate2000.dta, replace
 }
-*/
+
  
