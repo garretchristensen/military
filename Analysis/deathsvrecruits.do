@@ -7,7 +7,10 @@ set mem 200m
 cd $dir
 cap rm ./Output/deathsvrecruits.txt
 cap rm ./Output/deathsvrecruitsSEMI.txt
+cap rm ./Ouput/deathsvrecruitsSEMI.tex
 cap rm ./Output/deathsvrecruitsP.txt
+cap rm ./Ouput/deathsvrecruitsP.tex
+
 
 foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
 
@@ -25,7 +28,7 @@ bysort month: egen monthdeathtotal=total(totaldeaths)
 bysort month: egen monthapptotal=total(totapp)
 bysort month: egen monthARtotal=total(AR)
 
-label var monthdeathtotal "Total Deaths"
+label var monthdeathtotal "Current Deaths"
 label var monthapptotal "Total Applicants"
 label var monthARtotal "Total Active Duty Applicants"
 count
@@ -99,32 +102,41 @@ newey logmonthapptotal loglag1monthdeath t, lag(4)
 
 /*DAVID--USE SEMI-ELASTICITY HERE, SINCE I DO THAT EVERYWHERE ELSE*/
 reg logmonthapptotal monthdeathtotal
-estat bgodfrey, lags(1 2 3 4)
-estat dwatson
-estat durbinalt
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ti(Log Total Apps vs. Total Deaths: Semi-Elasticity) addnote(deathsvrecruitsSEMI.txt) ct(Log) bdec(3) tdec(3) bracket se append
-newey logmonthapptotal monthdeathtotal, lag(4)
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogNewey4) bdec(3) tdec(3) bracket se  append
-newey logmonthapptotal monthdeathtotal lag1monthdeath, lag(3)
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagNewey4) bdec(3) tdec(3) bracket se  append
-newey logmonthapptotal monthdeathtotal lag1monthdeath t, lag(3)
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagNewey4t) bdec(3) tdec(3) bracket se  append
-newey logmonthapptotal lag1monthdeath, lag(4)
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagonlyNewey4) bdec(3) tdec(3) bracket se  append
-newey logmonthapptotal lag1monthdeath t, lag(4)
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagonlyNewey4t) bdec(3) tdec(3) bracket se  append
+*estat bgodfrey, lags(1 2 3 4)
+*estat dwatson
+*estat durbinalt
+ outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ti(Log Total Apps vs. Total Deaths: Semi-Elasticity) addnote(deathsvrecruitsSEMI.txt) cti(`file') cttop(Applicants,"","",Contracts,"","") bdec(3) tdec(3) bracket se append nocons addtext (Linear Trend, NO)
+reg logmonthapptotal monthdeathtotal lag1monthdeath
+ outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label bdec(3) tdec(3) cti(`file') bracket se append nocons addtext (Linear Trend, NO)
+reg logmonthapptotal monthdeathtotal lag1monthdeath t
+ outreg2 using ./Output/deathsvrecruitsSEMI.txt, drop(t) tex label bdec(3) tdec(3) bracket se cti(`file') append addtext (Linear Trend, YES) nocons cttop(Applicants,"","",Contracts,"","")
+
+ 
+ *newey logmonthapptotal monthdeathtotal, lag(4)
+* outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogNewey4) bdec(3) tdec(3) bracket se  append
+*newey logmonthapptotal monthdeathtotal lag1monthdeath, lag(3)
+* outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagNewey4) bdec(3) tdec(3) bracket se  append
+*newey logmonthapptotal monthdeathtotal lag1monthdeath t, lag(3)
+* outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagNewey4t) bdec(3) tdec(3) bracket se  append
+*newey logmonthapptotal lag1monthdeath, lag(4)
+* outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagonlyNewey4) bdec(3) tdec(3) bracket se  append
+*newey logmonthapptotal lag1monthdeath t, lag(4)
+* outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ct(LogLagonlyNewey4t) bdec(3) tdec(3) bracket se  append
 
 /*SEMI-ELASTICITIES USING POISSON*/
 poisson monthapptotal monthdeathtotal
- outreg2 using ./Output/deathsvrecruitsP.txt, tex ti(Poisson Regression: Total Apps vs. Total Deaths) addnote(deathsvrecruitsP.txt) ct(Log1`file') bdec(3) tdec(3) bracket addstat(Likelihood, e(ll)) se append 
+ outreg2 using ./Output/deathsvrecruitsP.txt, tex ti(Poisson Regression: Total Applicants vs. Total Deaths) ///
+ addnote("Notes: Table shows Poisson regression estimates of total national monthly deaths on recruits.", ///
+ "The first three columns show applicants and the last three show contracts.", Filename:deathsvrecruitsP.tex) ///
+ ct(`file') bdec(3) tdec(3) bracket addstat(Likelihood, e(ll)) se append nocons label addtext (Linear Trend, NO)
 poisson monthapptotal monthdeathtotal lag1monthdeath
- outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(LogLag) bdec(3) tdec(3) bracket se  append addstat(Likelihood, e(ll))
+ outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(`file') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) nocons label addtext (Linear Trend, NO)
 poisson monthapptotal monthdeathtotal lag1monthdeath t
- outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(LogLagt) bdec(3) tdec(3) bracket se  append addstat(Likelihood, e(ll))
-poisson monthapptotal lag1monthdeath
- outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(LogLagonly) bdec(3) tdec(3) bracket se  append addstat(Likelihood, e(ll))
-poisson monthapptotal lag1monthdeath t
- outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(LogLagonlyt) bdec(3) tdec(3) bracket se  append addstat(Likelihood, e(ll))
+ outreg2 using ./Output/deathsvrecruitsP.txt, drop(t) tex ct(`file') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) nocons  label addtext (Linear Trend, YES)
+*poisson monthapptotal lag1monthdeath
+* outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(LogLagonly) bdec(3) tdec(3) bracket se  append addstat(Likelihood, e(ll)) nocons
+*poisson monthapptotal lag1monthdeath t
+* outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(LogLagonlyt) bdec(3) tdec(3) bracket se  append addstat(Likelihood, e(ll)) nocons
  
 
 } /*END HUGE LOOP OVER BOTH FILES*/
