@@ -105,7 +105,10 @@ reg logmonthapptotal monthdeathtotal
 *estat bgodfrey, lags(1 2 3 4)
 *estat dwatson
 *estat durbinalt
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ti(Log Total Apps vs. Total Deaths: Semi-Elasticity) addnote(deathsvrecruitsSEMI.txt) cti(`file') cttop(Applicants,"","",Contracts,"","") bdec(3) tdec(3) bracket se append nocons addtext (Linear Trend, NO)
+ outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ti(Log Total Apps vs. Total Deaths: Semi-Elasticity) ///
+ addnote("Notes: Table shows linear regression estimates of log national monthly deaths on recruits.", ///
+ "The first three columns show applicants and the last three show contracts.", Filename:deathsvrecruitsSEMI.tex) ///
+ cti(`file') cttop(Applicants,"","",Contracts,"","") bdec(3) tdec(3) bracket se append nocons addtext (Linear Trend, NO)
 reg logmonthapptotal monthdeathtotal lag1monthdeath
  outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label bdec(3) tdec(3) cti(`file') bracket se append nocons addtext (Linear Trend, NO)
 reg logmonthapptotal monthdeathtotal lag1monthdeath t
