@@ -509,6 +509,15 @@ foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV BLACK WHITE HISP OT
 
 sort monthcounty
 
+************************************************************************
+****** MERGE IN SEVERAL OUTSIDE DATA SETS**************
+*RECRUITS
+*ICPSR COUNTY CHAR
+*MORTALITY
+*UNEMPLOYMENT
+*POPULATION
+************************************************************************
+
 /*MERGE IN RECRUITS*/
 /*STARTED WITH LIST OF EVERY COUNTY MONTH, THEN MERGED IN DEATHS, NOW MERGE IN RECRUITS.*/
 /*NOT ALL COUNTY-MONTHS HAVE A RECRUIT, SO THEY DON'T ALL GET THE TOTALS FOR STATE AND COUNTRY THEY DESERVE*/
@@ -573,10 +582,6 @@ drop if year==2001 & qtr<4
 compress
 save ./Recruiters/Warner.dta, replace
 
-/* INCLUDE GELBER'S WAGE/SALARY DATA ONCE I CAN IDENTIFY STATES
-use ./Recruiters/garret_christensen_082410.dta
-keep if yr>2000
-*/
 
 use temp_county.dta
 gen qtr=1
@@ -618,6 +623,13 @@ drop if _merge==2 /* OUT OF RELEVANT TIME PERIOD. MERGE==1 PUERTO RICO MISSING D
 rename _merge mergestateunemp
 move stateunemp nationalunemp
 
+/*ADD COUNTY POPULATION IN ORDER TO WEIGHT*/
+destring countyfips, replace
+merge m:1 statefips countyfips year using ./Population/countyyoungmalepop.dta
+drop if _merge==2
+rename _merge merge_countypop
+bysort fips: egen avgcountypop=mean(age1824_male)
+
 /*ADD SLIGHTLY ALTERED/EXCLUSIVE DEATH DEFINITIONS*/
 gen outofstate=monthtotaldeath-monthstatedeath
 gen outofcounty=monthstatedeath-monthcountydeath
@@ -634,6 +646,60 @@ foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHA
  label var `type'outofstate "`type' out of state deaths this month"
  label var `type'outofcounty "`type' out of county but in-state deaths this month"
 }
+/*CON IS MISSING RESERVE--ACTIVE DUTY ONLY*/
+gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
+
+
+*************FINAL CLEANING************
+*This used to be at the beginning of each and every regression file.
+*Much better to have it here so we're sure I'm using the same data every time.
+
+drop if fips==0 
+drop if countyfips==999 /*This means they don't know. Right?*/
+
+*********FIXED EFFECTS AND TRENDS***********
+/*MONTHLY FE*/
+tab month, generate(monthfe)
+
+/*GENERATE YEAR FIXED EFFECTS*/ //Why don't I make these somewhere everyone can reach them?
+gen year1999=1 if year==1999
+gen year2000=1 if year==2000
+gen year2001=1 if year==2001
+gen year2002=1 if year==2002
+gen year2003=1 if year==2003
+gen year2004=1 if year==2004
+gen year2005=1 if year==2005
+gen year2006=1 if year==2006
+foreach var in 1999 2000 2001 2002 2003 2004 2005 2006{
+ replace year`var'=0 if year`var'==.
+}
+gen yearcounty=string(year)+string(fips)
+
+/*STATE TREND*/
+tab statefips, gen(statefe)
+gen mo=substr(month,5,2)
+destring mo, replace
+gen fancymonth=ym(year,mo)
+tsset fips fancymonth
+gen t=fancymonth-501
+tab statefips, gen(statetrend)
+forvalues X=1/51 {
+ replace statetrend`X'=statetrend`X'*t
+}
+
+/*STATE YEAR INTERACTED FE*/
+gen stateyear=string(year)+string(statefips)
+tab stateyear, gen(stateyearfe)
+
+/* (1) CREATE LAGS*/
+sort fips month
+foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp nationalunemp monthnationalmort monthstatemort monthcountymort Rmonthcountydeath Routofcounty Routofstate{
+ foreach X of numlist 1/12 {
+  quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
+  quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X']
+ } 
+}
+
 
 compress
 sa ./Data/county`FILE'_raw.dta, replace
