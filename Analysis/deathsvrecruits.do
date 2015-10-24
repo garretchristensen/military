@@ -100,13 +100,13 @@ newey logmonthapptotal loglag1monthdeath t, lag(4)
  outreg2 using ./Output/deathsvrecruits.txt, ct(LogLagonlyNewey4t) bdec(3) tdec(3) bracket se  append
 */
 
-/*DAVID--USE SEMI-ELASTICITY HERE, SINCE I DO THAT EVERYWHERE ELSE*/
+/*DAVID'S SUGGESTION--USE SEMI-ELASTICITY HERE, SINCE I DO THAT EVERYWHERE ELSE*/
 reg logmonthapptotal monthdeathtotal
 *estat bgodfrey, lags(1 2 3 4)
 *estat dwatson
 *estat durbinalt
  outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ti(Log Total Apps vs. Total Deaths: Semi-Elasticity) ///
- addnote("Notes: Table shows linear regression estimates of log national monthly deaths on recruits.", ///
+ addnote("Notes: Table shows linear regression estimates of log national monthly on recruits on deaths.", ///
  "The first three columns show applicants and the last three show contracts.", Filename:deathsvrecruitsSEMI.tex) ///
  cti(`file') cttop(Applicants,"","",Contracts,"","") bdec(3) tdec(3) bracket se append nocons addtext (Linear Trend, NO)
 reg logmonthapptotal monthdeathtotal lag1monthdeath
