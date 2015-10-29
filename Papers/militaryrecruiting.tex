@@ -422,7 +422,7 @@ rationality.%
 }
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Data\label{sec:Data}}
 
 
@@ -512,7 +512,7 @@ Statistics National Vital Statistics System. Statewide numbers of recruiters
 by service branch have also been included in certain specifications. 
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \section{Analysis\label{sec:Analysis}}
 
 \subsection{County Origin and Rates of Death}
@@ -588,29 +588,14 @@ for strong military support or lack thereof has a vastly different
 rate of death of its soldiers, and the behavioral explanation is still reasonable.
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{County-Level Analysis\label{sub:County OLS}}
 
-The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. 
-
-Since data on recruits is in count form, the Poisson model is a more natural one to fit to the data, and provides the results on which I place primary emphasis.\footnote{Linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested linear and log-linear specifications, which are shown in the Appendix. The results are qualitavely very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a square root specification, as well as negative binomial. Again, the results are very similar.} Poisson regression fits a generalized linear model of the form $log(\mu_{i})=x'_{i}\beta$, so $\mu_{i}=exp(x'_{i}\beta)$
-and a one unit increase in $x_{j}$ multiplies $\mu_{j}$ by $exp(\beta_{j})$.
-However, as I am modeling an underlying rate of enlistment, $\mu_{i}=e^{x'_{i}\beta}$, the observed number of recruits is the rate times the exposure, which in my case is the population of young males. If $R_{i}$ is the expected number of recruits, then $R_{i}=Population_{i}\cdot e^{x'_{i}\beta}=e^{ln(Population_{i})+x'_{i}\beta}$.
-Thus all the Poisson models have been fitted with a coefficient constrained
-to 1 for the county's log young male population.\footnote{Regressions without the offset give qualitatively similar results.} 
-
-The detailed specification I estimate follows the equation: 
-$$Recruits_{it}=Population_{i}\cdot e^{\beta_{0}Deaths_{i,t}+\beta_{1}Deaths_{i,t-1}+\beta_{2}Unemployment_{it}\\
-+x'_{it}\eta+\alpha_{i}+\gamma_{t}+u_{it}}$$
-where Deaths implies deaths from the given county, Unemployment county unemployment, and $x$ includes in-state (but out of county) deaths as well as
-state unemployment. $\alpha_{i}$ is a set of fixed effects for each county, which flexibly control for any county characteristics such as the presence of a military base or political support for the military. $\gamma_{t}$ is a set of fixed effects for every month,
-so national characteristics that are the same across counties in any
-given time period such as the total national number of deaths, national
-unemployment rate, or the military wage rate are also flexibly controlled for and cannot be separately estimated. 
+The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model \footnote{Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitavely very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a square root specification, as well as negative binomial. Again, the results are very similar.} 
 
 
-Table \ref{Flo:Poisson Basic}
-shows the results when Poisson regression is used to analyze the data
+Table \ref{Flo:loglinear}
+shows the results when linear regression is used to analyze the data
 at the county-month level. The left half of these regressions show the analysis done for applicants, the right hand side for contracts, one step further in the recruiting
 process. The first specification, for applicants in column one and contracts in column five, is the `horse race' specification, comparing in-county deaths, out-of-county but in-state deaths,  and out-of-state deaths. Of course this precludes the inclusion of monthly fixed effects, so this model is mis-specified to the extent that there is temporal heterogeneity in the recruiting response to deaths over the course of the wars, nevertheless, I find it illustrative that the coefficient for lagged in-county deaths is nearly five times that of the coefficient for an out-of-state death (1\% compared to 0.2\%). (A more detailed analysis of deaths at the national level is presented in the appendix.)
 
@@ -674,9 +659,9 @@ policy makers. As a robustness check, however, I have run the analysis
 using only the active-duty deaths, and under this specification, in-county
 deaths are followed by a 1.0 to 1.1\% reduction in recruits in the
 next month. The coefficients for out-of-county deaths and unemployment
-remain very similar. These results are shown in Appendix Table~\ref{Flo:Rdeaths}. 
+remain very similar. These results are shown in Appendix Table~\ref{Flo:Rdeathslinear}. 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Additional Controls}
 
 Despite the inclusion of fixed effects, the potential for omitted
@@ -988,21 +973,23 @@ may be able to better explain the observed recruiting phenomenon.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{figure}
-\includegraphics[scale=0.6]{C:/Users/garret/Documents/Research/Military/Output/graph_deathsvsrecruits_basic}
+\includegraphics[scale=0.6]{../Output/graph_deathsvsrecruits_basic}
+%This gets made in table1graph.do
 \caption{Graph of Monthly Recruits and Monthly Iraq/Afghanistan Combat Deaths}
 \label{Flo:Monthly Deaths vs. Monthly Recruits}
 \end{figure}
 
 \begin{figure}
-\includegraphics[scale=0.6]{C:/Users/garret/Documents/Research/Military/Output/PDF/histall4}
+\includegraphics[scale=0.6]{../Output/PDF/histall4}
 \caption{Active Duty/Total Deaths (2001-2010) and Active Duty Applicants/Contracts (1990-2006)}
 \label{Flo:HISTO total deaths total recruits}
 \end{figure}
 
 \pagebreak{}
 \begin{figure}
-\includegraphics[scale=0.6]{C:/Users/garret/Documents/Research/Military/Output/PDF/hist_binomial}
+\includegraphics[scale=0.6]{../Output/PDF/hist_binomial}
 \caption{Histogram of P-Values Testing Whether State Deaths All Came from the
 Same Binomial Distribution}
 \label{Flo:Pat's Histo}
@@ -1017,18 +1004,26 @@ Same Binomial Distribution}
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo:Simple Deaths}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/DeathsAnnualSimple}
+\label{Flo:Simple Deaths}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/DeathsAnnualSimple}
 \end{table}
 
 
-
+%4 Linear with logged LHS--Main specification
+% Made with redefined.do
+\pagebreak{}
+\clearpage{}
+\begin{table}
+\caption{}
+\label{Flo:loglinear}
+\input{../Output/LNLinearW.tex}
+\end{table}
 
 
 %5
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo:Poisson Basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.91]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefPbasic}
+\label{Flo:Poisson Basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.91]{../Output/PDF/redefPbasic}
 \end{table}
 
 %6
@@ -1036,14 +1031,14 @@ Same Binomial Distribution}
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo:Poisson Rec&Mort}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefPrec}
+\label{Flo:Poisson Rec&Mort}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPrec}
 \end{table}
 
 %7
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo:Media}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefcontigP}
+\label{Flo:Media}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefcontigP}
 \end{table}
 
 %Cumulative Lags
@@ -1051,7 +1046,7 @@ Same Binomial Distribution}
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo:Cumulative Lags}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefrunninglagsP}
+\label{Flo:Cumulative Lags}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefrunninglagsP}
 \end{table}
 
 %8
@@ -1059,7 +1054,7 @@ Same Binomial Distribution}
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo:Poisson Interactions}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefPinteractions}
+\label{Flo:Poisson Interactions}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPinteractions}
 \end{table}
 
 
@@ -1068,7 +1063,7 @@ Same Binomial Distribution}
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo: Recs by Quality}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/highqualitybytypeP}
+\label{Flo: Recs by Quality}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/highqualitybytypeP}
 \end{table}
 
 
@@ -1078,7 +1073,7 @@ Same Binomial Distribution}
 \begin{table}
 \caption{}
 \label{Flo:Deaths by War}
-\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefPwar}
+\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefPwar}
 \end{table}
 
 
@@ -1164,11 +1159,27 @@ the military.
 
 \subsection {Additional Robustness Checks}
 \paragraph{Other functional forms}
-Although I consider the Poisson regressions to be the most natural fit for count data with a large number of zeros that have no log, I have exhaustively tested other models and find generally similar results across all specifications. I present all these results here. Ordinary least squares results for recruit levels (as opposed to logs) are shown in Appendix Table \ref{Flo:County-basic}.
- All observations are weighted by county population. 
+Economists tend to favor linear models, which are shown in the main body of the paper, but some would consider Poisson regressions to be the most natural fit for count data with a large number of zeros that have no log, so I have exhaustively tested other models and find generally similar results across all specifications. I present all these results here. 
+
+Poisson regression fits a generalized linear model of the form $log(\mu_{i})=x'_{i}\beta$, so $\mu_{i}=exp(x'_{i}\beta)$ and a one unit increase in $x_{j}$ multiplies $\mu_{j}$ by $exp(\beta_{j})$. However, as I am modeling an underlying rate of enlistment, $\mu_{i}=e^{x'_{i}\beta}$, the observed number of recruits is the rate times the exposure, which in my case is the population of young males. If $R_{i}$ is the expected number of recruits, then $R_{i}=Population_{i}\cdot e^{x'_{i}\beta}=e^{ln(Population_{i})+x'_{i}\beta}$.
+Thus all the Poisson models have been fitted with a coefficient constrained
+to 1 for the county's log young male population.\footnote{Regressions without the offset give qualitatively similar results.} 
+
+The detailed specification I estimate follows the equation: 
+$$Recruits_{it}=Population_{i}\cdot e^{\beta_{0}Deaths_{i,t}+\beta_{1}Deaths_{i,t-1}+\beta_{2}Unemployment_{it}\\
++x'_{it}\eta+\alpha_{i}+\gamma_{t}+u_{it}}$$
+where Deaths implies deaths from the given county, Unemployment county unemployment, and $x$ includes in-state (but out of county) deaths as well as
+state unemployment. $\alpha_{i}$ is a set of fixed effects for each county, which flexibly control for any county characteristics such as the presence of a military base or political support for the military. $\gamma_{t}$ is a set of fixed effects for every month,
+so national characteristics that are the same across counties in any
+given time period such as the total national number of deaths, national
+unemployment rate, or the military wage rate are also flexibly controlled for and cannot be separately estimated. 
+Ordinary least squares results
+ for recruit levels (as opposed to logs) are shown in Appendix Table \ref{Flo:County-basic}. All observations are weighted by county population. 
+ 
 %(I have
 %run un-weighted regressions, in which the results are equally significant,
 %if only about 1/3 as large). 
+
 One can see that with a full set of fixed effects, in-county deaths in the previous month are associated with 15 fewer applicants and nearly 10 fewer contracts. In-state deaths
 are associated with 0.3 to 1.1 fewer applicants, and 0.2 to 0.7 contracted
 recruits fewer, although the estimate is sometimes positive and not
@@ -1203,7 +1214,7 @@ Additional specifications include modeling the left hand side variable as the sq
 \paragraph{Tests of Additional Data}
 The main Poisson regression specification from Table~\ref{Flo:Poisson Basic} is repeated in Appendix Table~\ref{Flo:allrecruits} using all recruits, including the reserve and guard contracts that appear to be underreported in the FOIA data. Results are very similar. 
 
-In addition to testing every recruit, I also test the model by using only deaths from active duty soldiers, as opposed to deaths of all soldiers (active, reserve, and guard) as in all other specification. Results, shown in Table~\ref{Flo:Rdeaths} appear slightly stronger, in that deterrent effects of in-county deaths are estimated to be slightly larger than one percent.
+In addition to testing every recruit, I also test the model by using only deaths from active duty soldiers, as opposed to deaths of all soldiers (active, reserve, and guard) as in all other specification. Results, shown in Table~\ref{Flo:Rdeathslinear} appear slightly stronger, in that deterrent effects of in-county deaths are estimated to be slightly larger than one percent. Table~\ref{RdeathsP} shows Poisson regressions using only active duty deaths.
 
 Appendix Table~\ref{Flo:redefPF1} repeats the main specification but adds one lead period of deaths as a falsification test of the model. As expected, deaths in the future have no relation to current recruiting.
 
@@ -1300,14 +1311,14 @@ can be for state deaths.
 
 %Graph of recruit pct by population percent by state
 \begin{figure}
-\includegraphics[scale=0.6]{C:/Users/garret/Documents/Research/Military/Output/graph_table1_rec_pop}
+\includegraphics[scale=0.6]{../Output/graph_table1_rec_pop}
 \caption{State Percentage of Recruits by State Percentage of Young Male Population}
 \label{Flo: Figure: Recruits vs. Population}
 \end{figure}
 
 %Graph of population percentage and death by state
 \begin{figure}
-\includegraphics[scale=0.6]{C:/Users/garret/Documents/Research/Military/Output/graph_table1_death_pop}
+\includegraphics[scale=0.6]{../Output/graph_table1_death_pop}
 \caption{State Percentage of Population vs. State Percentage of Deaths}
 \label{Flo:Figure: Pop vs. Deaths}
 \end{figure}
@@ -1316,17 +1327,10 @@ can be for state deaths.
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo:County-basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefW}
+\label{Flo:County-basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/redefW}
 \end{table}
 
-%4 Linear with logged LHS
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:Elasticities}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefWLN}
-\end{table}
+
 
 %Square Root
 \pagebreak{}
@@ -1334,7 +1338,7 @@ can be for state deaths.
 \begin{table}
 \caption{}
 \label{Flo:sqrt}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/sqrt}
+\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/sqrt}
 \end{table}
 
 %Negative Binomial
@@ -1343,7 +1347,7 @@ can be for state deaths.
 \begin{table}
 \caption{}
 \label{Flo:negbinom}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/negbinom}
+\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/negbinom}
 \end{table}
 
 %All Recruits, including the messed up reserve/guard
@@ -1352,16 +1356,26 @@ can be for state deaths.
 \begin{table}
 \caption{}
 \label{Flo:allrecruits}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/allrecPbasic}
+\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/allrecPbasic}
 \end{table}
 
+
 %Using Only Active Duty DEATHS (all the R variables)
+%Linear and then Poisson
 \pagebreak{}
 \clearpage{}
 \begin{table}
 \caption{}
-\label{Flo:Rdeaths}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefPbasicR}
+\label{Flo:Rdeathslinear}
+\input{../Output/LNLinearWR.tex}
+\end{table}
+
+\pagebreak{}
+\clearpage{}
+\begin{table}
+\caption{}
+\label{Flo:RdeathsP}
+\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPbasicR}
 \end{table}
 
 %Future Deaths Have No Effect
@@ -1370,7 +1384,7 @@ can be for state deaths.
 \begin{table}
 \caption{}
 \label{Flo:redefPF1}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefPF1}
+\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPF1}
 \end{table}
 
 %Non-Combat Deaths, 1990-2006 and 2001-2006
@@ -1379,7 +1393,7 @@ can be for state deaths.
 \begin{table}
 \caption{}
 \label{Flo:alldeaths90}
-\includegraphics[bb=45bp 0bp 692bp 780bp,clip,scale=1.0]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefPbasic90}
+\includegraphics[bb=45bp 0bp 692bp 780bp,clip,scale=1.0]{../Output/PDF/redefPbasic90}
 \end{table}
 
 %9 Break recruits out by service branch
@@ -1387,7 +1401,7 @@ can be for state deaths.
 \clearpage{}
 \begin{table}
 \caption{}
-\label{Flo:Recruits by Service}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{C:/Users/garret/Documents/Research/Military/Output/PDF/highqualitybyserviceP}
+\label{Flo:Recruits by Service}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/highqualitybyserviceP}
 \end{table}
 
 %11 Monthly county service branch observations 
@@ -1395,7 +1409,7 @@ can be for state deaths.
 \clearpage{}
 \begin{table}
 \caption{}
-\label{Flo:Death by Same-Service Other-Service}\includegraphics[bb=45bp 0bp 612bp 730bp,scale=0.91]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefbyserviceP}
+\label{Flo:Death by Same-Service Other-Service}\includegraphics[bb=45bp 0bp 612bp 730bp,scale=0.91]{../Output/PDF/redefbyserviceP}
 \end{table}
 
 %12 Break deaths out by service branch
@@ -1403,7 +1417,7 @@ can be for state deaths.
 \pagebreak{}
 \begin{table}
 \caption{}
-\label{Flo: Death by Service}\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{C:/Users/garret/Documents/Research/Military/Output/PDF/redefbyservicedeath}
+\label{Flo: Death by Service}\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefbyservicedeath}
 \end{table}
 
 

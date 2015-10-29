@@ -44,6 +44,7 @@ forvalues year=1990/2010 {
 reshape long unemp, i(fips)
 rename _j month
 rename unemp countyunemp
+label var countyunemp "County Unemployment"
 tostring fips, replace
 replace fips=statefips+countyfips
 sort fips
@@ -76,4 +77,5 @@ destring state, replace
 rename state statefips
 tostring month, replace
 sort month statefips
+label var stateunemp "State Unemployment"
 save ./Unemployment/stateunemp.dta, replace

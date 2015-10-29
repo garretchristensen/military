@@ -696,10 +696,16 @@ sort fips month
 foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp nationalunemp monthnationalmort monthstatemort monthcountymort Rmonthcountydeath Routofcounty Routofstate{
  foreach X of numlist 1/12 {
   quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
+  label var L`X'`var' "`X' monthly lags of `var'"
   quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X']
+  label var F`X'`var' "`X' monthly leads of `var'"
  } 
 }
 
+label var monthcountydeath "Current In-County Deaths"
+label var L1monthcountydeath "Lag In-County Deaths"
+label var outofcounty "Current Out-of-County Deaths"
+label var L1outofcounty "Lag Out-of-County Deaths"
 
 compress
 sa ./Data/county`FILE'_raw.dta, replace

@@ -486,6 +486,11 @@ foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHA
  gen `type'outofcounty=`type'monthstatedeath-`type'monthcountydeath
 }
 
+label var monthcountydeath "Current In-County Deaths"
+label var L1monthcountydeath "Lag In-County Deaths"
+label var outofcounty "Current Out-of-County Deaths"
+label var L1outofcounty "Lag Out-of-County Deaths"
+
 compress
 sa ./Data/county`FILE'90_raw.dta, replace
 
