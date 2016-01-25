@@ -22,6 +22,7 @@ Most of the analysis in the paper focuses on the period 2001-2006, because that 
 The analysis necessary to reproduce the paper is found in this repository. Analysis files are found in the "Analysis" subfolder, though a stray .do file used to organize an intermediate data set (data on the number of recruiters by state, for example) may be in the subfolder with the relevant data, however.
 
 To reproduce the analysis, run the "doeverything.do" file in Stata 12 or higher.
+This file calls numerous other .do files. The file begins with several files with the "build" prefix that turn raw data (deaths, recruits, unemployment, county characteristics, recruiters) into the combined analysis data. Skip these if you so desire. 
 
 ##Paper##
 The paper is written in LaTeX and (mostly) includes tables produced directly by the "doeverything.do" script files. The paper is the "militaryrecruiting.tex" found in the "Papers" subfolder.  
