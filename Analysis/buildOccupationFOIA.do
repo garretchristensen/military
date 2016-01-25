@@ -3,6 +3,7 @@
 clear all
 set excelxlsxlargefile on
 
+//Append all datasets together
 //Could do this as a loop over years, but would append work the first time?
 
 import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2001") 
@@ -102,5 +103,11 @@ foreach j in A B C D E F G H {
 }
 drop if _n==1
 append using .\FOIA\MilitaryOccupations\Occupations.dta
+
+sort DATE
+drop if DATE=="" & SERVICE=="" & HOME_OF_RECORD_STATE==""
+drop if DATE=="DRS # 85998" & SERVICE==""
+drop if DATE=="Produced By Defense Manpower Data Center on November 30, 2015" & SERVICE==""
+
 save .\FOIA\MilitaryOccupations\Occupations.dta, replace
 
