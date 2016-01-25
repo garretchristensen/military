@@ -28,7 +28,7 @@ do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mort
 *do ./Analysis/deathsvrecruits.do
 
 /*RUN MAIN LINEAR REGRESSIONS*/
-do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
+*do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
 *do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
 
 /*OTHER FUNCTIONAL FORMS*/
