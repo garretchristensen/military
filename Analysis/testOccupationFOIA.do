@@ -25,15 +25,26 @@ label var state "Home of Record State, 2 Letter Abbrev"
 *for starters just look at how many go into 11B from each state.
 egen totbystate=total(number), by(state)
 label var totbystate "total military by state"
+
 egen tot11Bbystate=total(number) if OCCUPATION_CODE=="11B", by(state)
+bysort state: replace tot11Bbystate=max(tot11Bbystate)
 label var tot11Bbystate "total Army 11B by state"
+
 gen frac11B=tot11Bbystate/totbystate
 label var frac11B "fraction Army 11B/total military by state"
 
 egen totArmybystate=total(number) if SERVICE=="ARMY", by(state)
+bysort state: replace totArmybystate=max(totArmybystate)
+
 egen totNavybystate=total(number) if SERVICE=="NAVY", by(state)
+bysort state: replace totNavybystate=max(totNavybystate)
+
 egen totMarinebystate=total(number) if SERVICE=="MARINE CORPS", by(state)
+bysort state: replace totMarinebystate=max(totMarinebystate)
+
 egen totAFbystate=total(number) if SERVICE=="AIR FORCE", by(state)
+bysort state: replace totAFbystate=max(totAFbystate)
+
 foreach service in Army Navy Marine AF{
  label var tot`service'bystate "Total number in service branch(`service') by state"
  gen frac`service'bystate=tot`service'bystate/totbystate
