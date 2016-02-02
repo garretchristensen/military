@@ -18,6 +18,8 @@ cap rm ./Output/LNLinearW.tex //log linear
 cap rm ./Output/LNLinearW.txt
 cap rm ./Output/LNLinearWR.tex //log linear, active deaths only
 cap rm ./Output/LNLinearWR.txt
+cap rm ./Output/forwardbasicWLN.txt //log linear, 2 leads
+cap rm ./Output/forwardbasicWLN.tex
 
 
 foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
@@ -28,7 +30,7 @@ destring stateyear, replace //necessary for reghdfe command
 *drop ID-McareB03
 *drop *Q*
 
-/******WEIGHTED LINEAR REGRESSIONS*******/
+/******WEIGHTED LINEAR (LEVEL!!) REGRESSIONS*******/
 /* Level regressions. Appear in Appendix*/
 
 /*NO STATE*/
@@ -61,6 +63,8 @@ outreg2 using ./Output/LinearW.tex, tex ti(County Applicants vs Deaths and Unemp
  
 /*WEIGHTED FUTURE LEADS*/
 *10/20/15 This doesn't appear in the paper, I don't think.
+*2/1/16 AND not even in appendix because it's level regressions.
+
 *disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
 *areg active F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath  stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips) vce(robust)
 *outreg2  F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath  stateunemp countyunemp using ./Output/forwardbasicW.txt, ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) addnote(forwardbasicW.txt)
@@ -72,6 +76,7 @@ outreg2 using ./Output/LinearW.tex, tex ti(County Applicants vs Deaths and Unemp
 
 
 /*******************************************************************/
+*2/1/16 IGNORE--NOBODY GIVES A SHIT ABOUT LEVEL-LEVEL REGRESSIONS
 /*REPEAT ABOVE WITH ACTIVE DEATHS ONLY*/
 *Do the same as above (level-level weighted linear regressions) 
 *But only with active deaths: Rmonthcountydeath L1Rmonthcountydeath
@@ -126,19 +131,23 @@ reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty /
 outreg2 using ./Output/LNLinearW.tex, tex label ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, YES)
-/*
+
 /*WEIGHTED FUTURE LEADS--WITH LN(Active)*/
 disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
-areg LNactive F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips) vce(robust)
-outreg2 F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath stateunemp countyunemp using ./Output/forwardbasicWLN.txt, ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) addnote(forwardbasicWLN.txt)
-coefplot, drop(monthfe* stateunemp countyunemp _cons) xline(0) title(County Recruits)
-graph export ./Output/forwardcountyLN`file'.png, replace
+reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
+	stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips)
+outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
+addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on active duty deaths", ///
+	"As well as future 'lead' periods. Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
+	"as well as a state-specific linear trend. The first four columns show applicants and the last four show contracts.", ///
+	Filename:forwardbasicWLN.txt)
 
-areg LNactive F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath F6outofcounty F5outofcounty F4outofcounty F3outofcounty F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty L3outofcounty L4outofcounty L5outofcounty L6outofcounty stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips)  vce(robust)
-outreg2 F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath F6outofcounty F5outofcounty F4outofcounty F3outofcounty F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty L3outofcounty L4outofcounty L5outofcounty L6outofcounty stateunemp countyunemp using ./Output/forwardbasicWLN.txt, ct(`file'countyandstate) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
-coefplot, drop(monthfe* stateunemp countyunemp _cons) xline(0) title (County and State Recruits)
-graph export ./Output/forwardcountystateLN`file'.png, replace
-*/
+reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
+	F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty ///
+	stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips month stateyear)  vce(clusterfips)
+outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyandstate) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+
+STOP YOU STUPID MUTHERFOCKER
 
 ************************************************************************
 /*ACTIVE DEATHS ONLY*/
