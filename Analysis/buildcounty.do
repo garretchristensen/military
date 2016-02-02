@@ -681,11 +681,12 @@ gen mo=substr(month,5,2)
 destring mo, replace
 gen fancymonth=ym(year,mo)
 tsset fips fancymonth
-gen t=fancymonth-501
+gen t=fancymonth-500 /*changed from 501 2/1/2016--1 to 58 not 0 to 57*/
 tab statefips, gen(statetrend)
 forvalues X=1/51 {
  replace statetrend`X'=statetrend`X'*t
 }
+
 
 /*STATE YEAR INTERACTED FE*/
 gen stateyear=string(year)+string(statefips)

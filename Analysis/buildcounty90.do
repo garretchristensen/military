@@ -475,15 +475,84 @@ drop if _merge==2 /* OUT OF RELEVANT TIME PERIOD. MERGE==1 PUERTO RICO MISSING D
 rename _merge mergestateunemp
 move stateunemp nationalunemp
 
+/*ADD COUNTY POPULATION IN ORDER TO WEIGHT*/
+destring countyfips, replace
+merge m:1 statefips countyfips year using ./Population/countyyoungmalepop.dta
+drop if _merge==2
+rename _merge merge_countypop
+bysort fips: egen avgcountypop=mean(age1824_male)
+
 /*ADD SLIGHTLY ALTERED/EXCLUSIVE DEATH DEFINITIONS*/
 gen outofstate=monthtotaldeath-monthstatedeath
 gen outofcounty=monthstatedeath-monthcountydeath
+label var outofstate "Out of state deaths this month"
+label var outofcounty "Out of county but in-state deaths this month"
 gen Rmonthcountydeath=ARmonthcountydeath+MRmonthcountydeath+FRmonthcountydeath+NRmonthcountydeath
 gen Rmonthstatedeath=ARmonthstatedeath+MRmonthstatedeath+FRmonthstatedeath+NRmonthstatedeath
 gen Rmonthtotaldeath=ARmonthtotaldeath+MRmonthtotaldeath+FRmonthtotaldeath+NRmonthtotaldeath
-foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHAN OTHER{
+label var Rmonthcountydeath "Active duty deaths this month-county"
+label var Rmonthstatedeath "Active duty deaths this month-state"
+foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHAN{
  gen `type'outofstate=`type'monthtotaldeath-`type'monthstatedeath
  gen `type'outofcounty=`type'monthstatedeath-`type'monthcountydeath
+ label var `type'outofstate "`type' out of state deaths this month"
+ label var `type'outofcounty "`type' out of county but in-state deaths this month"
+}
+/*CON IS MISSING RESERVE--ACTIVE DUTY ONLY*/
+gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
+
+
+*************FINAL CLEANING************
+*This used to be at the beginning of each and every regression file.
+*Much better to have it here so we're sure I'm using the same data every time.
+
+drop if fips==0 
+drop if countyfips==999 /*This means they don't know. Right?*/
+
+*********FIXED EFFECTS AND TRENDS***********
+/*MONTHLY FE*/
+tab month, generate(monthfe)
+
+/*GENERATE YEAR FIXED EFFECTS*/ //Why don't I make these somewhere everyone can reach them?
+gen year1999=1 if year==1999
+gen year2000=1 if year==2000
+gen year2001=1 if year==2001
+gen year2002=1 if year==2002
+gen year2003=1 if year==2003
+gen year2004=1 if year==2004
+gen year2005=1 if year==2005
+gen year2006=1 if year==2006
+foreach var in 1999 2000 2001 2002 2003 2004 2005 2006{
+ replace year`var'=0 if year`var'==.
+}
+gen yearcounty=string(year)+string(fips)
+
+/*STATE TREND*/
+tab statefips, gen(statefe)
+gen mo=substr(month,5,2)
+destring mo, replace
+gen fancymonth=ym(year,mo)
+tsset fips fancymonth
+gen t=fancymonth-500 /*changed from 501 2/1/2016--1 to 58 not 0 to 57*/
+tab statefips, gen(statetrend)
+forvalues X=1/51 {
+ replace statetrend`X'=statetrend`X'*t
+}
+
+
+/*STATE YEAR INTERACTED FE*/
+gen stateyear=string(year)+string(statefips)
+tab stateyear, gen(stateyearfe)
+
+/* (1) CREATE LAGS*/
+sort fips month
+foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp nationalunemp monthnationalmort monthstatemort monthcountymort Rmonthcountydeath Routofcounty Routofstate{
+ foreach X of numlist 1/12 {
+  quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
+  label var L`X'`var' "`X' monthly lags of `var'"
+  quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X']
+  label var F`X'`var' "`X' monthly leads of `var'"
+ } 
 }
 
 label var monthcountydeath "Current In-County Deaths"
