@@ -1,0 +1,14 @@
+#List of files to ignore
+
+
+#the dump of old files before version control
+old\
+
+#LaTeX garbage
+*.aux
+*.bib
+*.bib.bak
+*.bbl
+*.blg
+*.out
+*.synctex.gz
