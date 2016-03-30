@@ -2,7 +2,11 @@
 
 
 #the dump of old files before version control
-old\
+Analysis/old/*
+Analysis\old\*
+
+Papers/Literature/*
+Papers\Literature\*
 
 #LaTeX garbage
 *.aux
@@ -12,3 +16,11 @@ old\
 *.blg
 *.out
 *.synctex.gz
+
+
+#Stata data files
+*.dta
+
+#Excel
+*.xls
+*.xlsx
