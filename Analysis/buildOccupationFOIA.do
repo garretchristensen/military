@@ -1,113 +1,33 @@
 // This file builds the military occupation code data from the raw FOIA data.
 //Raw FOIA data was received the first week of January, 2016.
+//Data was discovered to be faulty, so I requested the FOIA be reopened
+//New data was received end of March, 2016
+
 clear all
-set excelxlsxlargefile on
 
-//Append all datasets together
-//Could do this as a loop over years, but would append work the first time?
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2001") 
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
+forvalues X=1/9{
+	insheet using .\FOIA\MilitaryOccupations\raw\v2\15F0425_DRS85998_200`X'.txt, clear delimiter("|")
+	save .\FOIA\MilitaryOccupations\Occupations_200`X'.dta, replace
 }
-drop if _n==1
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
+insheet using .\FOIA\MilitaryOccupations\raw\v2\15F0425_DRS85998_2010.txt, clear delimiter("|")
+	save .\FOIA\MilitaryOccupations\Occupations_2010.dta, replace
 
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2002") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
+use .\FOIA\MilitaryOccupations\Occupations_2001.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2002.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2003.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2004.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2005.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2006.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2007.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2008.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2009.dta
+append using .\FOIA\MilitaryOccupations\Occupations_2010.dta
 
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2003") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2004") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2005") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2006") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2007") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2008") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2009") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
-import excel using .\FOIA\MilitaryOccupations\raw\15F0425_Doc_01_DRS85998.xlsx, sheet("FY 2010") clear
-drop if _n<=5
-foreach j in A B C D E F G H {
-	replace `j'=subinstr(`j'," ","_",.) in 1
-	rename `j' `=`j'[1]'
-}
-drop if _n==1
-append using .\FOIA\MilitaryOccupations\Occupations.dta
-
-sort DATE
-drop if DATE=="" & SERVICE=="" & HOME_OF_RECORD_STATE==""
-drop if DATE=="DRS # 85998" & SERVICE==""
-drop if DATE=="Produced By Defense Manpower Data Center on November 30, 2015" & SERVICE==""
-
-save .\FOIA\MilitaryOccupations\Occupations.dta, replace
+rename v1 grade	
+rename v2 service
+rename v3 HORstate
+rename v4 HORcounty
+rename v5 MOS
+rename v6 yearmonth
+rename v7 manpower
 
