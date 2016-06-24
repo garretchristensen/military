@@ -1,9 +1,16 @@
-/*RUN REGRESSIONS BY COUNTY*/
-/*RECRUITS ON TOTAL DEATHS, STATE DEATHS, COUNTY DEATHS, UNEMPLOYMENT*/
+/*THIS FILE RUNS THE INTERMEDIATE STEPS OF DATASET CONSTRUCTION*/
+/*YOU MUST ALREADY HAVE TURNED THE FOIA .TXT APPLICATION DATA INTO COMPILED CONS
+(done in buildfromFOIA.do)
+AND YOU MUST ALSO TURN THE RAW DEATH DATA INTO A MASTER LIST OF US DEATHS*/
+/*This file take the apps and deaths, puts those together by county, then also merges in
+unemployment, recruiters, and mortality data.*/
+
+*THIS FILE SHOULD BE THE EXACT SAME AS buildcounty.do
+*I JUST DO IT THIS WAY BECAUSE LOOPING OVER SO MUCH 
 
 clear all
 set more off
-cd C:/Users/garret/Documents/Research/Military
+cd $dir
 
 cap log close
 log using ./Logs/buildcounty.smcl, replace

@@ -485,7 +485,9 @@ and women with very dangerous military professions buying homes near
 their duty-base and changing their legal residence to the county in
 which the base sits. 
 
-Since the focus of this paper is recent combat deaths, the main 2001-2006 fatality data used in the majority of this paper does not include the fairly common deaths of military members unrelated to combat abroad, or unrelated to the military at all (heart attacks, car accidents).  After earlier drafts of this paper were completed, a FOIA request for detailed death data for all  deaths in the military (not just those in the wars) for the entire period for which I had recruiting data (1990-2006) was granted. I use these deaths as placebo tests of my analysis and find that, as expected, there is no significant recruiting effect of local non-combat deaths. This is discussed in the appendix and shown in Table~\ref{Flo:alldeaths90}. 
+Since the focus of this paper is recent combat deaths, the main 2001-2006 fatality data used in the majority of this paper does not include the fairly common deaths of military members unrelated to combat abroad, or unrelated to the military at all (heart attacks, car accidents).  After earlier drafts of this paper were completed, a FOIA request for detailed death data for all  deaths in the military (not just those in the wars) for the entire period for which I had recruiting data (1990-2006) was granted. I use these deaths as placebo tests of my analysis and find that, as expected, there is no significant recruiting effect of local non-combat deaths. This is discussed in the appendix and shown in Table~\ref{Flo:alldeaths90}.
+
+CREATE LINEAR REG TABLE OF 1990-ON DEATHS AND SHOW IT'S ZERO 
  
 Table \ref{Flo:Simple Deaths} shows total annual military deaths and the subsets of those recorded as hostile action from the FOIA data and those considered part of the Iraqi/Enduring Freedom operations as reported publicly by the DMDC. One can see that at most in any year,
 under 50\% of the deaths of active duty US military members during the relevant time period (2001-2006) are classified as part of the Iraq/Afghanistan wars. Also, the Iraq/Afghanistan deaths outnumber the hostile deaths, so friendly fire or accidental deaths can be considered part of the war data. During the entire period for which I have data, 1999, two years prior to the beginning of my analysis, experienced the lowest number of deaths, with  796, of which zero were classified as hostile. 
@@ -526,7 +528,7 @@ for more dangerous occupations. However, data on military
 occupational specialties by region of origin is not publicly available. Instead I make a comparison of the likelihood of death for a recruit from each
 of the states. (In the appendix, I establish the perhaps unsurprising fact that recruits and deaths are not uniformly distributed across the population. Here I restrict my attention to the likelihood of death \textit{given} enlistment.) 
 
-Since I lack data on military occupational specialties, I can compare the number of
+Since I lack reliable data on military occupational specialties, I can compare the number of
 recruits from a state to the number of deaths from the same state.
 Figure \ref{Flo:HISTO total deaths total recruits} shows histograms
 of the ratio of active duty deaths to total active duty applicants
@@ -1000,7 +1002,7 @@ Same Binomial Distribution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TABLES
-%1
+%1--SUMMARY TABLE
 \pagebreak{}
 \begin{table}
 \caption{}
@@ -1008,7 +1010,7 @@ Same Binomial Distribution}
 \end{table}
 
 
-%4 Linear with logged LHS--Main specification
+% Linear with logged LHS--Main specification
 % Made with redefined.do
 \pagebreak{}
 \clearpage{}
@@ -1019,25 +1021,20 @@ Same Binomial Distribution}
 \end{table}
 
 
-%5
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo:Poisson Basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.91]{../Output/PDF/redefPbasic}
-\end{table}
 
-%6
+
+%RECRUITER AND MORTALITY CONTROLS-DO IN LOG LINEAR!!!
 \clearpage{}
 \pagebreak{}
 \begin{table}
-\caption{}
+\caption{DO IN LOG LINEAR!!!}
 \label{Flo:Poisson Rec&Mort}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPrec}
 \end{table}
 
-%7
+%MEDIA MARKET AND CONTIGUOUS-DO IN LOG LINEAR!!
 \pagebreak{}
 \begin{table}
-\caption{}
+\caption{DO IN LOG LINEAR!!!}
 \label{Flo:Media}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefcontigP}
 \end{table}
 
@@ -1045,15 +1042,15 @@ Same Binomial Distribution}
 \clearpage{}
 \pagebreak{}
 \begin{table}
-\caption{}
+\caption{DO IN LOG LINEAR!!}
 \label{Flo:Cumulative Lags}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefrunninglagsP}
 \end{table}
 
-%8
+%INTERACTIONS
 \clearpage{}
 \pagebreak{}
 \begin{table}
-\caption{}
+\caption{DO IN LOG LINEAR!!}
 \label{Flo:Poisson Interactions}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPinteractions}
 \end{table}
 
@@ -1296,13 +1293,13 @@ The hypotheses of equality cannot be rejected for county deaths, but
 can be for state deaths. 
 
 %National Time Series
-%SEMI
+%National-LogLinear (SEMI)
 \begin{table}
 \caption{}
 \label{Flo:TABLE: Simple Time Series}\input{../Output/deathsvrecruitsSEMI.tex}
 \end{table}
 
-%POISSON
+%National-Poisson
 \begin{table}
 \caption{}
 \label{Flo:TABLE: Simple Time Series P}\input{../Output/deathsvrecruitsP.tex}
@@ -1323,13 +1320,19 @@ can be for state deaths.
 \label{Flo:Figure: Pop vs. Deaths}
 \end{figure}
 
-%Linear Regression
+%POISSON BASIC
+\pagebreak{}
+\begin{table}
+\caption{}
+\label{Flo:Poisson Basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.91]{../Output/PDF/redefPbasic}
+\end{table}
+
+%Completely Linear Regression
 \pagebreak{}
 \begin{table}
 \caption{}
 \label{Flo:County-basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/redefW}
 \end{table}
-
 
 
 %Square Root
@@ -1354,7 +1357,7 @@ can be for state deaths.
 \pagebreak{}
 \clearpage{}
 \begin{table}
-\caption{}
+\caption{I NEED TO SWITCH THIS TO LOG LINEAR!}
 \label{Flo:allrecruits}
 \includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/allrecPbasic}
 \end{table}
@@ -1382,7 +1385,7 @@ can be for state deaths.
 \pagebreak{}
 \clearpage{}
 \begin{table}
-\caption{}
+\caption{DO THIS IN LOG LINEAR!!}
 \label{Flo:redefPF1}
 \includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPF1}
 \end{table}

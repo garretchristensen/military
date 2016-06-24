@@ -171,4 +171,4 @@ label var fancymonth "Year and Month"
 label var monthdeathtotal "US Deaths in Iraq/Afghanistan"
 label var monthapptotal "Applicants to Military"
 graph twoway (line monthdeathtotal fancymonth, yaxis(1) lpattern(dash))(line monthapptotal fancymonth, yaxis(2))
-graph export ./Output/graph_deathsvsrecruits_basic.tif, replace
+graph export ./Output/graph_deathsvsrecruits_basic.png, replace

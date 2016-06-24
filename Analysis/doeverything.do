@@ -12,7 +12,7 @@ cd $dir
 *do ./Analysis/buildunemployment.do //Formats BLS unemployment data
 do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mortality data
 							 // separately does the same with CONTRACTS
-*do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths from 1990 on,
+do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths from 1990 on,
 							//not just 2001-on combat
 							//separately does the same with CONTRACTS
 													
