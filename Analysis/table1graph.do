@@ -3,7 +3,6 @@
 
 clear all
 set more off
-set mem 200m
 cd $dir
 use ./Deaths/raw/table1graph.dta, clear //Sadly, I can't find the file that builds this dataset from scratch.
 
@@ -11,7 +10,7 @@ drop if fips==.
 /*******************************************************/
 /***DEATHS AND RECRUITS. SLOPE==1, HOPEFULLY***********/
 /******************************************************/
-scatter percentofdeaths percentofrecruits, xtitle("Percent of Recruits") mlabel(state) || lfit percentofdeaths percentofrecruits [aweight=youngmalepop], legend(label(2 "Fitted Slope=1.01")label(3 "Slope=1")) ||lfit percentofrecruits percentofrecruits, lpattern(dash)
+scatter percentofdeaths percentofrecruits, xtitle("Percent of Recruits") mlabel(state) || lfit percentofdeaths percentofrecruits [aweight=youngmalepop], legend(label(2 "Fitted Slope=1.01") label(3 "Slope=1")) ||lfit percentofrecruits percentofrecruits, lpattern(dash)
 graph export ./Output/graph_table1_death_rec.png, replace
 reg percentofdeaths percentofrecruits 
 test _b[percentofrecruits]=1
@@ -107,8 +106,8 @@ disp "Active Deaths/Active Apps " r(sd)/r(mean)
 summ hazard_aaa [aweight=percentpop]
 disp "Active Deaths/Active Apps WEIGHTED " r(sd)/r(mean)
 label var hazard_aaa "Active Deaths/Active Applicants"
-histogram hazard_aaa, addl frequency title("Hazard Rate by State")
-graph export ./Output/hist_state_aaa.png, replace
+histogram hazard_aaa, addl frequency //title("Hazard Rate by State")
+graph save ./Output/hist_state_aaa.gph, replace
 /*TOTAL ACTIVE APPS*/
 gen hazard_taa=deaths/stateactiveapps
 summ hazard_taa
@@ -116,8 +115,8 @@ disp "Total Deaths/Active Apps "r(sd)/r(mean)
 summ hazard_taa [aweight=percentpop]
 disp "Total Deaths/Active Apps WEIGHTED "r(sd)/r(mean)
 label var hazard_taa "Total Deaths/Active Applicants"
-histogram hazard_taa, addl frequency title("Hazard Rate by State")
-graph export ./Output/hist_state_taa.png, replace
+histogram hazard_taa, addl frequency //title("Hazard Rate by State")
+graph save ./Output/hist_state_taa.gph, replace
 /*ACTIVE ACTIVE CON*/
 gen hazard_aac=activedeaths/stateactivecons
 summ hazard_aac
@@ -125,8 +124,8 @@ disp "Active Deaths/Active Cons "r(sd)/r(mean)
 summ hazard_aac [aweight=percentpop]
 disp "Active Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_aac "Active Deaths/Active Contracts"
-histogram hazard_aac, addl frequency title("Hazard Rate by State")
-graph export ./Output/hist_state_aac.png, replace
+histogram hazard_aac, addl frequency //title("Hazard Rate by State")
+graph save ./Output/hist_state_aac.gph, replace
 /*TOTAL ACTIVE CON*/
 gen hazard_tac=deaths/stateactivecons
 summ hazard_tac
@@ -134,9 +133,13 @@ disp "Total Deaths/Active Cons "r(sd)/r(mean)
 summ hazard_tac [aweight=percentpop]
 disp "Total Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_tac "Total Deaths/Active Contracts"
-histogram hazard_tac, addl frequency title("Hazard Rate by State")
-graph export ./Output/hist_state_tac.png, replace
+histogram hazard_tac, addl frequency //title("Hazard Rate by State")
+graph save ./Output/hist_state_tac.gph, replace
 
+***COMBINE ALL 4 GRAPHS***
+graph combine ./Output/hist_state_aaa.gph ./Output/hist_state_taa.gph ./Output/hist_state_aac.gph ///
+	./Output/hist_state_tac.gph, title("Death Hazard Rate by State") saving(./Output/hist_state_combined.gph, replace) 
+graph export ./Output/hist_state_combined.png, replace
 
 /* (2) SIMPLE GRAPH OF DEATHS AGAINST RECRUITS OVER TIME*/
 use ./Apps/APP_bydate2000.dta, clear

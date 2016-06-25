@@ -4,9 +4,6 @@
 
 clear all
 set more off
-*set mem 5g
-*set maxvar 32767
-*set matsize 11000 
 cd $dir
 cap log close
 log using ./Logs/redefined.txt, replace
