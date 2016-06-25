@@ -24,10 +24,15 @@ quietly bitesti countyactiveapps[`X'] activedeaths[`X'] .0027603, detail
 quietly replace WorstP=r(p) in `X'
 }
 summ WorstP
-label var WorstP "P-Value of County Observation Having National Average Binomial Distribution"
-histogram WorstP if WorstP!=1, addl width(.01) frequency ti(Binomial Test of Each County's Hazard Rate)
-graph export ./Output/hist_binomial.png, replace
+label var WorstP "County P-Value"
+histogram WorstP if WorstP!=1, width(.01) frequency ti(Active Duty Deaths and Applicants) //addl
+graph save ./Output/hist_binomial.gph, replace
 
+count if WorstP<(.05/3129) //was 9 last time I checked
+if r(N)!=9{
+ throw a hissy fit
+}
+disp "this is how many counties couldn't come from the average dist"
 *********************************************************/
 /** ALL COUNTIES ARE CLEARLY NOT THE SAME. JUST SHOW THE DISPERSION OF THE HAZARD RATE ISN'T CRAZY*/
 /* DO FOR ALL RECS & DEATHS AND ACTIVE ONLY*/
@@ -49,7 +54,7 @@ disp "Total Deaths/Active Apps "r(sd)/r(mean)
 *summ hazard_taa [aweight=percentpop]
 *disp "Total Deaths/Active Apps WEIGHTED "r(sd)/r(mean)
 label var hazard_taa "Total Deaths/Active Applicants"
-histogram hazard_taa, addl frequency //title("Hazard Rate by County")
+histogram hazard_taa, frequency addl //title("Hazard Rate by County")
 graph save ./Output/hist_county_taa.gph, replace
 
 /*****************************************************/
@@ -71,9 +76,24 @@ quietly bitesti countyactivecons[`X'] activedeaths[`X'] sumactivedeaths/sumactiv
 quietly replace WorstP=r(p) in `X'
 }
 summ WorstP
-label var WorstP "P-Value of County Observation Having National Average Binomial Distribution"
-histogram WorstP if WorstP!=1, addl width(.01) frequency ti(Active-Duty Deaths and Contracts)
-graph export ./Output/hist_binomialcon.tif, replace
+label var WorstP "County P-Value"
+histogram WorstP if WorstP!=1, width(.01) frequency ti(Active-Duty Deaths and Contracts) //addl
+graph save ./Output/hist_binomialcon.gph, replace
+
+count if WorstP<(.05/3129) //was 0 last time I checked
+if r(N)!=0{
+ throw a hissy fit
+}
+disp "this is how many counties couldn't come from the average dist"
+
+******************************************
+*COMBINE 2 STATE and 2 COUNTY GRAPHS INTO ONE
+graph combine ./Output/hist_state_binomial.gph ./Output/hist_state_binomialcon.gph ///
+	./Output/hist_binomial.gph ./Output/hist_binomialcon.gph, ///
+	saving(./Output/hist_binomial_combined.gph, replace) title("State and County Binomial Tests of Death Hazard Rates") ///
+	note("Graph displays the p-values that the observed state and county death rate could come from the overall" ///
+	"average national death rate. The majority (70+%) of county p-values are ~=1 and are excluded from the graph.")
+graph export ./Output/hist_binomial_combined.png, replace
 
 *********************************************************/
 /** ALL COUNTIES ARE CLEARLY NOT THE SAME. JUST SHOW THE DISPERSION OF THE HAZARD RATE ISN'T CRAZY*/

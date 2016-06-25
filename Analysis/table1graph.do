@@ -77,9 +77,9 @@ bitesti stateactiveapps[`X'] activedeaths[`X'] .0027603, detail
 replace WorstP=r(p) in `X'
 }
 summ WorstP
-label var WorstP "P-Value of State Observation Having National Average Binomial Distribution"
+label var WorstP "State P-Value"
 histogram WorstP, addl width(.01) frequency ti(Active-Duty Deaths and Applicants)
-graph export ./Output/hist_binomial.tif, replace
+graph save ./Output/hist_state_binomial.gph, replace
 
 /*ACTIVE DEATHS ACTIVE CONS*/
 egen sumactivecons=sum(stateactivecons)
@@ -88,9 +88,9 @@ bitesti stateactivecons[`X'] activedeaths[`X'] sumactivedeaths/sumactivecons, de
 replace WorstP=r(p) in `X'
 }
 summ WorstP
-label var WorstP "P-Value of State Observation Having National Average Binomial Distribution"
+label var WorstP "State P-Value"
 histogram WorstP, addl width(.01) frequency ti(Active-Duty Deaths and Contracts)
-graph export ./Output/hist_binomialcon.tif, replace
+graph save ./Output/hist_state_binomialcon.gph, replace
 
 
 /*********************************************************/
