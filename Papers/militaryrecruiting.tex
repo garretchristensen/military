@@ -480,7 +480,7 @@ An important point to note here is that the data include {}``home
 of record'' which is where the soldier lived on the day they joined
 the service, and generally does not change over the course of military service, no matter how long. This is important with regards to my claim of plausible
 random assignment of death with respect to county after controlling
-for military population levels---the data is not tainted by service-men
+for military population levels---the data is not biased by service-men
 and women with very dangerous military professions buying homes near
 their duty-base and changing their legal residence to the county in
 which the base sits. 
@@ -489,10 +489,25 @@ Since the focus of this paper is recent combat deaths, the main 2001-2006 fatali
 
 CREATE LINEAR REG TABLE OF 1990-ON DEATHS AND SHOW IT'S ZERO 
  
-Table \ref{Flo:Simple Deaths} shows total annual military deaths and the subsets of those recorded as hostile action from the FOIA data and those considered part of the Iraqi/Enduring Freedom operations as reported publicly by the DMDC. One can see that at most in any year,
-under 50\% of the deaths of active duty US military members during the relevant time period (2001-2006) are classified as part of the Iraq/Afghanistan wars. Also, the Iraq/Afghanistan deaths outnumber the hostile deaths, so friendly fire or accidental deaths can be considered part of the war data. During the entire period for which I have data, 1999, two years prior to the beginning of my analysis, experienced the lowest number of deaths, with  796, of which zero were classified as hostile. 
+Table \ref{Flo:Simple Deaths} shows total annual military deaths and the subsets of those recorded as hostile action from the FOIA data and those considered part of the Iraqi/Enduring Freedom operations as reported publicly by the DMDC. One can see that at most in any year, under 50\% of the deaths of active duty US military members during the relevant time period (2001-2006) are classified as part of the Iraq/Afghanistan wars. Also, the Iraq/Afghanistan deaths outnumber the hostile deaths, so friendly fire or accidental deaths can be considered part of the war data. During the entire period for which I have data, 1999, two years prior to the beginning of my analysis, experienced the lowest number of deaths, with  796, of which zero were classified as hostile. 
+
+%1--SUMMARY TABLE
+\begin{table}
+\caption{}
+\label{Flo:Simple Deaths}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/DeathsAnnualSimple}
+%this is made by DataSummaryTable.do (though not reproduced automatically)
+\end{table}
+
 
 During the 2001-2006 period there were 2886 deaths in the combat death database, 2725 of which (94\%) I have been able to link to the home county of record of the deceased soldier. I thus have data for both deaths and recruits for 58 months, for all the roughly 3,150 U.S. counties or county-equivalents. The number of deaths in a county-month range from 0 (98.7\% of county-month observations) to a high of 8 in Los Angeles County in November, 2004. These and other summary statistics are presented in Table~\ref{Flo:Simple Deaths}. Figure \ref{Flo:Monthly Deaths vs. Monthly Recruits} shows monthly total national combat deaths and monthly total applicants to the military from October 2001 through July 2006. 
+
+%1--SUMMARY FIGURE  
+\begin{figure}
+\includegraphics[scale=0.6]{../Output/graph_deathsvsrecruits_basic}
+%This gets made in table1graph.do
+\caption{Graph of Monthly Recruits and Monthly Iraq/Afghanistan Combat Deaths}
+\label{Flo:Monthly Deaths vs. Monthly Recruits}
+\end{figure} 
  
  
 %Publicly available yearly figures indicate that in the period for which I have recruiting data %(1990-2006),
@@ -517,7 +532,7 @@ by service branch have also been included in certain specifications.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \section{Analysis\label{sec:Analysis}}
 
-\subsection{County Origin and Rates of Death}
+\subsection{Location of Origin and Rates of Death}
 A characteristic that effects the interpretation
 of my results is the specific type of military career for which the
 residents of certain counties or states are likely to sign up. It
@@ -528,28 +543,32 @@ for more dangerous occupations. However, data on military
 occupational specialties by region of origin is not publicly available. Instead I make a comparison of the likelihood of death for a recruit from each
 of the states. (In the appendix, I establish the perhaps unsurprising fact that recruits and deaths are not uniformly distributed across the population. Here I restrict my attention to the likelihood of death \textit{given} enlistment.) 
 
-Since I lack reliable data on military occupational specialties, I can compare the number of
-recruits from a state to the number of deaths from the same state.
-Figure \ref{Flo:HISTO total deaths total recruits} shows histograms
-of the ratio of active duty deaths to total active duty applicants
-for each state over the whole period for which I have data. The ratios
-are centered around 0.3\%, but are clearly not all identical. I have
-repeated this exercise including both active duty and reserve and
-guard deaths (since service and death in the reserve and guard duty
+A rough way to examine this issue is to compare the number of recruits from a state (or county) to the number of deaths from the same state (or county). Figure \ref{Flo:HISTOstatedeaths} shows histograms of the ratio of active duty deaths to total active duty applicants for each state over the whole period for which I have data. Figure \ref{Flo:HISTOcountydeaths} The state ratios are centered around 0.3\%, but are clearly not all identical. I have repeated this exercise including both active duty and reserve and guard deaths (since service and death in the reserve and guard duty
 is clearly correlated with where one lives, including them might lead
 to complications) for both applicants and contracts, using both unweighted
 and population-weighted means. The coefficients of variation for each
 of these eight methods of calculating the risk of death by state are
-relatively small, ranging from 0.143 to 0.319. Simply put, recruits
-have about the same likelihood of dying, regardless of where they
-are from. 
+relatively small, ranging from 0.143 to 0.319. Looking at county figures shows that the majority of counties have zero deaths. While some counties clearly exhibit higher rates, testing is required to determine whether this is significant. 
 
-Another way to analyze this is to look at each individual observation,
-and check the likelihood that it came from a binomial distribution
-with the hazard rate equal to that of the overall national hazard
-rate. (The number of active-duty deaths divided by the total number
+%State death hazard graphs
+%built by Table1graph.do
+\begin{figure}
+\includegraphics[scale=0.6]{../Output/hist_state_combined.png}
+\caption{Death Hazard Rates by State: Active Duty/Total Deaths (2001-2010) and Active Duty Applicants/Contracts (1990-2006)}
+\label{Flo:HISTOstatedeaths}
+\end{figure}
+
+%County death hazard graphs
+%built by table1bycounty.do
+\begin{figure}
+\includegraphics[scale=0.6]{../Output/hist_county_combined.png}
+\caption{Death Hazard Rates by County: Active Duty/Total Deaths (2001-2010) and Active Duty Applicants/Contracts (1990-2006)}
+\label{Flo:HISTOcountydeaths}
+\end{figure}
+
+To do this, I look at each individual county, and check the likelihood that it came from a binomial distribution with the hazard rate equal to that of the overall national hazard rate. (The number of active-duty deaths divided by the total number
 of active duty applicants was .003.) I then tested the likelihood
-that each observation came from a binomial distribution with this
+that each county observation came from a binomial distribution with this
 hazard rate of p=.003. Figure \ref{Flo:Pat's Histo} displays two
 histograms of the p-value for each state, one using active-duty deaths
 and active duty applicants, the other using active-duty deaths and
@@ -565,7 +584,13 @@ enter dangerous military occupations, but according to my evidence,
 the idea that the risk of death is the same across all states can
 only be rejected for one or two states. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different.
 
-%Add test of serial correlation, or thereabouts.
+\begin{figure}
+\includegraphics[scale=0.6]{../Output/PDF/hist_binomial}
+\caption{Histogram of P-Values Testing Whether State Deaths All Came from the
+Same Binomial Distribution}
+\label{Flo:Pat's Histo}
+\end{figure}
+\clearpage{}
 
 This is not necessarily a reason for concern regarding omitted variable bias,
 since fixed effects for each county will still be able to control for
@@ -593,7 +618,7 @@ rate of death of its soldiers, and the behavioral explanation is still reasonabl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{County-Level Analysis\label{sub:County OLS}}
 
-The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model \footnote{Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitavely very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a square root specification, as well as negative binomial. Again, the results are very similar.} 
+The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model \footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata \citep{reghdfe}. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitavely very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a square root specification, as well as negative binomial. Again, the results are very similar.} 
 
 
 Table \ref{Flo:loglinear}
@@ -976,38 +1001,18 @@ may be able to better explain the observed recruiting phenomenon.
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{figure}
-\includegraphics[scale=0.6]{../Output/graph_deathsvsrecruits_basic}
-%This gets made in table1graph.do
-\caption{Graph of Monthly Recruits and Monthly Iraq/Afghanistan Combat Deaths}
-\label{Flo:Monthly Deaths vs. Monthly Recruits}
-\end{figure}
 
-\begin{figure}
-\includegraphics[scale=0.6]{../Output/PDF/histall4}
-\caption{Active Duty/Total Deaths (2001-2010) and Active Duty Applicants/Contracts (1990-2006)}
-\label{Flo:HISTO total deaths total recruits}
-\end{figure}
+
+
 
 \pagebreak{}
-\begin{figure}
-\includegraphics[scale=0.6]{../Output/PDF/hist_binomial}
-\caption{Histogram of P-Values Testing Whether State Deaths All Came from the
-Same Binomial Distribution}
-\label{Flo:Pat's Histo}
-\end{figure}
-\clearpage{}
+
 
 \pagebreak{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TABLES
-%1--SUMMARY TABLE
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo:Simple Deaths}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/DeathsAnnualSimple}
-\end{table}
+
 
 
 % Linear with logged LHS--Main specification
