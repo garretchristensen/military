@@ -34,29 +34,29 @@ destring stateyear, replace //necessary for areg command
 /* Level regressions. Appear in Appendix*/
 
 /*NO STATE*/
-aref active monthcountydeath L1monthcountydeath [aweight=avgcountypop], absorb(fips month) ///
+areg active monthcountydeath L1monthcountydeath monthfe1-monthfe58 [aweight=avgcountypop], absorb(fips) ///
 	vce(cluster fips)
 outreg2 monthcountydeath L1monthcountydeath using ./Output/LinearW.tex, tex ///
 	ti(County Applicants vs Deaths and Unemployment) addnote(LinearW.tex) ///
 	ct(Basic) bdec(3) tdec(3) bracket se append
 
 /*STATE AND UNEMP*/
-xtreg  active monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
-	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
+areg active monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
+	stateunemp monthfe3-monthfe58 [aweight=avgcountypop], vce(cluster fips) absorb(fips)
 outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
 	using ./Output/LinearW.tex, tex ct(w/State) bdec(3) tdec(3) bracket se append
 
 /*STATE TREND*/
 areg active monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
-	stateunemp statetrend1-statetrend51[aweight=avgcountypop], vce (cluster fips) ///
-	absorb(fips month)
+	stateunemp monthfe3-monthfe58 statetrend1-statetrend51[aweight=avgcountypop], vce (cluster fips) ///
+	absorb(fips)
 outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp ///
 	countyunemp using ./Output/LinearW.tex, tex ct(w/Statetrend) bdec(3) tdec(3) ///
 	bracket se append keep(*month* *county* stateunemp)
 
 /*STATE YEAR INTERACTED FE*/
 areg active monthcountydeath L1monthcountydeath outofcounty L1outofcounty ///
-	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
+	stateunemp countyunemp monthfe3-monthfe58 stateyear [aweight=avgcountypop],  absorb(fips) vce(cluster fips)
 outreg2 using ./Output/LinearW.tex, tex ti(County Applicants vs Deaths and Unemployment) ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append
 
@@ -98,8 +98,8 @@ summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
 /******WEIGHTED REGRESSIONS*******/
 
 /*NO STATE*/
-areg LNactive monthcountydeath L1monthcountydeath [aweight=avgcountypop], ///
-	absorb(fips month) vce(cluster fips)
+areg LNactive monthcountydeath L1monthcountydeath monthfe3-monthfe58 [aweight=avgcountypop], ///
+	absorb(fips) vce(cluster fips)
 outreg2 using ./Output/LNLinearW.tex, tex label ///
 	ti(Log County Applicants vs Deaths and Unemployment) ///
 	ct(Basic) bdec(3) tdec(3) bracket se append ///
@@ -112,22 +112,22 @@ outreg2 using ./Output/LNLinearW.tex, tex label ///
 
 /*STATE AND UNEMP*/
 areg LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
-	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
+	stateunemp monthfe3-monthfe58 [aweight=avgcountypop], vce(cluster fips) absorb(fips)
 outreg2 using ./Output/LNLinearW.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
 	se append ///
 	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, NO)
 	
 /*STATE TREND*/
 areg LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
-	stateunemp statetrend1-statetrend51[aweight=avgcountypop], ///
-	vce (cluster fips) absorb(fips month)
+	stateunemp monthfe3-monthfe58 statetrend1-statetrend51[aweight=avgcountypop], ///
+	vce (cluster fips) absorb(fips)
 outreg2 using ./Output/LNLinearW.tex, tex label ct(State Trend) bdec(3) tdec(3) ///
 	bracket se append keep(*month* *county* stateunemp) ///
 	addtext(County FE, YES, Month FE, YES, State Trend, YES, Stateyear FE, NO)
 
 /*STATE YEAR INTERACTED FE*/
 areg LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty ///
-	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
+	stateunemp countyunemp monthfe3-monthfe58 stateyear [aweight=avgcountypop],  absorb(fips) vce(cluster fips)
 outreg2 using ./Output/LNLinearW.tex, tex label ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, YES)
@@ -135,7 +135,7 @@ outreg2 using ./Output/LNLinearW.tex, tex label ///
 /*WEIGHTED FUTURE LEADS--WITH LN(Active)*/
 disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
 areg LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
-	stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips)
+	stateunemp countyunemp monthfe12-monthfe58 statetrend1-statetrend51 [aweight=avgcountypop], absorb(fips) vce(cluster fips)
 outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
 addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on active duty deaths", ///
 	"As well as future 'lead' periods. Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
@@ -144,10 +144,9 @@ addnote("Notes: Table shows linear regression estimates of log (national active 
 
 areg LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
 	F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty ///
-	stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips month stateyear)  vce(clusterfips)
+	stateunemp countyunemp monthfe12-monthfe52 [aweight=avgcountypop], absorb(fips)  vce(clusterfips)
 outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyandstate) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
 
-STOP YOU STUPID MUTHERFOCKER
 
 ************************************************************************
 /*ACTIVE DEATHS ONLY*/
@@ -160,8 +159,8 @@ replace L1Routofcounty=L1Routofcounty/100
 label var L1Routofcounty "Lag Out-of-County Active Duty Deaths"
 
 /*NO STATE*/
-areg LNactive Rmonthcountydeath L1Rmonthcountydeath [aweight=avgcountypop], ///
-	absorb(fips month) vce(cluster fips)
+areg LNactive Rmonthcountydeath L1Rmonthcountydeath monthfe3-monthfe58 [aweight=avgcountypop], ///
+	absorb(fips) vce(cluster fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ti(Log County Applicants vs Active Duty Deaths and Unemployment) ///
 	ct(Basic) bdec(3) tdec(3) bracket se append ///
@@ -174,22 +173,23 @@ outreg2 using ./Output/LNLinearWR.tex, tex label ///
 
 /*STATE AND UNEMP*/
 areg LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty countyunemp ///
-	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
+	stateunemp monthfe3-monthfe58 [aweight=avgcountypop], vce(cluster fips) absorb(fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
 	se append ///
 	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, NO)
 	
 /*STATE TREND*/
 areg LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty countyunemp ///
-	stateunemp statetrend1-statetrend51[aweight=avgcountypop], ///
-	vce (cluster fips) absorb(fips month)
+	stateunemp monthfe3-monthfe58 statetrend1-statetrend51[aweight=avgcountypop], ///
+	vce (cluster fips) absorb(fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ct(State Trend) bdec(3) tdec(3) ///
 	bracket se append keep(*month* *county* stateunemp) ///
 	addtext(County FE, YES, Month FE, YES, State Trend, YES, Stateyear FE, NO)
 
 /*STATE YEAR INTERACTED FE*/
 areg LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty ///
-	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
+	stateunemp countyunemp monthfe3-monthfe58 stateyearfe1-stateyearfe312[aweight=avgcountypop],  ///
+	absorb(fips) vce(cluster fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, YES)
