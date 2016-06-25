@@ -40,8 +40,8 @@ disp "Active Deaths/Active Apps " r(sd)/r(mean)
 *summ hazard_aaa [aweight=percentpop]
 *disp "Active Deaths/Active Apps WEIGHTED " r(sd)/r(mean)
 label var hazard_aaa "Active Deaths/Active Applicants"
-histogram hazard_aaa, addl frequency title("Hazard Rate by County")
-graph export ./Output/hist_county_aaa.png, replace
+histogram hazard_aaa, addl frequency //title("Hazard Rate by County")
+graph save ./Output/hist_county_aaa.gph, replace
 /*TOTAL ACTIVE APPS*/
 gen hazard_taa=deaths/countyactiveapps
 summ hazard_taa
@@ -49,8 +49,8 @@ disp "Total Deaths/Active Apps "r(sd)/r(mean)
 *summ hazard_taa [aweight=percentpop]
 *disp "Total Deaths/Active Apps WEIGHTED "r(sd)/r(mean)
 label var hazard_taa "Total Deaths/Active Applicants"
-histogram hazard_taa, addl frequency title("Hazard Rate by County")
-graph export ./Output/hist_county_taa.png, replace
+histogram hazard_taa, addl frequency //title("Hazard Rate by County")
+graph save ./Output/hist_county_taa.gph, replace
 
 /*****************************************************/
 /* PAT'S THING. JUST TEST HOW WELL THEY FIT TO A BINOMIAL DISTRIBUTION*/
@@ -87,7 +87,7 @@ disp "Active Deaths/Active Cons "r(sd)/r(mean)
 *disp "Active Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_aac "Active Deaths/Active Contracts"
 histogram hazard_aac, addl frequency
-graph export ./Output/hist_county_aac.png, replace
+graph save ./Output/hist_county_aac.gph, replace
 /*TOTAL ACTIVE CON*/
 gen hazard_tac=deaths/countyactivecons
 summ hazard_tac
@@ -96,5 +96,9 @@ disp "Total Deaths/Active Cons "r(sd)/r(mean)
 disp "Total Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_tac "Total Deaths/Active Contracts"
 histogram hazard_tac, addl frequency
-graph export ./Output/hist_county_tac.png, replace
+graph save ./Output/hist_county_tac.gph, replace
 
+**COMBINE ALL FOUR COUNTY GRAPHS
+graph combine ./Output/hist_county_aaa.gph ./Output/hist_county_taa.gph ./Output/hist_county_aac.gph ///
+	./Output/hist_county_tac.gph, title("Death Hazard Rate by County") saving(./Output/hist_county_combined.gph, replace) 
+graph export ./Output/hist_county_combined.png, replace

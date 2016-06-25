@@ -10,9 +10,9 @@ cd $dir
 *do ./Analysis/buildfromFOIA.do //Takes original FOIA .txt datasets, compiles into one file of all APP, CON, ACC
 *do ./Analysis/builddeaths.do //Takes the original DOD death data from OIF and OEF and makes a combined US death dataset
 *do ./Analysis/buildunemployment.do //Formats BLS unemployment data
-do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mortality data
+*do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mortality data
 							 // separately does the same with CONTRACTS
-do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths from 1990 on,
+*do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths from 1990 on,
 							//not just 2001-on combat
 							//separately does the same with CONTRACTS
 													
@@ -20,16 +20,16 @@ do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths f
 
 
 /*SHOW DISPERSION OF DEATHS*/
-*do ./Analysis/DataSummaryTable.do //simple data summary table
-*do ./Analysis/table1graph.do //prints the rec/pop, death/pop, and rec/death graphs, by state
-*do ./Analysis/table1bycounty.do //graphs binomial hazard rate
+do ./Analysis/DataSummaryTable.do //simple data summary table
+do ./Analysis/table1graph.do //prints the rec/pop, death/pop, and rec/death graphs, by state
+do ./Analysis/table1bycounty.do //graphs binomial hazard rate
 
 /*NATIONAL LEVEL STUFF*/
-*do ./Analysis/deathsvrecruits.do
+do ./Analysis/deathsvrecruits.do
 
 /*RUN MAIN LINEAR REGRESSIONS*/
-*do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
-*do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
+do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
+do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
 
 /*OTHER FUNCTIONAL FORMS*/
 *do ./Analysis/redefinedpoisson2015.02.17.do /*poission regs, with recruit/mort controls, and interactions*/
