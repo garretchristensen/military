@@ -1,0 +1,26 @@
+File Manifest for ICPSR
+
+U.S. Dept. of Commerce, Bureau of the Census. CONTIGUOUS COUNTY FILE, 1991:
+[UNITED STATES] [Computer file]. Washington, DC: U.S. Dept. of Commerce,
+Bureau of the Census [producer], 1992. Ann Arbor, MI: Inter- university
+Consortium for Political and Social Research [distributor], 1992.
+doi:10.3886/ICPSR09835
+
+
+Study-level Documentation
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    09835-manifest.txt                  -       -         -       2010-10-15  -
+
+
+DS0001 Contiguous County File, 1991:  [United States]
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    09835-0001-Codebook.txt             -       -         -       1994-06-08  3bd042fa0a34802cbb8f95f17a6cad75
+
+    09835-0001-Data.txt                 56      22,212    8       1994-06-08  13a3eec4fbd382f0ce11d06b01483984
+

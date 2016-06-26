@@ -1,0 +1,581 @@
+1                                                                                    
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                 CONTIGUOUS COUNTY FILE, 1991: [UNITED STATES]                       
+                                                                                     
+                                                                                     
+                                  (ICPSR 9835)                                       
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                             Principal Investigator                                  
+                                                                                     
+                             U.S. Dept. of Commerce                                  
+                              Bureau of the Census                                   
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                              First ICPSR Edition                                    
+                                September, 1992                                      
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                        Inter-university Consortium for                              
+                         Political and Social Research                               
+                                 P.O. Box 1248                                       
+                           Ann Arbor, Michigan 48106                                 
+                                                                                     
+1                                                                                    
+                                                                                     
+1                                                                                    
+                             BIBLIOGRAPHIC CITATION                                  
+                                                                                     
+                                                                                     
+     Publications based on ICPSR data collections should acknowledge  those          
+     sources  by  means  of  bibliographic  citations.  To ensure that such          
+     source attributions are  captured  for  social  science  bibliographic          
+     utilities, citations must appear in footnotes or in the reference sec-          
+     tion of publications.  The bibliographic citation for this  data  col-          
+     lection is:                                                                     
+                                                                                     
+                                                                                     
+            U.S. Dept. of Commerce, Bureau of the Census. CONTIGUOUS                 
+            COUNTY  FILE,  1991:  [UNITED  STATES]  [Computer file].                 
+            Washington, DC: U.S. Dept. of Commerce,  Bureau  of  the                 
+            Census [producer], 1992. Ann Arbor, MI: Inter- universi-                 
+            ty Consortium for Political and Social Research [distri-                 
+            butor], 1992.                                                            
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+               REQUEST FOR INFORMATION ON USE OF ICPSR RESOURCES                     
+                                                                                     
+     To provide funding agencies with essential information  about  use  of          
+     archival resources and to facilitate the exchange of information about          
+     ICPSR participants' research activities, users of ICPSR data  are  re-          
+     quested  to  send  to ICPSR bibliographic citations for each completed          
+     manuscript or thesis abstract. Please indicate in a cover letter which          
+     data were used.                                                                 
+                                                                                     
+                                                                                     
+                                                                                     
+                                DATA DISCLAIMER                                      
+                                                                                     
+     The original collector of the data, ICPSR, and  the  relevant  funding          
+     agency  bear  no responsibility for uses of this collection or for in-          
+     terpretations or inferences based upon such uses.                               
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+1                                                                                    
+                                                                                     
+1                                                                                    
+                          DATA COLLECTION DESCRIPTION                                
+                                                                                     
+                                                                                     
+                                                                                     
+     United States Department of Commerce. Bureau of the Census                      
+     CONTIGUOUS COUNTY FILE, 1991: [UNITED STATES]                                   
+     (ICPSR 9835)                                                                    
+                                                                                     
+     SUMMARY: This file provides information on the locational relationship          
+     between counties (and statistically equivalent entities) in the United          
+     States. For purposes of this study, contiguous counties included those          
+     that were physically adjacent, those that were not physically adjacent          
+     but were connected by a major road, and those that were not physically          
+     adjacent but had significant economic ties. The file includes FIPS              
+     state and county codes, county names, and the type of relationship              
+     between contiguous counties.                                                    
+     CLASS IV                                                                        
+                                                                                     
+     UNIVERSE: Counties and statistically equivalent entities as recorded by         
+     the Census Bureau as of December 31, 1991.                                      
+                                                                                     
+     EXTENT OF COLLECTION: 1 data file + machine-readable documentation (text)       
+                                                                                     
+     EXTENT OF PROCESSING: NONNUM/ BLANKS                                            
+                                                                                     
+     DATA FORMAT: Logical Record Length                                              
+                                                                                     
+     File Structure: rectangular                                                     
+     Cases: 22,212                                                                   
+     Variables: 8                                                                    
+     Record Length: 56                                                               
+     Records Per Case: 1                                                             
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+1                                                                                    
+                                                                                     
+1                                                                                    
+                     1991 CONTIGUOUS COUNTY FILE                                     
+                                                                                     
+                                                                                     
+                                                                                     
+This file documentation consists of the following materials:                         
+                                                                                     
+                                                                                     
+      Attachment 1                  Abstract                                         
+      Attachment 2                  Record Description                               
+      Attachment 3                  Example Printout of the File                     
+      Attachment 4                  FIPS State Codes and Names                       
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                 NOTE                                                
+                                                                                     
+                                                                                     
+Questions about the tape should be directed to Data User Services Division,          
+Customer Services (Tapes), Bureau of the Census, Washington, DC 20233. Phone:        
+(301) 763-4100.                                                                      
+                                                                                     
+Questions about accompanying documentation should be directed to Data User           
+Services Division, Data Access and Use Staff, Bureau of the Census, Washington,      
+DC 20233. Phone: (301) 763- 2074.                                                    
+                                                                                     
+Questions about the subject matter should be directed to Norman Kaplan,              
+Population Division, Bureau of the Census, Washington, DC 20233. Phone: (301)        
+763-5049.                                                                            
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+1                                                                                    
+                             ATTACHMENT 1                                            
+                                                                                     
+                               ABSTRACT                                              
+                                                                                     
+ 1991 Contiguous County File [machine-readable data file] / prepared by the          
+U.S.Bureau of the Census. - Washington: The Bureau [producer and distributor],       
+ 1992.                                                                               
+                                                                                     
+                                                                                     
+Type of File                                                                         
+                                                                                     
+Geographic reference.                                                                
+                                                                                     
+                                                                                     
+Subject-Matter Description                                                           
+                                                                                     
+This file provides information on the locational relationship between counties       
+(and statistically equivalent entities) in the United States. Counties are           
+identified as having several types of contiguity: those having physical              
+adjacency (including those areas separated by water but known at the Bureau to       
+be linked by a bridge or regular transportation service), those that are nearby      
+but not adjacent, and those that do not border but nevertheless are                  
+economically integrated (measured by one-way commuting flows of at least 2,000       
+people per day based on data from the 1980 census). This file, which was             
+prepared originally as part of the work related to validating 1975-1980              
+population estimates, has been updated through December 1991. The file includes      
+FIPS State and county codes and the county names for all counties and                
+statistically equivalent entities.                                                   
+                                                                                     
+                                                                                     
+Geographic Coverage                                                                  
+                                                                                     
+Counties and statistically equivalent entities (3,142 in all) as recorded by         
+the Census Bureau as of December 31, 1991.                                           
+                                                                                     
+                                                                                     
+Technical Description                                                                
+                                                                                     
+File Structure: Rectangular. Two record types: base and adjacent counties.           
+                                                                                     
+File Size: 22,212 logical records; 56-character record length.                       
+                                                                                     
+File Sort: Records are sequenced in the FIPS State and county code order of the      
+base county.  The 1991 Contiguous County File records, within the base county,       
+are sequenced by their FIPS State and county codes.                                  
+                                                                                     
+                                                                                     
+Reference Materials                                                                  
+                                                                                     
+ 1991 Contiguous County File Technical Documentation. The documentation              
+includes this abstract, a record description, an example printout of the file,       
+and a                                                                                
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+1                                                                                    
+ Page 2                                            ICPSR 9835                        
+                                                                                     
+                                                                                     
+list of State codes. One copy accompanies each file order. If ordered                
+separately, it is available for $ 10 from the Data User Services Division,           
+Customer Services (Tapes), Bureau of the Census, Washington, DC 20233                
+(telephone: 301-763-4100; FAX: 301-763-4794).                                        
+                                                                                     
+                                                                                     
+File Availability                                                                    
+                                                                                     
+The file is available from the Data User Services Division, Customer Services        
+(Tapes), Bureau of the Census, Washington, DC 20233 (telephone: 301-763-4100;        
+FAX: 301-763-4794). It is on one tape reel at 1600 bpi or 6250 bpi for $175.         
+                                                                                     
+                             ATTACHMENT 2                                            
+                                                                                     
+                          Record Description                                         
+                                                                                     
+                                                                                     
+Field                    Position                Description                         
+                                                                                     
+Base State                 1-2                   01-56:  FIPS State code             
+                                                        (see attachment 4)           
+                                                                                     
+Not Used                   3                     Blank                               
+                                                                                     
+Base County                4-6                   001-840: FIPS county                
+                                                         (or statistically           
+                                                          equivalent entity)         
+                                                          code                       
+                                                                                     
+Not Used                   7                     Blank                               
+                                                                                     
+Record Type                8                     1:  Base Record (contains           
+                                                     same State and county           
+                                                     codes for both base and         
+                                                     contiguous records)             
+                                                                                     
+                                                 2:  Contiguity Record (conti-       
+                                                     guous State and/or county       
+                                                     codes differ from base          
+                                                     State and/or county codes)      
+                                                                                     
+Not Used                   9                     Blank                               
+                                                                                     
+Contiguous State           10-11                 01-56:  FIPS State code (see        
+                                                         attachment 4)               
+                                                                                     
+Not Used                   12                    Blank                               
+                                                                                     
+Contiguous County          13-15                 001-840:  FIPS county (or           
+                                                           statistically equi-       
+                                                           valent entity) code       
+                                                                                     
+                                                                                     
+1                                                                                    
+ ICPSR 9835                                            Page 3                        
+                                                                                     
+                                                                                     
+Not Used                   16                    Blank                               
+                                                                                     
+County                     17                    Base Record: Blank                  
+Contiguity                                                                           
+Type                                             Contiguity Record                   
+                                                                                     
+                                                 A:  Base county shares a            
+                                                     common land border with a       
+                                                     contiguous county.              
+                                                                                     
+                                                 C:  Base and contiguous             
+                                                     counties are not bor-           
+                                                     dering, but are tied            
+                                                     economically.                   
+                                                                                     
+                                                 P:  Base and contiguous             
+                                                     counties meet at a              
+                                                     corner only                     
+                                                                                     
+                                                 R:  Base and contiguous             
+                                                     counties are nearby             
+                                                     but not bordering. They         
+                                                     have a major road connec-       
+                                                     tion, but are not tied to-      
+                                                     gether economically.            
+                                                                                     
+                                                 W:  Base and contiguous             
+                                                     counties are separated by       
+                                                     a body of water but             
+                                                     connected by a bridge or        
+                                                     boat.                           
+                                                                                     
+Not Used                   18                    Blank                               
+                                                                                     
+County Name                19-56                 Left-justified, blank filled,       
+                                                 without punctuation                 
+                                                                                     
+                             Attachment 3                                            
+                                                                                     
+                     Example Printout of the File                                    
+                                                                                     
+                                                                                     
+ 01  001  1  01  001    AUTAUGA             01  015   2  01  121  A TALLADEGA        
+ 01  001  2  01  021  A CHILTON             01  017   1  01  017    CHAMBERS         
+ 01  001  2  01  047  A DALLAS              01  017   2  01  027  R CLAY             
+ 01  001  2  01  051  A ELMORE              01  017   2  01  081  A LEE              
+ 01  001  2  01  085  A LOWNDES             01  017   2  01  111  A RANDOLPH         
+ 01  001  2  01  101  A MONTGOMERY          01  017   2  01  123  A TALLAPOOSA       
+ 01  003  1  01  003    BALDWIN             01  017   2  13  145  A HARRIS           
+ 01  003  2  01  025  A CLARKE              01  017   2  13  285  A TROUP            
+ 01  003  2  01  053  A ESCAMBIA            01  019   1  01  019    CHEROKEE         
+                                                                                     
+                                                                                     
+1                                                                                    
+ Page 4                                            ICPSR 9835                        
+                                                                                     
+                                                                                     
+ 01  003  2  01  097  A MOBILE              01  019   2  01  015  A CALHOUN          
+ 01  003  2  01  099  A MONROE              01  019   2  01  029  A CLEBURNE         
+ 01  003  2  01  129  A WASHINGTON          01  019   2  01  049  A DE KALB          
+ 01  003  2  12  033  A ESCAMBIA            01  019   2  01  055  A ETOWAH           
+ 01  005  1  01  005    BARBOUR             01  019   2  13  055  A CHATTOOGA        
+ 01  005  2  01  011  A BULLOCK             01  019   2  13  115  A FLOYD            
+ 01  005  2  01  031  R COFFEE              01  019   2  13  233  A POLK             
+ 01  005  2  01  045  A DALE                01  019   2  13  295  R WALKER           
+ 01  005  2  01  067  A HENRY               01  021   1  01  021    CHILTON          
+ 01  005  2  01  109  A PIKE                01  021   2  01  001  A AUTAUGA          
+ 01  005  2  01  113  A RUSSELL             01  021   2  01  007  A BIBB             
+ 01  005  2  13  061  A CLAY                01  021   2  01  037  A COOSA            
+ 01  005  2  13  239  A QUITMAN             01  021   2  01  047  A OALLAS           
+ 01  005  2  13  259  A STEWART             01  021   2  01  051  A ELMORE           
+ 01  007  1  01  007    BIBB                01  021   2  01  105  A PERRY            
+ 01  007  2  01  021  A CHILTON             01  021   2  01  117  A SHELBY           
+ 01  007  2  01  065  A HALE                01  023   1  01  023    CHOCTAW          
+ 01  007  2  01  073  A JEFFERSON           01  023   2  01  025  A CLARKE           
+ 01  007  2  01  105  A PERRY               01  023   2  01  091  A MARENGO          
+ 01  007  2  01  117  A SHELBY              01  023   2  01  119  A SUMTER           
+ 01  007  2  Cl  125  A TUSCALOOSA          01  023   2  01  129  A WASHINGTON       
+ 01  009  1  01  009    BLOUNT              01  023   2  28  023  A CLARKE           
+ 01  009  2  01  043  A CULLMAN             01  023   2  28  075  A LAUDERDALE       
+ 01  009  2  01  055  A ETOWAH              01  023   2  28  153  A WAYNE            
+ 01  009  2  01  073  A JEFFERSON           01  025   1  01  025    CLARKE           
+ 01  009  2  01  095  A MARSHALL            01  025   2  01  003  A BALDWIN          
+ 01  009  2  01  115  A ST CLAIR            01  025   2  01  023  A CHOCTAW          
+ 01  009  2  01  127  A WALKER              01  025   2  01  091  A MARENGO          
+ 01  011  1  01  011    BULLOCK             01  025   2  01  099  A MONROE           
+ 01  011  2  01  005  A BARBOUR             01  025   2  01  129  A WASHINGTON       
+ 01  011  2  01  087  A MACON               01  025   2  01  131  A WILCOX           
+ 01  011  2  01  101  A MONTGOMERY          01  027   1  01  027    CLAY             
+ 01  011  2  01  109  A PIKE                01  027   2  01  015  R CALHOUN          
+ 01  011  2  01  113  A RUSSELL             01  027   2  01  017  R CHAMBERS         
+ 01  013  1  01  013    BUTLER              01  027   2  01  029  A CLEBURNE         
+ 01  013  2  01  035  A CONECUH             01  027   2  0l  037  A COOSA            
+ 01  013  2  01  039  A COVINGTON           01  027   2  01  111  A RANDOLPH         
+ 01  013  2  01  041  A CRENSHAW            01  027   2  01  121  A TALLADEGA        
+ 01  013  2  01  085  A LOWNDES             01  027   2  01  123  A TALLAPOOSA       
+ 01  013  2  01  099  A MONROE              01  029   1  01  029    CLEBURNE         
+ 01  013  2  01  101  R MONTGOMERY          01  029   2  01  015  A CALHOUN          
+ 01  013  2  01  131  A WILCOX              01  029   2  01  019  A CHEROKEE         
+ Cl  015  1  01  015    CALHOUN             01  029   2  01  027  A CLAY             
+ 01  015  2  01  019  A CHEROKEE            01  029   2  01  Ill  A RANDOLPH         
+ 01  015  2  01  027  R CLAY                01  029   2  01  121  A TALLADEGA        
+ 01  015  2  01  029  A CLEBURNE            01  029   2  13  045  A CARROLL          
+ 01  015  2  01  055  A ETOWAH              01  029   2  13  143  A HARALSON         
+ 01  015  2  01  115  A ST CLAIR            01  029   2  13  233  A POLK             
+                                                                                     
+                             Attachment 4                                            
+                                                                                     
+                                                                                     
+                                                                                     
+1                                                                                    
+ ICPSR 9835                                            Page 5                        
+                                                                                     
+                                                                                     
+                        State Names and Codes                                        
+                                                                                     
+                                                                                     
+                              ABBR       FIPS                                        
+                                                                                     
+Alabama         ............... AL       01                                          
+Alaska          ............... AK       02                                          
+Arizona         ............... AZ       04                                          
+Arkansas        ............... AR       05                                          
+California      ............... CA       06                                          
+Colorado        ............... CO       08                                          
+Connecticut     ............... CT       09                                          
+Delaware        ............... DE       10                                          
+District of Columbia........... DC       11                                          
+Florida         ............... FL       12                                          
+Georgia         ............... GA       13                                          
+Hawaii          ............... HI       15                                          
+Idaho           ............... ID       16                                          
+Illinois        ............... IL       17                                          
+Indiana         ............... IN       18                                          
+Iowa            ............... IA       19                                          
+Kansas          ............... KS       20                                          
+Kentucky        ............... KY       21                                          
+Louisiana       ............... LA       22                                          
+Maine           ............... ME       23                                          
+Maryland        ............... MD       24                                          
+Massachusetts   ............... MA       25                                          
+Michigan        ............... MI       26                                          
+Minnesota       ............... MN       27                                          
+Mississippi     ............... MS       28                                          
+Missouri        ............... MO       29                                          
+Montana         ............... MT       30                                          
+Nebraska        ............... NE       31                                          
+Nevada          ............... NV       32                                          
+New Hampshire   ............... NH       33                                          
+New Jersey      ............... NJ       34                                          
+New Mexico      ............... NM       35                                          
+New York        ............... NY       36                                          
+North Carolina  ............... NC       37                                          
+North Dakota    ............... ND       38                                          
+Ohio            ............... OH       39                                          
+Oklahoma        ............... OK       40                                          
+Oregon          ............... OR       41                                          
+Pennsylvania    ............... PA       42                                          
+Rhode Island    ............... RI       44                                          
+South Carolina  ............... SC       45                                          
+South Dakota    ............... SD       46                                          
+Tennessee       ............... TN       47                                          
+Texas           ............... TX       48                                          
+Utah            ............... UT       49                                          
+Vermont         ............... VT       50                                          
+                                                                                     
+                                                                                     
+1                                                                                    
+ Page 6                                            ICPSR 9835                        
+                                                                                     
+                                                                                     
+Virginia        ............... VA       51                                          
+Washington      ............... WA       53                                          
+West Virginia   ............... WV       54                                          
+Wisconsin       ............... WI       55                                          
+Wyoming         ............... WY       56                                          
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     

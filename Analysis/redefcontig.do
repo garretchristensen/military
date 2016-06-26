@@ -8,10 +8,13 @@ set more off
 
 
 foreach file in APP CON{   /*BEGIN CONSTRUCTION LOOP OVER BOTH FILES*/
+ *generate a file of just deaths and recruits
  use ./Data/county`file'_raw.dta, clear
  sort statefips countyfips t
  keep statefips countyfips t monthcountydeath active
  save temp_contig`file'.dta, replace
+ 
+ 
  use ./Contiguous/contiguous.dta, clear
  rename name contiguousname
  gen new=_n
@@ -59,7 +62,7 @@ foreach file in APP CON{   /*BEGIN CONSTRUCTION LOOP OVER BOTH FILES*/
 } /*END CONSTRUCTION LOOP OVER BOTH FILES*/ 
 
  
-foreach file in county countyCON { /*REG LOOP OVER BOTH FILES*/
+foreach file in APP CON { /*REG LOOP OVER BOTH FILES*/
  use ./Data/`file'contig.dta, replace
  sort fips month
  foreach var in neighbordeath mediadeath{
