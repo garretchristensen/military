@@ -22,42 +22,68 @@ cap rm ./Output/highqualitybytypeP.tex
 
 foreach file in APP CON {
 /******************************************************************************/
-use county`file'_raw.dta, clear /*LOOPS OVER BOTH FILES!*/
+use ./Data/county`file'_raw.dta, clear /*LOOPS OVER BOTH FILES!*/
 destring month, replace //necessary for reghdfe command
 destring stateyear, replace //necessary for reghdfe command
 if "`file'"=="APP"{
-	local header="Applicants"
+	local header1="Applicants"
 }
 else{
-	local header="Contracts"
+	local header1="Contracts"
+}
+replace monthcountydeath=monthcountydeath/100
+replace L1monthcountydeath=L1monthcountydeath/100
+replace outofcounty=outofcounty/100
+replace L1outofcounty=L1outofcounty/100
+label var monthcountydeath "Current In-County Deaths/100"
+label var L1monthcountydeath "Lag In-County Deaths/100"
+label var outofcounty "Current Out-of-County Deaths/100"
+label var L1outofcounty "Lag Out-of-County Deaths/100"
+summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
+if r(max)<.01|r(max)>1 {
+	display "you divided deaths by 100 too little/much"
+	throw a hissy fit
 }
 
-
 /*(2)RECRUITS OF DIFFERENT QUALITY--OLS*/
+
+/*GENERATE ACTIVE DUTY ONLY VARIABLES*/
+gen Rmonthcounty=ARmonthcounty+FRmonthcounty+MRmonthcounty+NRmonthcounty
+gen RLQmonthcounty=ARLQmonthcounty+FRLQmonthcounty+MRLQmonthcounty+NRLQmonthcounty
+gen RHQ50monthcounty=ARHQ50monthcounty+FRHQ50monthcounty+MRHQ50monthcounty+NRHQ50monthcounty
+gen RHQ50altmonthcounty=ARHQ50altmonthcounty+FRHQ50altmonthcounty+MRHQ50altmonthcounty+NRHQ50altmonthcounty
+gen RHQ75monthcounty=ARHQ75monthcounty+FRHQ75monthcounty+MRHQ75monthcounty+NRHQ75monthcounty
+
 foreach TYPE in LQ HQ50 HQ50alt HQ75 {
  gen LN`TYPE'monthcounty=ln(R`TYPE'monthcounty+1)
+ if "`TYPE'"=="LQ" local header2="LowQuality "
+ if "`TYPE'"=="HQ50" local header2="HighQual "
+ if "`TYPE'"=="HQ50alt" local header2="HighQual(Alt.) "
+ if "`TYPE'"=="HQ75" local header2="VHighQual "
  reghdfe LN`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
 	[aweight=avgcountypop], cluster(fips) absorb(fips month)
- outreg2 using ./Output/highqualitybytypeLN.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append
+ outreg2 using ./Output/highqualitybytypeLN.txt, lab tex ct(`header2'`header1') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative ", ///
 	"lagged deaths. Fixed effects are included separately by county and month as indiciated,", ///
-	"The first five columns show applicants and the last five show contracts.", Filename:highqualitybytypeLN.tex) ///
+	"The first four columns show applicants and the last four show contracts.", Filename:highqualitybytypeLN.tex) ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 }
 
 /*RECRUITS OF DIFFERENT QUALITY--POISSON*/
 foreach TYPE in LQ HQ50 HQ50alt HQ75 {
  xtpoisson R`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
-	monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(countypop) vce(robust)
- outreg2  using ./Output/highqualitybytypeP.txt, ct(`header') bdec(3) tdec(3) bracket se append 
+	monthfe3-monthfe58 /*statetrend2-statetrend51*/, fe exposure(avgcountypop) vce(robust)
+ outreg2  using ./Output/highqualitybytypeP.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append 
+ addnote("Notes: Table shows Poisson regression estimates of log (national active duty recruits +1) on cumulative ", ///
+	"lagged deaths. Fixed effects are included separately by county and month as indiciated,", ///
+	"The first four columns show applicants and the last four show contracts.", Filename:highqualitybytypeLN.tex) ///
+	addtext(County FE, YES, Month FE, YES, State Trend, NO)
  /*ADDED 1/3/11-JUSTIN GALLAGHER ASKED WHY SMARTER KIDS RESPOND _MORE_ TO LOCAL DEATHS. IF THEY'RE SMARTER
   SHOULDN'T THEY BE RESPONDING LESS TO LOCAL INFO BECAUSE THEY READ THE NYT? MAYBE THEY JUST RESPOND MORE TO TOTAL DEATHS*/
  *xtpoisson R`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty outofstate L1outofstate stateunemp countyunemp, fe exposure(avgcountypop) vce(robust)
  *outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty outofstate L1outofstate stateunemp countyunemp  using ./Output/highqualitybytypePX.txt, ct(`file'`TYPE') bdec(3) tdec(3) bracket se append
 }
 
-
-STOP
 /****************************************************************************************/
 /*(7) DEATHS OF DIFFERENT WARS*/
 
@@ -254,11 +280,4 @@ local current=r(p)
 test L1FEMALEmonthcountydeath=L1MALEmonthcountydeath
 outreg2  FEMALEmonthcountydeath MALEmonthcountydeath L1FEMALEmonthcountydeath L1MALEmonthcountydeath outofcounty stateunemp countyunemp using ./Output/redefPgender.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p), "Current", `current')
 
-
-/*GENERATE ACTIVE DUTY ONLY VARIABLES*/
-gen Rmonthcounty=ARmonthcounty+FRmonthcounty+MRmonthcounty+NRmonthcounty
-gen RLQmonthcounty=ARLQmonthcounty+FRLQmonthcounty+MRLQmonthcounty+NRLQmonthcounty
-gen RHQ50monthcounty=ARHQ50monthcounty+FRHQ50monthcounty+MRHQ50monthcounty+NRHQ50monthcounty
-gen RHQ50altmonthcounty=ARHQ50altmonthcounty+FRHQ50altmonthcounty+MRHQ50altmonthcounty+NRHQ50altmonthcounty
-gen RHQ75monthcounty=ARHQ75monthcounty+FRHQ75monthcounty+MRHQ75monthcounty+NRHQ75monthcounty
 */

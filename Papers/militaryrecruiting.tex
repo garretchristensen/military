@@ -879,10 +879,8 @@ a larger response to deaths, as did counties that voted against George
 W. Bush (in either 2000 or 2004).
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Recruiting Response for Different Types of Recruits \label{sub:Different Recruit Types}}
-
-
 
 
 The military, like any other organization, has a strong interest in
@@ -894,7 +892,14 @@ generally required that a high percentage of their recruits fall into
 the high category, although these requirements have changed over time
 with the needs of the services. 
 
-Table \ref{Flo: Recs by Quality} shows results for recruits
+%LN QUALITY OF RECRUIT
+\begin{table}
+\caption{Recruits by Quality}
+\label{Flo: Recs by QualityLN}
+\scalebox{0.7}{\rotatebox{90}{\input{../Output/highqualitybytypeLN}}}
+\end{table}
+
+Table \ref{Flo: Recs by QualityLN} shows results for recruits
 of different quality levels. I have broken recruits into four groups, the first three of which attempt to use definitions explicitly used by the military.
 Low Quality recruits either scored below 50 on the AFQT or do not
 have a high school degree. High Quality have both a 50 or higher on
@@ -906,8 +911,7 @@ actually ship out until they graduate and are considered high quality
 recruits by the military.) Very High Quality recruits is not a specific
 distinction used by the military, but is meant to identify the most
 sought after recruits--those who have a 75 or higher on the AFQT and
-have taken at least some college courses. There are fewer observations in this specification since 666 counties never have a very high quality recruit and cannot be included. The results indicate that all but the Very High Quality recruits have roughly the same response
-to deaths: a slightly smaller than 1\% reduction in recruits for every
+have taken at least some college courses. There are fewer observations in this specification since 666 counties never have a very high quality recruit and cannot be included. The results indicate that all but the Very High Quality recruits have roughly the same response to deaths: a slightly smaller than 1\% reduction in recruits for every
 death. Amongst Very High Quality recruits, the effect is almost 2.5\%.%
 \footnote{It may be slightly surprising that higher-quality recruits are more
 deterred by local deaths if one interprets the response to a county
@@ -1023,12 +1027,7 @@ may be able to better explain the observed recruiting phenomenon.
 
 
 
-%10
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo: Recs by Quality}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/highqualitybytypeP}
-\end{table}
+
 
 
 
@@ -1324,6 +1323,13 @@ can be for state deaths.
 \begin{table}
 \caption{DO IN LOG LINEAR!!}
 \label{Flo:Poisson Interactions}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPinteractions}
+\end{table}
+
+%POISSON QUALITY OF RECRUIT
+\pagebreak{}
+\begin{table}
+\caption{}
+\label{Flo: Recs by QualityP}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/highqualitybytypeP}
 \end{table}
 
 %Completely Linear Regression
