@@ -99,6 +99,7 @@ foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farmi
  gen `var'Z=`var'-avg`var'
  summ `var'Z
  gen death`var'=L1monthcountydeath*`var'Z
+}
 label var deathcountyunemp "Lag County Death*County Unemployment"
 label var deathcountypop "Lag County Death/County Population"
 label var deathPctBlack05 "Lag County Death*%Black Population"
@@ -165,6 +166,9 @@ outreg2 using ./Output/LNinteractALL.txt, lab ct(`header', pop) ti(OLS Weighted 
 
  /*WEIGHTED*/
  /*INTERACTION REGRESSION*/
+foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing Government ///
+	Services HouseStrs04 LowEduc04 LowEmp04 PerstPov04 PopLoss04 NonmetRec04 Retirement04 UrbanInf03 UrbanInfluence ///
+	RuralUrban03 Rural Rural2 CA05N0035_05 CA05N0030_05 PctBush04 PctKerry04{
  reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' stateunemp countyunemp ///
 	[aweight=avgcountypop], absorb(fips month) vce(cluster fips)
  outreg2 using	./Output/LNinteractALL.txt, tex lab ct(`header') bdec(3) tdec(3) bracket se append ///
