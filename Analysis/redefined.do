@@ -103,12 +103,18 @@ if r(max)<.01|r(max)>1 {
 /******WEIGHTED REGRESSIONS*******/
 *THIS IS THE MAIN SPECIFICATION!
 
+if "`file'"=="APP"{
+	local header="Applicants"
+}
+else{
+	local header="Contracts"
+}
 /*NO STATE*/
 reghdfe LNactive monthcountydeath L1monthcountydeath [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)
 outreg2 using ./Output/LNLinearW.tex, tex label ///
 	ti(Log County Applicants vs Deaths and Unemployment) ///
-	ct(Basic) bdec(3) tdec(3) bracket se append ///
+	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
 	"The first three columns show applicants and the last three show contracts.", Filename:LNLinearW.tex) ///
@@ -118,7 +124,7 @@ outreg2 using ./Output/LNLinearW.tex, tex label ///
 /*STATE AND UNEMP*/
 reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
 	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
-outreg2 using ./Output/LNLinearW.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
+outreg2 using ./Output/LNLinearW.tex, tex label ct(`header') bdec(3) tdec(3) bracket ///
 	se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 	
@@ -134,7 +140,7 @@ outreg2 using ./Output/LNLinearW.tex, tex label ct(State) bdec(3) tdec(3) bracke
 reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty ///
 	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
 outreg2 using ./Output/LNLinearW.tex, tex label ///
-	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
+	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
 /*WEIGHTED FUTURE LEADS--WITH LN(Active)*/
