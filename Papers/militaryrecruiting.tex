@@ -591,9 +591,7 @@ Same Binomial Distribution}
 
 This is not necessarily a reason for concern regarding omitted variable bias,
 since fixed effects for each county will still be able to control for
-this underlying characteristic of the state, however, it does give
-a slightly different meaning to the estimates I will develop in the
-next few pages. If deaths in Iraq and Afghanistan were truly uniformly
+this underlying characteristic of the state and county to the extent it is constant over time, however, it does give a slightly different meaning to the estimates I develop in the next few pages. If deaths in Iraq and Afghanistan were truly uniformly
 distributed amongst all the troops, regardless of where they came
 from, then the fact that a soldier from a given county, say Fairfax
 County, Virginia, had died would provide no more information regarding
@@ -606,7 +604,7 @@ and those are the soldiers who were dying, then this death might actually
 contain a useful signal as to the risk of death, and an extra deterrent
 effect might be warranted for those reasons. Looking at the above
 histograms of the rates of death by state, it seems that soldiers
-from different states have only slightly different hazard rates, and
+from different locations have insignificantly different hazard rates, and
 it is not the case that one state or another with a supposed reputation
 for strong military support or lack thereof has a vastly different
 rate of death of its soldiers, and the behavioral explanation is still reasonable.
@@ -616,6 +614,14 @@ rate of death of its soldiers, and the behavioral explanation is still reasonabl
 \subsection{County-Level Analysis\label{sub:County OLS}}
 
 The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model \footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata \citep{reghdfe}. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitavely very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a square root specification, as well as negative binomial. Again, the results are very similar.} 
+
+% Linear with logged LHS--Main specification
+% Made with redefined.do
+\begin{table}
+\caption{}
+\label{Flo:loglinear}
+\input{../Output/LNLinearW.tex}
+\end{table}
 
 
 Table \ref{Flo:loglinear}
@@ -997,33 +1003,8 @@ may be able to better explain the observed recruiting phenomenon.
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-\pagebreak{}
-
-
-\pagebreak{}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TABLES
-
-
-
-% Linear with logged LHS--Main specification
-% Made with redefined.do
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:loglinear}
-\input{../Output/LNLinearW.tex}
-\end{table}
-
-
-
 
 %RECRUITER AND MORTALITY CONTROLS-DO IN LOG LINEAR!!!
 \clearpage{}
