@@ -220,7 +220,7 @@ outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`typ
 }/*END BOTH ACTIVE AND TOTAL DEATHS*/
 }/*END HUGE LOOP OVER BOTH FILES*/
 
-STOP
+
 ****************************************************************************************************************
 /*MAIN POISSON TABLE, EXCEPT WITH ALL RECRUITS, BECAUSE SOME REFERREE DOESN'T UNDERSTAND MEASUREMENT ERROR*/
 *That means use "monthcountyrecruit" instead of "active"

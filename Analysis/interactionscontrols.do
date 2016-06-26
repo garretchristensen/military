@@ -4,6 +4,8 @@ cap log close
 log using ./Logs/interactionscontrols.log, replace
 cap rm ./Output/LNcontrolWR.tex
 cap rm ./Output/LNcontrolW.tex
+cap rm ./Output/LNcontrolWR.txt
+cap rm ./Output/LNcontrolW.txt
 
 cap rm ./Output/redefinteractionselast.txt
 cap rm ./Output/redefinteractionsW.txt
@@ -16,8 +18,16 @@ clear all
 
 
 foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
+if "`file'"=="APP"{
+	local header="Applicants"
+}
+else{
+	local header="Contracts"
+}
+
 
 use ./Data/county`file'_raw.dta, clear
+
 
 /*MERGE IN STATE AND NATION POPULATION DATA*/
 merge m:1 statefips using ./Population/statenationyoungmalepop.dta
@@ -74,7 +84,7 @@ foreach type in "" R { /*DO WITH BOTH ACTIVE AND TOTAL DEATHS*/
 reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
 	countyunemp if yearqtr<=20042&totalrec!=.&L1monthcountymort!=.&L1outofcountymort!=., ///
 	absorb(fips month) vce(cluster fips)
-outreg2 using ./Output/LNcontrolW`type'.tex, ct(Basic) bdec(3) tdec(3) bracket se append  ///
+outreg2 using ./Output/LNcontrolW`type'.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append  ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
 	"The first four columns show applicants and the last three show contracts.", Filename:LNcontrolW`type'.tex) ///
@@ -83,7 +93,7 @@ outreg2 using ./Output/LNcontrolW`type'.tex, ct(Basic) bdec(3) tdec(3) bracket s
 reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
 	countyunemp totalrec L1monthcountymort L1outofcountymort if yearqtr<=20042, ///
 	absorb(fips month) vce(cluster fips)
-outreg2 using ./Output/LNcontrolW`type'.tex, ct(Controls) bdec(3) tdec(3) ///
+outreg2 using ./Output/LNcontrolW`type'.txt, lab tex ct(`header') bdec(3) tdec(3) ///
 	bracket se append addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 } 
 
@@ -122,11 +132,16 @@ replace Rural2=0 if Rural2==.
 
 /*RUN REGRESSIONS WITH INTERACTIONS. MONTHLY FE. CALC ELASTICITIES, THEN REDO WITH WEIGHTS*/
 /*DO POP FIRST SINCE INVERSE*/
+ summ countypop [aweight=countypop]
+ cap gen avgcountypop=r(mean)
+ cap gen countypopZ=countypop-avgcountypop
+ gen deathcountypop=L1monthcountydeath/countypopZ
+
 /*WEIGHTED*/
-reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop stateunemp ///
-	countyunemp [aweight=countypop], absorb(fips month) robust cluster(fips)
-outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop using ./Output/redefinteractionsW.txt, ///
-	ct(`file'pop) ti(OLS Weighted Interactions) addnote(redefinteractionsW.txt EML) bdec(3) tdec(3) bracket se append 
+reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathcountypop stateunemp ///
+	countyunemp [aweight=countypop], absorb(fips month) vce(cluster fips)
+outreg2 using ./Output/redefinteractionsW.txt, ct(`file'pop) ti(OLS Weighted Interactions) ///
+	addnote(redefinteractionsW.txt EML) bdec(3) tdec(3) bracket se append 
 
 /*ALL THE REST OF THE INTERACTIONS INDIVIDUALLLY*/
 foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing Government ///
@@ -140,7 +155,7 @@ foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farmi
  /*WEIGHTED*/
  /*INTERACTION REGRESSION*/
  reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' stateunemp countyunemp ///
-	[aweight=countypop], absorb(fips month) robust vce(cluster fips)
+	[aweight=countypop], absorb(fips month) vce(cluster fips)
  outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' using ///
 	./Output/redefinteractionsW.txt, ct(`var') bdec(3) tdec(3) bracket se append 
 }

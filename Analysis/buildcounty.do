@@ -611,6 +611,11 @@ move monthstatemort monthcountymort
 bysort month: egen monthnationalmort=sum(monthstatemort)
 move monthnationalmort monthstatemort
 
+label var monthcountymort "County Mortality Rate"
+label var monthstatemort "State Mortality Rate"
+label var monthnationalmort "National Mortality Rate"
+
+
 /**BUILD IN NATIONAL AND STATE UNEMPLOYMENT LEVELS*/
 sort month
 merge m:1 month using ./Unemployment/nationalunemp.dta
