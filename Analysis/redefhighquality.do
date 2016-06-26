@@ -35,14 +35,26 @@ if "`file'"=="APP"{
 else{
 	local header1="Contracts"
 }
-replace monthcountydeath=monthcountydeath/100
-replace L1monthcountydeath=L1monthcountydeath/100
-replace outofcounty=outofcounty/100
-replace L1outofcounty=L1outofcounty/100
-label var monthcountydeath "Current In-County Deaths/100"
+foreach var in monthcountydeath outofcounty { 
+	foreach lag in "" L1 {
+		foreach war in "" IRAQ AFGHAN{
+			replace `lag'`war'`var'=`lag'`war'`var'/100
+		}
+	}
+}
+label var monthcountydeath "In-County Deaths/100"
 label var L1monthcountydeath "Lag In-County Deaths/100"
-label var outofcounty "Current Out-of-County Deaths/100"
+label var outofcounty "Out-of-County Deaths/100"
 label var L1outofcounty "Lag Out-of-County Deaths/100"
+label var AFGHANmonthcountydeath "Afghanistan In-County Deaths/100"
+label var L1AFGHANmonthcountydeath "Afghanistan Lag In-County Deaths/100"
+label var AFGHANoutofcounty "Afghanistan Out-of-County Deaths/100"
+label var L1AFGHANoutofcounty "Afghanistan Lag Out-of-County Deaths/100" 
+label var IRAQmonthcountydeath "Iraq In-County Deaths/100"
+label var L1IRAQmonthcountydeath "Iraq Lag In-County Deaths/100"
+label var IRAQoutofcounty "Iraq Out-of-County Deaths/100"
+label var L1IRAQoutofcounty "Iraq Lag Out-of-County Deaths/100" 
+ 
 summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
 if r(max)<.01|r(max)>1 {
 	display "you divided deaths by 100 too little/much"
@@ -168,10 +180,11 @@ outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) br
 *merge m:1 statename countyname using ./Newspaper/Newspapers.dta
 
 
- /*GEN INTERACTIONS*/ //*RESTORE DEATHS TO FULL SIZE for INTERACTION *replace L1monthcountydeath=L1monthcountydeath*100 *replace countypop=countypop/1000
- summ countypop [aweight=countypop]
- cap gen avgcountypop=r(mean)
- cap gen countypopZ=countypop-avgcountypop
+ /*GEN INTERACTIONS*/ 
+ //*RESTORE DEATHS TO FULL SIZE for INTERACTION *replace L1monthcountydeath=L1monthcountydeath*100 *replace countypop=countypop/1000
+ summ countypopmonth
+ local avgcountypop=r(mean)
+ cap gen countypopZ=countypop-`avgcountypop'
  gen `type'deathcountypopIRAQ=L1IRAQ`type'monthcountydeath/countypopZ
  gen `type'deathcountypopAFGHAN=L1AFGHAN`type'monthcountydeath/countypopZ
  gen `type'deathOOCcountypopIRAQ=L1IRAQ`type'outofcounty/countypopZ

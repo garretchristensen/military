@@ -12,7 +12,7 @@ cd $dir
 *do ./Analysis/buildfromFOIA.do //Takes original FOIA .txt datasets, compiles into one file of all APP, CON, ACC
 *do ./Analysis/builddeaths.do //Takes the original DOD death data from OIF and OEF and makes a combined US death dataset
 *do ./Analysis/buildunemployment.do //Formats BLS unemployment data
-*do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mortality data
+do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mortality data
 							 // separately does the same with CONTRACTS
 *do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths from 1990 on,
 							//not just 2001-on combat
@@ -30,13 +30,13 @@ cd $dir
 *do ./Analysis/deathsvrecruits.do
 
 /*RUN MAIN LINEAR REGRESSIONS*/
-do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
+*do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
 *do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
-do ./Analysis/redefcontig.do /*linear and poisson regressions of neighboring/media market counties*/
+*do ./Analysis/redefcontig.do /*linear and poisson regressions of neighboring/media market counties*/
 
 /*OTHER*/
-do ./Analysis/redefrunninglags.do /*poisson and linear regs for longer-term lags*/
-*do ./Analysis/redefhighquality.do /*regs of LQ/HQ recruits, plus deaths of many ifferent types, and interactions with diff war deaths*/
+*do ./Analysis/redefrunninglags.do /*poisson and linear regs for longer-term lags*/
+do ./Analysis/redefhighquality.do /*regs of LQ/HQ recruits, plus deaths of many ifferent types, and interactions with diff war deaths*/
 
 *do ./Analysis/90deaths/redefinedpoisson90_2015.02.17.do /*Main P-regs with 90-2006 deaths*/
 *do ./Analysis/redefbyservice2013.12.11.do /*reshape the data month-county-service branch, run linear and possion regs*/

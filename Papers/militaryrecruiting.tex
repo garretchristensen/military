@@ -929,24 +929,11 @@ evidence indicates that those with more education are likely to have
 larger social networks. As written in \cite{GlaeserSocialNetworks},
 {}``The connection between social capital and human capital is one
 of the most robust empirical regularities in the social capital literature.''} 
-Another interesting difference is the effect of unemployment on different
-types of recruits. \emph{A priori} it is unclear how unemployment
-would affect different types of recruits. Higher unemployment could
-raise low quality enlistment because low quality individuals have
-fewer outside options, or it could hurt low quality individuals, because
-high quality individuals have their outside options eliminated, then
-they join the military in greater numbers, and there isn't enough
-demand remaining for low quality individuals to enlist. (While High
-Quality can typically enlist in the military at any time with no cap
-on demand, low quality recruiting is frequently subject to both demand
-and supply constraints.) The table seems to indicate that county unemployment
-leads to a 2.5\% increase in high quality recruiting and a 1.5\% increase
-in low quality recruits. Again, I have tested whether the results are
-the same when done using weighted least squares analysis, and the
-results exhibit the same patterns for deaths---very high quality recruits
-are more deterred by deaths than other types of recruits.
 
-The appendix includes a similar analysis in Table \ref{Flo:Recruits by Service} with recruits broken out by military service branch.
+%Another interesting difference is the effect of unemployment on different types of recruits. \emph{A priori} it is unclear how unemployment would affect different types of recruits. Higher unemployment could raise low quality enlistment because low quality individuals have fewer outside options, or it could hurt low quality individuals, because high quality individuals have their outside options eliminated, then they join the military in greater numbers, and there isn't enough demand remaining for low quality individuals to enlist. (While High Quality can typically enlist in the military at any time with no cap on demand, low quality recruiting is frequently subject to both demand and supply constraints.) The table seems to indicate that county unemployment leads to a 2.5\% increase in high quality recruiting and a 1.5\% increase in low quality recruits. 
+Again, I have tested whether the results are the same when done using Poisson regression, and the results exhibit the same patterns for deaths---very high quality recruits are more deterred by deaths than other types of recruits.
+
+%The appendix includes a similar analysis in Table \ref{Flo:Recruits by Service} with recruits broken out by military service branch.
 
 \subsection{Recruiting Response for Different Types of Deaths\label{sub:Different Death Types}}
 
@@ -954,21 +941,17 @@ In addition to responses for different types of recruits, I have run analysis co
 the casualty, and the war in which the deceased was killed (Iraq or
 Afghanistan). Casualties are found to have no significantly different
 deterrent effect based on gender, hostility-status, and race.%
-\footnote{Although statistical tests cannot reject that the race of the death
-does not affect the size of the deterrent effect, I have also run
-regressions interacting the race of the death with county racial characteristics.
-The coefficient of interaction between black deaths and black population
-is twice the magnitude of the coefficient on the interaction of white
-deaths and black population, indicating that perhaps counties with
-more blacks are even more deterred by black soldier deaths, although
-the difference between these two interactions is again not significant.%
-} The appendix includes results in Tables \ref{Flo:Death by Same-Service Other-Service} and \ref{Flo: Death by Service} comparing deaths across military service branches, with no significant differences by branch. However, the war in which the death occurred has a significant effect of the recruiting response. Table \ref{Flo:Deaths by War} shows that
-county deaths from Iraq lead to a 1.6 to 1.7\% decrease in recruiting
-in the following month, while county deaths from Afghanistan lead
-to an increase in recruiting of 2.3 to 2.9\% in the following month. 
+\footnote{%Although statistical tests cannot reject that the race of the death does not affect the size of the deterrent effect, I have also run regressions interacting the race of the death with county racial characteristics. The coefficient of interaction between black deaths and black population is twice the magnitude of the coefficient on the interaction of white deaths and black population, indicating that perhaps counties with more blacks are even more deterred by black soldier deaths, although the difference between these two interactions is again not significant.
+The appendix includes results in Tables \ref{Flo:Death by Same-Service Other-Service} and \ref{Flo: Death by Service} comparing deaths across military service branches, with no significant differences by branch.} 
+However, the war in which the death occurred has a significant effect of the recruiting response. Table \ref{Flo:Deaths by War} shows that county deaths from Iraq lead to a 1.6 to 1.7\% decrease in recruiting in the following month, while county deaths from Afghanistan lead to an increase in recruiting of 2.3 to 2.9\% in the following month. 
 These effects are significant with high confidence, and tests of the
 equality of the coefficients are easily rejected. The same pattern holds, though slightly less pronounced, when one restricts the analysis to after March 2003 when both wars were occurring simultaneously. This seems to be further evidence that recruits are responding not only to the risk of death, but are also exhibiting a response based on a subjective valuation of the circumstances of the death, as well as how their politics affect that valuation. Perhaps the perception that the war in Afghanistan was `just' while the war in Iraq was not is enough to completely change the direction of the effect. (Only Representative Barbara Lee of California voted against the Authorization for Use of Military Force in September 2001, while 133 Representatives and 23 Sentators voted against the war in Iraq War Resolution in October 2002.)
-
+\begin{table}
+%built by redefhighquality.do
+\caption{Deaths in Different Wars}
+\label{Flo:Deaths by WarLN}
+\input{../Output/redefLNwar}
+\end{table}
 %New on Feb 18 2015:
 I have also tested specifications that separately interact Iraq and Afghanistan deaths with county characteristics. The coefficients on the interactions are not statistically different from one another, and go in the same direction for county population, percent African-American, and county unemployment---that is, both wars have positive interactions with unemployment, both negative for percent African-American, and both negative for population. However, the coefficients for the interaction of deaths with county percent George Bush vote share have different directions and are significantly different (p-values are between .05 and .10), with positive coefficients for Bush voteshare interacted with Iraq deaths, and negative coefficients for Bush voteshare interacted with Afghanistan deaths. This implies that the incentive effect of a death in Afghanistan is actually smaller in Bush voting counties than in non-Bush counties. That is, deaths in Afghanistan drew out more new recruits overall, and relatively more new recruits in non-Bush counties than in Bush counties. Deaths in Iraq led to an overall decrease in recruits, with an incentive effect in some Bush counties and a deterent effect in most non-Bush counties. This again seems to fit with the not uncommon perception that the country was united in response to 9/11 and the war in Afghanistan (the effects go in the same direction), but deeply divided over Iraq (the effects go in opposite directions in some counties). 
 
@@ -1025,21 +1008,6 @@ may be able to better explain the observed recruiting phenomenon.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TABLES
-
-
-
-
-
-
-
-
-%13
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo:Deaths by War}
-\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefPwar}
-\end{table}
 
 
 
@@ -1427,6 +1395,14 @@ can be for state deaths.
 \begin{table}
 \caption{}
 \label{Flo:Recruits by Service}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/highqualitybyserviceP}
+\end{table}
+
+%13
+\pagebreak{}
+\begin{table}
+\caption{}
+\label{Flo:Deaths by WarP}
+\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefPwar}
 \end{table}
 
 %11 Monthly county service branch observations 
