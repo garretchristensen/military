@@ -20,12 +20,12 @@ cd $dir
 
 
 /*SHOW DISPERSION OF DEATHS*/
-do ./Analysis/DataSummaryTable.do //simple data summary table
-do ./Analysis/table1graph.do //prints the rec/pop, death/pop, and rec/death graphs, by state
-do ./Analysis/table1bycounty.do //graphs binomial hazard rate
+*do ./Analysis/DataSummaryTable.do //simple data summary table
+*do ./Analysis/table1graph.do //prints the rec/pop, death/pop, and rec/death graphs, by state
+*do ./Analysis/table1bycounty.do //graphs binomial hazard rate
 
 /*NATIONAL LEVEL STUFF*/
-do ./Analysis/deathsvrecruits.do
+*do ./Analysis/deathsvrecruits.do
 
 /*RUN MAIN LINEAR REGRESSIONS*/
 do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/

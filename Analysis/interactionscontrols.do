@@ -44,6 +44,21 @@ replace nationpop=15055210 if year==2004
 replace nationpop=15139739 if year==2005
 replace nationpop=15233351 if year==2006
 
+*RESIZE DEATHS
+replace monthcountydeath=monthcountydeath/100
+replace L1monthcountydeath=L1monthcountydeath/100
+replace outofcounty=outofcounty/100
+replace L1outofcounty=L1outofcounty/100
+label var monthcountydeath "Current In-County Deaths/100"
+label var L1monthcountydeath "Lag In-County Deaths/100"
+label var outofcounty "Current Out-of-County Deaths/100"
+label var L1outofcounty "Lag Out-of-County Deaths/100"
+summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
+if r(max)<.01|r(max)>1 {
+	display "you divided deaths by 100 too little/much"
+	throw a hissy fit
+}
+
 
 /*TEST WITH RECRUITER CONTROLS AND STUFF*/
 tostring qtr, replace
@@ -59,18 +74,19 @@ foreach type in "" R { /*DO WITH BOTH ACTIVE AND TOTAL DEATHS*/
 reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
 	countyunemp if yearqtr<=20042&totalrec!=.&L1monthcountymort!=.&L1outofcountymort!=., ///
 	absorb(fips month) vce(cluster fips)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp ///
-	using ./Output/LNcontrolW`type'.tex, ct(`file'NoRec`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+outreg2 using ./Output/LNcontrolW`type'.tex, ct(Basic) bdec(3) tdec(3) bracket se append  ///
+	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
+	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
+	"The first four columns show applicants and the last three show contracts.", Filename:LNcontrolW`type'.tex) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 
 reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
 	countyunemp totalrec L1monthcountymort L1outofcountymort if yearqtr<=20042, ///
 	absorb(fips month) vce(cluster fips)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp ///
-	totalrec L1monthcountymort L1outofcountymort using ./Output/LNcontrolW`type'.tex, ct(`file'RecMort`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+outreg2 using ./Output/LNcontrolW`type'.tex, ct(Controls) bdec(3) tdec(3) ///
+	bracket se append addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 } 
 
-
-stop
 
 /*REWORK INTERACTION VARIABLES*/
 replace PctWhite05=PctWhite05/100
@@ -106,75 +122,58 @@ replace Rural2=0 if Rural2==.
 
 /*RUN REGRESSIONS WITH INTERACTIONS. MONTHLY FE. CALC ELASTICITIES, THEN REDO WITH WEIGHTS*/
 /*DO POP FIRST SINCE INVERSE*/
-/*UNWEIGHTED*/
-gen deathpop=L1monthcountydeath/countypop
-areg active monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop stateunemp countyunemp monthfe1-monthfe56, absorb(fips) robust cluster(fips)
-outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop using ./Output/redefinteractions.txt, ct(`file'pop) ti(OLS with interacations) addnote(redefinteractions.txt EML) bdec(3) tdec(3) bracket se append
-margins, eydx(L1monthcountydeath deathpop) atmeans post
-outreg2 L1monthcountydeath death`var' using ./Output/redefinteractionselast.txt, ct(`file'pop) ti(Partial-Elasticity interacations) addnote(redefinteractionselast.txt EML) bdec(3) tdec(3) bracket se append  
 /*WEIGHTED*/
-areg active monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop stateunemp countyunemp monthfe1-monthfe56 [aweight=countypop], absorb(fips) robust cluster(fips)
-outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop using ./Output/redefinteractionsW.txt, ct(`file'pop) ti(OLS Weighted Interactions) addnote(redefinteractionsW.txt EML) bdec(3) tdec(3) bracket se append 
-margins, eydx(L1monthcountydeath deathpop) atmeans post
-outreg2 L1monthcountydeath deathpop using ./Output/redefinteractionselastW.txt, ct(`file'pop) ti(Partial-Elasticity Weighted Interactions) addnote(redefinteractionselastW.txt EML) bdec(3) tdec(3) bracket se append  
+reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop stateunemp ///
+	countyunemp [aweight=countypop], absorb(fips month) robust cluster(fips)
+outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathpop using ./Output/redefinteractionsW.txt, ///
+	ct(`file'pop) ti(OLS Weighted Interactions) addnote(redefinteractionsW.txt EML) bdec(3) tdec(3) bracket se append 
 
-/*ALL THE REST OF THE INTERACTIONS 4 WAYS*/
-foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing Government Services HouseStrs04 LowEduc04 LowEmp04 PerstPov04 PopLoss04 NonmetRec04 Retirement04 UrbanInf03 UrbanInfluence RuralUrban03 Rural Rural2 CA05N0035_05 CA05N0030_05 PctBush04 PctKerry04{
+/*ALL THE REST OF THE INTERACTIONS INDIVIDUALLLY*/
+foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing Government ///
+	Services HouseStrs04 LowEduc04 LowEmp04 PerstPov04 PopLoss04 NonmetRec04 Retirement04 UrbanInf03 UrbanInfluence ///
+	RuralUrban03 Rural Rural2 CA05N0035_05 CA05N0030_05 PctBush04 PctKerry04{
  summ `var' [aweight=countypop]
  gen avg`var'=r(mean)
  gen `var'Z=`var'-avg`var'
  summ `var'Z
  gen death`var'=L1monthcountydeath*`var'Z
- /*UNWEIGHTED*/
- /*INTERACTION REGRESSION*/
- areg active monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' stateunemp countyunemp monthfe1-monthfe56, absorb(fips) robust cluster(fips)
- outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' using ./Output/redefinteractions.txt, ct(`var') bdec(3) tdec(3) bracket se append 
- /*ELAST*/
- margins, eydx(monthcountydeath L1monthcountydeath death`var') atmeans post
- outreg2 monthcountydeath L1monthcountydeath death`var' using ./Output/redefinteractionselast.txt, ct(`file'`var') bdec(3) tdec(3) bracket se append  
  /*WEIGHTED*/
  /*INTERACTION REGRESSION*/
- areg active monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' stateunemp countyunemp monthfe1-monthfe56 [aweight=countypop], absorb(fips) robust cluster(fips)
- outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' using ./Output/redefinteractionsW.txt, ct(`var') bdec(3) tdec(3) bracket se append 
- /*ELAST*/
- margins, eydx(monthcountydeath L1monthcountydeath death`var') atmeans post
- outreg2 monthcountydeath L1monthcountydeath death`var' using ./Output/redefinteractionselastW.txt, ct(`file'`var') bdec(3) tdec(3) bracket se append  
+ reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' stateunemp countyunemp ///
+	[aweight=countypop], absorb(fips month) robust vce(cluster fips)
+ outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' using ///
+	./Output/redefinteractionsW.txt, ct(`var') bdec(3) tdec(3) bracket se append 
 }
+
+*SIGNIFICANT INTERACTIONS
+reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty /*took out avg*/deathcountyunemp ///
+	deathcountypop deathPctBlack05 deathPctBush04 /*deathavgcov*/ deathRural2 stateunemp countyunemp, ///
+	absorb(fips month) vce(cluster fips)
+outreg2 using ./Output/LNinteractions.txt, ct(black) bdec(3) tdec(3) bracket se append
 
 
 /**************************************/
 /*DO THE ABOVE BUT WITH ONLY ACTIVE DEATHS*/
 /*RUN REGRESSIONS WITH INTERACTIONS. MONTHLY FE. CALC ELASTICITIES, THEN REDO WITH WEIGHTS*/
 /*DO POP FIRST SINCE INVERSE*/
-/*UNWEIGHTED*/
-gen Rdeathpop=L1Rmonthcountydeath/countypop
-areg active Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeathpop stateunemp countyunemp monthfe1-monthfe56, absorb(fips) robust cluster(fips)
-outreg2 Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeathpop using ./Output/redefinteractions.txt, ct(`file'pop) ti(OLS with interacations ACTIVE DEATHS) addnote(redefinteractionsR.txt EML) bdec(3) tdec(3) bracket se append
-margins, eydx(Rmonthcountydeath L1Rmonthcountydeath Rdeathpop) atmeans post
-outreg2 Rmonthcountydeath L1Rmonthcountydeath Rdeathpop using ./Output/redefinteractionselast.txt, ct(`file'pop) ti(Partial-Elasticity interacations ACTIVEDEATHS) addnote(redefinteractionselastR.txt EML) bdec(3) tdec(3) bracket se append  
 /*WEIGHTED*/
-areg active Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeathpop stateunemp countyunemp monthfe1-monthfe56 [aweight=countypop], absorb(fips) robust cluster(fips)
-outreg2 Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeathpop using ./Output/redefinteractionsRW.txt, ct(`file'pop) ti(OLS Weighted Interactions ACTIVE Deaths) addnote(redefinteractionsRW.txt EML) bdec(3) tdec(3) bracket se append 
-margins, eydx(Rmonthcountydeath L1Rmonthcountydeath Rdeathpop) atmeans post
-outreg2 Rmonthcountydeath L1Rmonthcountydeath Rdeathpop using ./Output/redefinteractionselastRW.txt, ct(`file'pop) ti(Partial-Elasticity Weighted Interactions ACTIVE deaths) addnote(redefinteractionselastRW.txt EML) bdec(3) tdec(3) bracket se append  
+reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeathpop ///
+	stateunemp countyunemp monthfe1-monthfe56 [aweight=countypop], absorb(fips month) vce(cluster fips)
+outreg2 Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeathpop using ./Output/redefinteractionsRW.txt, ///
+	ct(`file'pop) ti(OLS Weighted Interactions ACTIVE Deaths) addnote(redefinteractionsRW.txt EML) ///
+	bdec(3) tdec(3) bracket se append 
 
 /*ALL THE REST OF THE INTERACTIONS 4 WAYS*/
-foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing Government Services HouseStrs04 LowEduc04 LowEmp04 PerstPov04 PopLoss04 NonmetRec04 Retirement04 UrbanInf03 UrbanInfluence RuralUrban03 Rural Rural2 CA05N0035_05 CA05N0030_05 PctBush04 PctKerry04{
+foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing ///
+	Government Services HouseStrs04 LowEduc04 LowEmp04 PerstPov04 PopLoss04 NonmetRec04 Retirement04 UrbanInf03 ///
+	UrbanInfluence RuralUrban03 Rural Rural2 CA05N0035_05 CA05N0030_05 PctBush04 PctKerry04{
  gen Rdeath`var'=L1Rmonthcountydeath*`var'Z
- /*UNWEIGHTED*/
- /*INTERACTION REGRESSION*/
- areg active Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeath`var' stateunemp countyunemp monthfe1-monthfe56, absorb(fips) robust cluster(fips)
- outreg2 Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeath`var' using ./Output/redefinteractionsR.txt, ct(`var') bdec(3) tdec(3) bracket se append 
- /*ELAST*/
- margins, eydx(Rmonthcountydeath L1Rmonthcountydeath Rdeath`var') atmeans post
- outreg2 Rmonthcountydeath L1Rmonthcountydeath Rdeath`var' using ./Output/redefinteractionselastR.txt, ct(`file'`var') bdec(3) tdec(3) bracket se append  
  /*WEIGHTED*/
  /*INTERACTION REGRESSION*/
- areg active Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeath`var' stateunemp countyunemp monthfe1-monthfe56 [aweight=countypop], absorb(fips) robust cluster(fips)
- outreg2 Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeath`var' using ./Output/redefinteractionsRW.txt, ct(`var') bdec(3) tdec(3) bracket se append 
- /*ELAST*/
- margins, eydx(Rmonthcountydeath L1Rmonthcountydeath Rdeath`var') atmeans post
- outreg2 Rmonthcountydeath L1Rmonthcountydeath Rdeath`var' using ./Output/redefinteractionselastRW.txt, ct(`file'`var') bdec(3) tdec(3) bracket se append  
+ reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeath`var' stateunemp ///
+	countyunemp [aweight=countypop], absorb(fips month) vce(cluster fips)
+ outreg2 Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty Rdeath`var' using ///
+	./Output/redefinteractionsRW.txt, ct(`var') bdec(3) tdec(3) bracket se append 
 }
 
 } /*END HUGE LOOP OVER APP & CON*/
