@@ -120,63 +120,74 @@ if r(max)<.01|r(max)>1 {
  corr L1monthcountydeath L1mediadeath
  corr L1mediadeath L1neighbordeath
  
- 
  *******************************************
  *REGS
  *******************************************
  /*LINEAR LN*/
+ 
  reghdfe LNactive neighbordeath L1neighbordeath stateunemp countyunemp [aweight=avgcountypop], ///
-	absorb(fips month) vce(cluster fips)  
+	absorb(fips month stateyear) vce(cluster fips)  
  outreg2  using ./Output/redefcontigLN.txt, tex lab ///
 	ct(`header') ti(Media and Contiguous Deaths) bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month as indiciated,", ///
-	"The first five columns show applicants and the last five show contracts.", Filename:redefcontigLN.tex)
+	"The first five columns show applicants and the last five show contracts.", Filename:redefcontigLN.tex) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  reghdfe LNactive monthcountydeath L1monthcountydeath neighbordeath L1neighbordeath stateunemp countyunemp ///
-	[aweight=avgcountypop], absorb(fips month) vce(cluster fips)
+	[aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  outreg2 using ./Output/redefcontigLN.txt, tex lab ct(`header') bdec(3) tdec(3) bracket se append
  reghdfe LNactive mediadeath L1mediadeath stateunemp countyunemp  [aweight=avgcountypop], ///
-	absorb(fips month) vce(cluster fips) 
+	absorb(fips month) vce(cluster fips stateyear) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  outreg2 using ./Output/redefcontigLN.txt, tex lab ct(`header') bdec(3) tdec(3) bracket se append
  reghdfe LNactive monthcountydeath L1monthcountydeath mediadeath L1mediadeath stateunemp countyunemp ///
-	[aweight=avgcountypop], absorb(fips month) vce(cluster fips)
+	[aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  outreg2 using ./Output/redefcontigLN.txt, tex lab ct(`header') bdec(3) tdec(3) bracket se append
  reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty mediadeath L1mediadeath stateunemp ///
-	countyunemp [aweight=avgcountypop], absorb(fips month) vce(cluster fips) 
+	countyunemp [aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  outreg2 using ./Output/redefcontigLN.txt, tex lab ct(`header') bdec(3) tdec(3) bracket se append
  
- 
- /*POISSON TAKES FOREVER
+ /*POISSON TAKES FOREVER*/
  /*POISSON*/
   *xtpoisson active monthcountydeath L1monthcountydeath stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
   *xtpoisson active outofcounty L1outofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
  
  /*NEIGHBOR ONLY*/
- xtpoisson active neighbordeath L1neighbordeath stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, ///
+ xtpoisson active neighbordeath L1neighbordeath stateunemp countyunemp monthfe3-monthfe58 /*statetrend2-statetrend51*/, ///
 	fe exposure(avgcountypop) vce(robust)
- outreg2 neighbordeath L1neighbordeath stateunemp countyunemp  using ./Output/redefcontigP.txt, ///
-	ct(`file'justneighbor) ti(Poisson Regression of Media and Contiguous Deaths) addnote(redefcontigP.txt EML) bdec(3) tdec(3) bracket se append
+ outreg2 using ./Output/redefcontigP.txt, ///
+	ct(`file'justneighbor) ti(Poisson Regression of Media and Contiguous Deaths) addnote(redefcontigP.txt) ///
+	lab tex bdec(3) tdec(3) bracket se append keep(neighbordeath L1neighbordeath stateunemp countyunemp) 
+	addnote("Notes: Table shows Poisson regression estimates of national active duty recruits on deaths.", ///
+	"Fixed effects are included separately by county and month as indiciated,", ///
+	"The first five columns show applicants and the last five show contracts.", Filename:redefcontigP.tex) ///
+	addtext(County FE, YES, Month FE, YES, State Trend, NO)
   /*IN-COUNTY, NEIGHBOR*/
   xtpoisson active monthcountydeath L1monthcountydeath neighbordeath L1neighbordeath stateunemp countyunemp ///
-	monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
-  outreg2 monthcountydeath L1monthcountydeath neighbordeath L1neighbordeath stateunemp countyunemp  ///
-	using ./Output/redefcontigP.txt, ct(`file'neighbor) bdec(3) tdec(3) bracket se append
+	monthfe3-monthfe58 /*statetrend2-statetrend51*/, fe exposure(avgcountypop) vce(robust)
+  outreg2  using ./Output/redefcontigP.txt, keep(monthcountydeath L1monthcountydeath neighbordeath L1neighbordeath ///
+	stateunemp countyunemp) lab tex ct(`file'neighbor) bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, State Trend, NO)
   /*MEDIA ONLY*/
-  xtpoisson active mediadeath L1mediadeath stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, ///
+  xtpoisson active mediadeath L1mediadeath stateunemp countyunemp monthfe3-monthfe58 /*statetrend2-statetrend51*/, ///
 	fe exposure(avgcountypop) vce(robust)
-  outreg2 mediadeath L1mediadeath stateunemp countyunemp  using ./Output/redefcontigP.txt, ct(`file'justmedia) ///
-	bdec(3) tdec(3) bracket se append
+  outreg2 using ./Output/redefcontigP.txt, keep(mediadeath L1mediadeath stateunemp countyunemp) ct(`file'justmedia) ///
+	bdec(3) tdec(3) bracket se append lab tex ///
+	addtext(County FE, YES, Month FE, YES, State Trend, NO)
   /*IN-COUNTY, MEDIA*/
   xtpoisson active monthcountydeath L1monthcountydeath mediadeath L1mediadeath stateunemp countyunemp monthfe3-monthfe58 ///
-	statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
-  outreg2 monthcountydeath L1monthcountydeath mediadeath L1mediadeath stateunemp countyunemp  using ./Output/redefcontigP.txt, ///
-   ct(`file'media) bdec(3) tdec(3) bracket se append
+	/*statetrend2-statetrend51*/, fe exposure(avgcountypop) vce(robust) ///
+	addtext(County FE, YES, Month FE, YES, State Trend, NO)
+  outreg2 using ./Output/redefcontigP.txt, keep(monthcountydeath L1monthcountydeath mediadeath L1mediadeath stateunemp countyunemp) ///
+   ct(`file'media) bdec(3) tdec(3) bracket se append lab tex
   /*IN-COUNTY, NEIGHBOR, MEDIA*/
   xtpoisson active monthcountydeath L1monthcountydeath mediadeath L1mediadeath neighbordeath L1neighbordeath stateunemp ///
-	countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
-  outreg2 monthcountydeath L1monthcountydeath mediadeath L1mediadeath neighbordeath L1neighbordeath stateunemp countyunemp  ///
-	using ./Output/redefcontigP.txt, ct(`file'all) bdec(3) tdec(3) bracket se append
- 
-*/
+	countyunemp monthfe3-monthfe58 /*statetrend2-statetrend51*/, fe exposure(avgcountypop) vce(robust)
+  outreg2 using ./Output/redefcontigP.txt, ct(`file'all) bdec(3) tdec(3) bracket se append lab tex ///
+	keep(monthcountydeath L1monthcountydeath mediadeath L1mediadeath neighbordeath L1neighbordeath stateunemp countyunemp) ///
+	addtext(County FE, YES, Month FE, YES, State Trend, NO)
  
 } /*END REG LOOP OVER BOTH FILES*/
