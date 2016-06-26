@@ -30,6 +30,7 @@ cd $dir
 /*RUN MAIN LINEAR REGRESSIONS*/
 do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
 do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
+do ./Analysis/redefcontig.do /*linear and poisson regressions of neighboring/media market counties*/
 
 /*OTHER FUNCTIONAL FORMS*/
 *do ./Analysis/redefinedpoisson2015.02.17.do /*poission regs, with recruit/mort controls, and interactions*/

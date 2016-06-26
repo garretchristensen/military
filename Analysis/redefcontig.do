@@ -14,19 +14,23 @@ foreach file in APP CON{   /*BEGIN CONSTRUCTION LOOP OVER BOTH FILES*/
  keep statefips countyfips t monthcountydeath active
  save temp_contig`file'.dta, replace
  
- 
+ *expand neighboring counties for each month
  use ./Contiguous/contiguous.dta, clear
  rename name contiguousname
  gen new=_n
- expand 58
- bys new: egen new2=rank(_n)
- gen t=-1+new2 
+ expand 58 //create one obs for every month
+ bys new: egen t=rank(_n)
  sort statefips2 countyfips2 t
- rename statefips2 statefips
+ rename statefips2 statefips //fips2 is the center (non-neighbor) county
  rename countyfips2 countyfips
- merge statefips countyfips t using temp_contig`file'.dta
+ merge m:1 statefips countyfips t using temp_contig`file'.dta
+ tab _merge
  rename _merge mergecontig1
+ 
  /*GENERATE NEIGHBORING VARS*/
+ *fips1 are the neighbor counties
+ *deaths are from the center county.
+ *so group by fips1s, and summ all the deaths to get deaths in all neighbors
  bysort statefips1 countyfips1 t: egen neighbordeath=sum(monthcountydeath)
  bysort statefips1 countyfips1 t: egen neighborsamestatedeath=sum(monthcountydeath) if statefips==statefips1
  bysort statefips1 countyfips1 t: egen neighborrecruit=sum(active)
@@ -39,12 +43,13 @@ foreach file in APP CON{   /*BEGIN CONSTRUCTION LOOP OVER BOTH FILES*/
  replace neighborsamestatedeath=neighborsamestatedeath-monthcountydeath
  replace neighborrecruit=neighborrecruit-active
  replace neighborsamestaterecruit=neighborsamestaterecruit-active
- keep if samecounty==1
+ keep if samecounty==1 //keep just one observation from each county, month
  keep neighbor* statefips1 countyfips1 t
  rename statefips1 statefips
  rename countyfips1 countyfips
  save temp_contig`file', replace
- use ./Data/`file'.dta, clear
+ 
+ use ./Data/county`file'_raw.dta, clear
  sort statefips countyfips t
  merge 1:1 statefips countyfips t using temp_contig`file'
  rename _merge mergecontig2
