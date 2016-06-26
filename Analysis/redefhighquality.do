@@ -77,8 +77,8 @@ foreach TYPE in LQ HQ50 HQ50alt HQ75 {
 foreach TYPE in LQ HQ50 HQ50alt HQ75 {
  xtpoisson R`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
 	monthfe3-monthfe58 /*statetrend2-statetrend51*/, fe exposure(avgcountypop) vce(robust)
- outreg2  using ./Output/highqualitybytypeP.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append 
- addnote("Notes: Table shows Poisson regression estimates of log (national active duty recruits +1) on cumulative ", ///
+ outreg2  using ./Output/highqualitybytypeP.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
+	addnote("Notes: Table shows Poisson regression estimates of log (national active duty recruits +1) on cumulative ", ///
 	"lagged deaths. Fixed effects are included separately by county and month as indiciated,", ///
 	"The first four columns show applicants and the last four show contracts.", Filename:highqualitybytypeLN.tex) ///
 	addtext(County FE, YES, Month FE, YES, State Trend, NO)
@@ -133,26 +133,26 @@ outreg2 using ./Output/redefLNwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bra
 /*CURRENT*/
 xtpoisson active IRAQmonthcountydeath AFGHANmonthcountydeath outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 test IRAQmonthcountydeath=AFGHANmonthcountydeath
-outreg2  IRAQmonthcountydeath AFGHANmonthcountydeath outofcounty stateunemp countyunemp using ./Output/redefPwar.txt, ct(`file'Race current only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), " Test", r(p))
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race current only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), " Test", r(p))
 
 /*LAGGED*/
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-outreg2  monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty stateunemp countyunemp using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p))
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p))
 
 /*BOTH*/
 xtpoisson active IRAQmonthcountydeath AFGHANmonthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 test IRAQmonthcountydeath=AFGHANmonthcountydeath
 local current=r(p)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-outreg2  IRAQmonthcountydeath AFGHANmonthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty stateunemp countyunemp using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p), "Current", `current')
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p), "Current", `current')
 
 /*IN AND OUT OF COUNTY*/
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
 local county=r(p)
 test L1IRAQoutofcounty=L1AFGHANoutofcounty
-outreg2  monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty stateunemp countyunemp using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "State", r(p), "County", `county')
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "State", r(p), "County", `county')
 
 
 *ADDED 2015/2/18--TEST INTERACTIONS WITH AFGHAN AND IRAQ, SINCE THAT'S INTERESTING TO A LOT OF PEOPLE
