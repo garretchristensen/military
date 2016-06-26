@@ -896,7 +896,8 @@ with the needs of the services.
 \begin{table}
 \caption{Recruits by Quality}
 \label{Flo: Recs by QualityLN}
-\scalebox{0.7}{\rotatebox{90}{\input{../Output/highqualitybytypeLN}}}
+\scalebox{0.7}{%\rotatebox{90}{
+\input{../Output/highqualitybytypeLN}}%}
 \end{table}
 
 Table \ref{Flo: Recs by QualityLN} shows results for recruits
@@ -911,8 +912,9 @@ actually ship out until they graduate and are considered high quality
 recruits by the military.) Very High Quality recruits is not a specific
 distinction used by the military, but is meant to identify the most
 sought after recruits--those who have a 75 or higher on the AFQT and
-have taken at least some college courses. There are fewer observations in this specification since 666 counties never have a very high quality recruit and cannot be included. The results indicate that all but the Very High Quality recruits have roughly the same response to deaths: a slightly smaller than 1\% reduction in recruits for every
-death. Amongst Very High Quality recruits, the effect is almost 2.5\%.%
+have taken at least some college courses. %There are fewer observations in this specification since 666 counties never have a very high quality recruit and cannot be included. 
+The results indicate that all but the Very High Quality recruits have roughly the same response to deaths: a 1\% reduction in recruits for every
+death. Amongst Very High Quality recruits, the effect is almost 4\%.%
 \footnote{It may be slightly surprising that higher-quality recruits are more
 deterred by local deaths if one interprets the response to a county
 death as an {}``over-response'' compared to deaths from out of county
@@ -926,8 +928,8 @@ being due to personal knowledge of the soldier who was killed, since
 evidence indicates that those with more education are likely to have
 larger social networks. As written in \cite{GlaeserSocialNetworks},
 {}``The connection between social capital and human capital is one
-of the most robust empirical regularities in the social capital literature.'' %
-} Another interesting difference is the effect of unemployment on different
+of the most robust empirical regularities in the social capital literature.''} 
+Another interesting difference is the effect of unemployment on different
 types of recruits. \emph{A priori} it is unclear how unemployment
 would affect different types of recruits. Higher unemployment could
 raise low quality enlistment because low quality individuals have
