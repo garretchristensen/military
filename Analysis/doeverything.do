@@ -4,7 +4,9 @@ version 12
 global dir="C:/Users/garret/Documents/Research/Military" //Change this as necessary. 
 cd $dir  
 //Clone the GitHub repo at https://github.com/garretchristensen/military to get the necessary folder structure.
-
+//make sure you have a bunch of ado's installed
+//ssc install outreg2
+//ssc install reghdfe
 
 /*BUILD FROM THE RAW DATA*/
 *do ./Analysis/buildfromFOIA.do //Takes original FOIA .txt datasets, compiles into one file of all APP, CON, ACC
