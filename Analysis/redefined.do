@@ -157,12 +157,19 @@ outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyandstate) bdec(3) tde
 /*ACTIVE DEATHS ONLY*/
 ************************************************************************
 replace Rmonthcountydeath=Rmonthcountydeath/100
+label var Rmonthcountydeath "In-County Active Duty Deaths/100"
 replace L1Rmonthcountydeath=L1Rmonthcountydeath/100
-label var L1Rmonthcountydeath "Lag In-County Active Duty Deaths"
+label var L1Rmonthcountydeath "Lag In-County Active Duty Deaths/100"
 replace Routofcounty=Routofcounty/100
+label var Routofcounty "Out-of-County Active Duty Deaths"
 replace L1Routofcounty=L1Routofcounty/100
 label var L1Routofcounty "Lag Out-of-County Active Duty Deaths"
 
+summ Rmonthcountydeath
+if r(max)>1|r(max)<.01 {
+	display "divided R deaths by 100 too much"
+	hissy fit
+}
 /*NO STATE*/
 reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)
@@ -171,7 +178,7 @@ outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ct(Basic) bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on \textit{only} active duty deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"The first four columns show applicants and the last four show contracts.", Filename:LNLinearWR.tex) ///
+	"The first three columns show applicants and the last three show contracts.", Filename:LNLinearWR.tex) ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  
 

@@ -1,6 +1,7 @@
-cd /Users/gchrist1/Documents/Research/Military
+cd $dir
+set more off
 cap log close
-log using ./Logs/redefinteractions.log, replace
+log using ./Logs/interactionscontrols.log, replace
 cap rm ./Output/redefinteractions.txt
 cap rm ./Output/redefinteractionselast.txt
 cap rm ./Output/redefinteractionsW.txt
@@ -10,56 +11,13 @@ cap rm ./Output/redefinteractionselastR.txt
 cap rm ./Output/redefinteractionsRW.txt
 cap rm ./Output/redefinteractionselastRW.txt
 clear all
-set mem 3g
-set maxvar 32767
-set matsize 11000
 
-foreach file in county countyCON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
 
-use ./Data/`file'_raw.dta, clear
-drop *Q*
-drop if fips==0
-drop if countyfips=="999"
-/*GENERATE YEAR FIXED EFFECTS*/
-gen year1999=1 if year==1999
-gen year2000=1 if year==2000
-gen year2001=1 if year==2001
-gen year2002=1 if year==2002
-gen year2003=1 if year==2003
-gen year2004=1 if year==2004
-gen year2005=1 if year==2005
-gen year2006=1 if year==2006
-foreach var in 1999 2000 2001 2002 2003 2004 2005 2006{
- replace year`var'=0 if year`var'==.
-}
+foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
 
-/* (1) CREATE LAGS*/
-sort fips month
-foreach var in monthcountydeath outofcounty outofstate Rmonthcountydeath Routofcounty Routofstate countyunemp stateunemp nationalunemp monthnationalmort monthstatemort monthcountymort{
- foreach X of numlist 1/2 {
-  quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
-  quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X']
- } 
-}
-set more off
-gen mo=substr(month,5,2)
-destring year, replace
-destring mo, replace
-gen fancymonth=ym(year,mo)
-destring fips, replace
-tsset fips fancymonth
-/*CREATE ACTIVE DUTY RECRUITS*/
-gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
+use ./Data/county`file'_raw.dta, clear
 
-/*MERGE IN THE POPULATION DATA*/
-destring statefips, replace
-destring countyfips, replace
-destring year, replace
-drop if statefips==72
-sort statefips countyfips
-merge m:1 statefips countyfips year using ./Population/countyyoungmalepop.dta
-drop if _merge==2 /*ALASKA DIVISIONS ARE INCONSISTENT. DROP IT*/
-rename _merge mergecountypop
+/*MERGE IN STATE AND NATION POPULATION DATA*/
 merge m:1 statefips using ./Population/statenationyoungmalepop.dta
 drop if _merge!=3 /*WHO ARE THESE 33 FUCKERS, AND WHERE DID THEY COME FROM?*/
 rename _merge mergestatepop
@@ -85,6 +43,29 @@ replace nationpop=15139739 if year==2005
 replace nationpop=15233351 if year==2006
 
 tab month, gen(monthfe)
+
+
+/*TEST WITH RECRUITER CONTROLS AND STUFF*/
+tostring qtr, replace
+tostring year, replace
+gen yearqtr=year+qtr
+destring yearqtr, replace
+gen totalrec=(arec+mrec+frec+nrec)/100 if yearqtr <=20042
+gen outofcountymort=monthstatemort-monthcountymort
+gen L1outofcountymort=L1monthstatemort-L1monthcountymort
+
+
+foreach type in "" R { /*DO WITH BOTH ACTIVE AND TOTAL DEATHS*/
+xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51 if yearqtr<=20042&totalrec!=.&L1monthcountymort!=.&L1outofcountymort!=., fe exposure(countypop) vce(robust)
+outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp using ./Output/redefPrec`type'.txt, ct(`file'NoRec`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+
+xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp totalrec L1monthcountymort L1outofcountymort monthfe3-monthfe33 statetrend1-statetrend51 if yearqtr<=20042, fe exposure(countypop) vce(robust)
+outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp totalrec L1monthcountymort L1outofcountymort using ./Output/redefPrec`type'.txt, ct(`file'RecMort`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+} 
+
+*/
+
+
 /*REWORK INTERACTION VARIABLES*/
 replace PctWhite05=PctWhite05/100
 replace PctBlack05=PctBlack05/100
