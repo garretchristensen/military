@@ -29,16 +29,16 @@ cd $dir
 
 /*RUN MAIN LINEAR REGRESSIONS*/
 do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
-do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
+*do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
 do ./Analysis/redefcontig.do /*linear and poisson regressions of neighboring/media market counties*/
+
+/*OTHER*/
+do ./Analysis/redefrunninglags.do /*poisson and linear regs for longer-term lags*/
+*do ./Analysis/90deaths/redefinedpoisson90_2015.02.17.do /*Main P-regs with 90-2006 deaths*/
+*do ./Analysis/redefbyservice2013.12.11.do /*reshape the data month-county-service branch, run linear and possion regs*/
+*do ./Analysis/redefhighquality2015.02.18.do /*P-regs of deaths of different types, and interactions with diff war deaths*/
 
 /*OTHER FUNCTIONAL FORMS*/
 *do ./Analysis/redefinedpoisson2015.02.17.do /*poission regs, with recruit/mort controls, and interactions*/
 *do ./Analysis/squareroot2015.2.17.do /*square root of recruits*/
 *do ./Analaysis/nebinom2015.2.17.do /*negative binomial*/
-
-/*OTHER*/
-*do ./Analysis/90deaths/redefinedpoisson90_2015.02.17.do /*Main P-regs with 90-2006 deaths*/
-*do ./Analysis/redefrunninglags2013.12.11.do /*poisson and linear regs for longer-term lags*/
-*do ./Analysis/redefbyservice2013.12.11.do /*reshape the data month-county-service branch, run linear and possion regs*/
-*do ./Analysis/redefhighquality2015.02.18.do /*P-regs of deaths of different types, and interactions with diff war deaths*/

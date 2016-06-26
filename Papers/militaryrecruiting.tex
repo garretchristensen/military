@@ -730,15 +730,13 @@ Dept. of Commerce, Bureau of the Census {[}producer{]}, 1992. Ann
 Arbor, MI: Inter- university Consortium for Political and Social Research
 {[}distributor{]}, 1992. doi:10.3886/ICPSR09835 
 } Media markets are defined using the Nielsen Media Research's Designated
-Market Area (DMA). In the year 2000, Nielsen divided the country into 208 DMAs based on a preponderence of residents having access to the same broadcast television and radio stations.   (See \cite{DMAsource1} and \cite{DMAsource2} for more details.) The regressions show that deaths in nearby areas, whether defined using county borders or media market, do not affect
-recruiting in a given county. The deterrent effect of deaths appears
-to be very localized. This is also suggestive evidence that the county response to deaths is due to something more than information, since media markets are intended to share major news sources. 
+Market Area (DMA). In the year 2000, Nielsen divided the country into 208 DMAs based on a preponderence of residents having access to the same broadcast television and radio stations.   (See \cite{DMAsource1} and \cite{DMAsource2} for more details.) The regressions show that deaths in nearby areas, whether defined using county borders or media market, have smaller effects on recruiting in a given county. While it seems that recruits do respond to information from outside the county, this is perhaps suggestive evidence that the county response to deaths is due to something more than information, since media markets are intended to share major news sources. 
 
 %MEDIA MARKET AND CONTIGUOUS
 \begin{table}
 \caption{Deaths in Neighboring Counties and Same Media Market}
 \label{Flo:Media}
-\scalebox{0.7}{\input{../Output/redefcontigLN.tex}
+\scalebox{0.65}{\input{../Output/redefcontigLN.tex}
 }
 \end{table}
 
@@ -747,7 +745,7 @@ My main empirical method thus far has been to compare county recruits
 in a given calendar month to county-wide and state-wide deaths in
 the previous month. It is possible that potential recruits initially
 deterred from enlisting by a death eventually {}``forget'' about
-local deaths and join the military. Table~\ref{Flo:Cumulative Lags}
+local deaths and join the military. Table~\ref{Flo:Cumulative LagsLN}
 shows Poisson regressions with cumulative death and unemployment lags
 of two, four, six, and twelve months--that is, the sum of current
 deaths plus all the deaths that occurred in the previous number of
@@ -760,6 +758,12 @@ to one-half a percent, down to one-third or even a statistically insignificant
 one-sixth of a percent deterrent effect for twelve months of lagged
 deaths. Weighted least squares regressions produce very similar semi-elasticity
 estimates.
+
+%Cumulative Lags
+\begin{table}
+\caption{Cumulative Lage}
+\label{Flo:Cumulative LagsLN}\input{../Output/redefrunninglagsLN}
+\end{table}
 
 As a robustness check on my main specification, I have included a one period lead of deaths. As expected, a death from the county one month into the future has no significant relationship with recruits in the preferred specifications. These regressions are shown in Appendix Table~\ref{Flo:redefPF1}. 
 
@@ -776,18 +780,10 @@ Table \ref{Flo:Poisson Interactions} displays these regressions.
 They all include monthly and county fixed effects, out of county but
 in-state deaths, as well as unemployment, and I have added county
 characteristics interacted with lagged in-county deaths. All variables
-to be interacted have had the population weighted mean subtracted.\footnote{
-In a standard OLS regression this de-meaning would mean we could expect
-the main coefficient on lagged county deaths to remain essentially constant,
-but the weighting scheme used in Poisson regressions does not give
-the same sort of results. I have tested this and found that the main
-coefficient does stay very stable in least squares regressions regardless
-of what sort of weighted de-meaned interaction variables are included.
-I have also run these regressions using least squares and the results
-are qualitatively similar.} Note that the county characteristics, which are fixed over time and thus perfectly collinear with fixed effects, cannot also be included.
+to be interacted have had the population weighted mean subtracted.%\footnote{ In a standard OLS regression this de-meaning would mean we could expect the main coefficient on lagged county deaths to remain essentially constant, but the weighting scheme used in Poisson regressions does not give the same sort of results. I have tested this and found that the main coefficient does stay very stable in least squares regressions regardless of what sort of weighted de-meaned interaction variables are included. I have also run these regressions using least squares and the results are qualitatively similar.}
+Note that the county characteristics, which are fixed over time and thus perfectly collinear with fixed effects, cannot also be included.
 
-I have interacted lagged county deaths with inverse county population to estimate the effect in terms of deaths per population. Also included are interactions with the monthly
-county unemployment figure (the only county characteristic I have
+I have interacted lagged county deaths with inverse county population to estimate the effect in terms of deaths per population. Also included are interactions with the monthly county unemployment figure (the only county characteristic I have
 that changes over time and thus is not collinear with the fixed effects
 and can be included in the regression by itself), percent African-American
 population as measured in 2005, racial fractionalization using percent
@@ -1014,17 +1010,6 @@ may be able to better explain the observed recruiting phenomenon.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TABLES
 
-
-
-
-
-%Cumulative Lags
-\clearpage{}
-\pagebreak{}
-\begin{table}
-\caption{DO IN LOG LINEAR!!}
-\label{Flo:Cumulative Lags}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefrunninglagsP}
-\end{table}
 
 %INTERACTIONS
 \clearpage{}
@@ -1322,6 +1307,14 @@ can be for state deaths.
 %\caption{Poisson version of media and neighboring}
 %\label{Flo:Media}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefcontigP}
 %\end{table}
+
+%POISSON Cumulative Lags
+\clearpage{}
+\pagebreak{}
+\begin{table}
+\caption{DO IN LOG LINEAR!!}
+\label{Flo:Cumulative LagsP}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefrunninglagsP}
+\end{table}
 
 %Completely Linear Regression
 \pagebreak{}

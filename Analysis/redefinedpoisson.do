@@ -374,7 +374,7 @@ replace Rural2=0 if Rural2==.
  gen effect=_b[L1monthcountydeath]+_b[deathcountyunemp]*countyunempZ+_b[deathcountypop]*countypopZ + PctBlack05Z*_b[deathPctBlack05] +PctBush04Z*_b[deathPctBush04] +Rural2Z*_b[deathRural2]
  //No need to add fixed effects here because those affect level, not the effect size
  sort effect
- stop
+
  summ effect
  label var effect "Percentage Point Deterrent Effect of County Death by Interacted County Characteristics"
  histogram effect if effect>-50 &effect<50, title(Distribution of Deterrent Effects)

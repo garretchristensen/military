@@ -147,16 +147,18 @@ outreg2 using ./Output/LNLinearW.tex, tex label ///
 disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
 reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
 	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips)
-outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
+outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
 addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on active duty deaths", ///
 	"As well as future 'lead' periods. Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
 	"as well as a state-specific linear trend. The first four columns show applicants and the last four show contracts.", ///
-	Filename:forwardbasicWLN.txt)
+	Filename:forwardbasicWLN.txt) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
 reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
 	F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty ///
 	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear)  vce(cluster fips)
-outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyandstate) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`file'countyandstate) bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
 
 ************************************************************************
