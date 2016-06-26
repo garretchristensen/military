@@ -47,6 +47,64 @@ replace nationpop=15055210 if year==2004
 replace nationpop=15139739 if year==2005
 replace nationpop=15233351 if year==2006
 
+
+**********
+*Do all generating *before* resizing
+/*REWORK INTERACTION VARIABLES*/
+replace PctWhite05=PctWhite05/100
+replace PctBlack05=PctBlack05/100
+replace PctAIAN05=PctAIAN05/100
+replace PctAsian05=PctAsian05/100
+replace PctNHOPI05=PctNHOPI05/100
+replace PctH05=PctH05/100
+replace CA05N0035_05=CA05N0035_05/1000
+replace CA05N0030_05=CA05N0030_05/1000
+replace PctBush04=PctBush04/100
+replace PctKerry04=PctKerry04/100
+/*RACIAL FRACTIONALIZATION*/
+gen RaceFracH=1-PctWhite05*PctWhite05-PctBlack05*PctBlack05-PctAIAN05*PctAIAN05-PctAsian05*PctAsian05-PctNHOPI*PctNHOPI05-PctH05*PctH05
+gen RaceFrac=1-PctWhite05*PctWhite05-PctBlack05*PctBlack05-PctAIAN05*PctAIAN05-PctAsian05*PctAsian05-PctNHOPI*PctNHOPI05
+/*ECONOMY TYPE*/
+gen Farming=1 if EconType04==1
+replace Farming=0 if Farming==.
+gen FarmMine=1 if EconType04==1|EconType==2
+replace FarmMine=0 if FarmMine==.
+gen Manufacturing=1 if EconType04==1
+replace Manufacturing=0 if Manufacturing==.
+gen Government=1 if EconType04==1
+replace Government=0 if Government==.
+gen Services=1 if EconType04==1
+replace Services=0 if Services==.
+gen UrbanInfluence=1 if UrbanInf03<=7
+replace UrbanInfluence=0 if UrbanInfluence==.
+gen Rural=1 if RuralUrban03>3
+replace Rural=0 if Rural==.
+gen Rural2=1 if RuralUrban03>5
+replace Rural2=0 if Rural2==.
+
+/*RUN REGRESSIONS WITH INTERACTIONS. MONTHLY FE. CALC ELASTICITIES, THEN REDO WITH WEIGHTS*/
+/*DO POP FIRST SINCE INVERSE*/
+ summ countypopmonth /*calc average of county populations*/
+	/*doesn't matter whether you use this or avgcountypop, which is avg'd by fips already*/
+ local avgcountypop=r(mean)
+ gen countypopZ=countypop-`avgcountypop' //subtract off mean
+ gen deathcountypop=L1monthcountydeath/countypopZ //create interaction
+
+/*ALL THE REST OF THE INTERACTIONS INDIVIDUALLLY*/
+foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing Government ///
+	Services HouseStrs04 LowEduc04 LowEmp04 PerstPov04 PopLoss04 NonmetRec04 Retirement04 UrbanInf03 UrbanInfluence ///
+	RuralUrban03 Rural Rural2 CA05N0035_05 CA05N0030_05 PctBush04 PctKerry04{
+ summ `var' [aweight=avgcountypop]
+ gen avg`var'=r(mean)
+ gen `var'Z=`var'-avg`var'
+ summ `var'Z
+ gen death`var'=L1monthcountydeath*`var'Z
+label var deathcountyunemp "Lag County Death*County Unemployment"
+label var deathcountypop "Lag County Death/County Population"
+label var deathPctBlack05 "Lag County Death*%Black Population"
+label var deathPctBush04 "Lag County Death*%George Bush Vote"
+label var deathRural2 "Lag County Death*Rural"
+
 *RESIZE DEATHS
 replace monthcountydeath=monthcountydeath/100
 replace L1monthcountydeath=L1monthcountydeath/100
@@ -94,47 +152,7 @@ outreg2 using ./Output/LNcontrolW`type'.txt, lab tex ct(`header') bdec(3) tdec(3
 	bracket se append addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 } 
 
-
-/*REWORK INTERACTION VARIABLES*/
-replace PctWhite05=PctWhite05/100
-replace PctBlack05=PctBlack05/100
-replace PctAIAN05=PctAIAN05/100
-replace PctAsian05=PctAsian05/100
-replace PctNHOPI05=PctNHOPI05/100
-replace PctH05=PctH05/100
-replace CA05N0035_05=CA05N0035_05/1000
-replace CA05N0030_05=CA05N0030_05/1000
-replace PctBush04=PctBush04/100
-replace PctKerry04=PctKerry04/100
-/*RACIAL FRACTIONALIZATION*/
-gen RaceFracH=1-PctWhite05*PctWhite05-PctBlack05*PctBlack05-PctAIAN05*PctAIAN05-PctAsian05*PctAsian05-PctNHOPI*PctNHOPI05-PctH05*PctH05
-gen RaceFrac=1-PctWhite05*PctWhite05-PctBlack05*PctBlack05-PctAIAN05*PctAIAN05-PctAsian05*PctAsian05-PctNHOPI*PctNHOPI05
-/*ECONOMY TYPE*/
-gen Farming=1 if EconType04==1
-replace Farming=0 if Farming==.
-gen FarmMine=1 if EconType04==1|EconType==2
-replace FarmMine=0 if FarmMine==.
-gen Manufacturing=1 if EconType04==1
-replace Manufacturing=0 if Manufacturing==.
-gen Government=1 if EconType04==1
-replace Government=0 if Government==.
-gen Services=1 if EconType04==1
-replace Services=0 if Services==.
-gen UrbanInfluence=1 if UrbanInf03<=7
-replace UrbanInfluence=0 if UrbanInfluence==.
-gen Rural=1 if RuralUrban03>3
-replace Rural=0 if Rural==.
-gen Rural2=1 if RuralUrban03>5
-replace Rural2=0 if Rural2==.
-
-/*RUN REGRESSIONS WITH INTERACTIONS. MONTHLY FE. CALC ELASTICITIES, THEN REDO WITH WEIGHTS*/
-/*DO POP FIRST SINCE INVERSE*/
- summ countypopmonth /*calc average of county populations*/
-	/*doesn't matter whether you use this or avgcountypop, which is avg'd by fips already*/
- local avgcountypop=r(mean)
- gen countypopZ=countypop-`avgcountypop' //subtract off mean
- gen deathcountypop=L1monthcountydeath/countypopZ //create interaction
-
+*INTERACTIONS ONE AT A TIME**********************************
 /*WEIGHTED*/
 reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty deathcountypop stateunemp ///
 	countyunemp [aweight=avgcountypop], absorb(fips month) vce(cluster fips)
@@ -145,29 +163,21 @@ outreg2 using ./Output/LNinteractALL.txt, lab ct(`header', pop) ti(OLS Weighted 
 	"The first three columns show applicants and the last three show contracts.", Filename:LNinteractALL.tex) ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 
-/*ALL THE REST OF THE INTERACTIONS INDIVIDUALLLY*/
-foreach var in countyunemp PctBlack05 PctH05 PctAsian05 RaceFracH RaceFrac Farming FarmMine Manufacturing Government ///
-	Services HouseStrs04 LowEduc04 LowEmp04 PerstPov04 PopLoss04 NonmetRec04 Retirement04 UrbanInf03 UrbanInfluence ///
-	RuralUrban03 Rural Rural2 CA05N0035_05 CA05N0030_05 PctBush04 PctKerry04{
- summ `var' [aweight=avgcountypop]
- gen avg`var'=r(mean)
- gen `var'Z=`var'-avg`var'
- summ `var'Z
- gen death`var'=L1monthcountydeath*`var'Z
  /*WEIGHTED*/
  /*INTERACTION REGRESSION*/
  reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty death`var' stateunemp countyunemp ///
 	[aweight=avgcountypop], absorb(fips month) vce(cluster fips)
- outreg2 using	./Output/LNinteractALL.txt, tex lab ct(`header' `var') bdec(3) tdec(3) bracket se append ///
+ outreg2 using	./Output/LNinteractALL.txt, tex lab ct(`header') bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 }
 
-*COMBINED INTERACTIONS
+
+*INTERACTIONS COMBINED**********************************
 reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty /*took out avg*/deathcountyunemp ///
 	deathcountypop deathPctBlack05 deathPctBush04 /*deathavgcov*/ deathRural2 stateunemp countyunemp [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)
-outreg2 using ./Output/LNinteractCOMBINE.txt, ct(black) bdec(3) tdec(3) bracket se append ///
-	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO) ///
+outreg2 using ./Output/LNinteractCOMBINE.txt, ct(`header') bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO) tex lab ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
 	"The first three columns show applicants and the last three show contracts.", Filename:LNinteractCOMBINE.tex) ///
