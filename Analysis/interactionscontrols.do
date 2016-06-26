@@ -13,7 +13,6 @@ cap rm ./Output/LNinteractCOMBINE.tex
 
 clear all
 
-
 foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
 if "`file'"=="APP"{
 	local header="Applicants"
@@ -22,9 +21,7 @@ else{
 	local header="Contracts"
 }
 
-
 use ./Data/county`file'_raw.dta, clear
-
 
 /*MERGE IN STATE AND NATION POPULATION DATA*/
 merge m:1 statefips using ./Population/statenationyoungmalepop.dta
