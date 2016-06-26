@@ -704,11 +704,11 @@ of effort) were also correlated with the number of deaths, my estimates
 would be biased. Given that recruiters serve for three years in one
 place, it is highly unlikely that the military is relocating them
 in a way that is correlated with monthly deaths. Without being relocated,
-however, recruiters may change their level of effort. FOIA requests for data on recruiter quotas unfortunately have not been granted, so I am only able to use the number of recruiters by state and quarter until halfway through 2004\footnote{I am grateful to John Warner for sharing this data.}, which I have included this extra control variable for that portion of the sample. I also have detailed mortality data, through 2004. It is conceivable that deaths unrelated to
+however, recruiters may change their level of effort. FOIA requests for data on recruiter quotas unfortunately have not been granted, so I am only able to use the number of recruiters by state and quarter until halfway through 2004\footnote{I am grateful to John Warner for sharing this data.}, which I have included as an extra control variable for that portion of the sample. I also have detailed mortality data, through 2004. It is conceivable that deaths unrelated to
 the military would play a role in determining recruiting (for example,
 young men in a crime-ridden community may be anxious to join the military
 as a means of escape) thus I include monthly male 18-24 year-old mortality figures
-as well. Table \ref{Flo:Poisson Rec&Mort} shows these results. The
+as well. Table \ref{Flo:LNRec&Mort} shows these results. The
 analysis is done for both applicants and contracts, with the observations
 limited to those from October 2001 to June 2004. County and monthly
 fixed effects as well as state trends are included. One can see that
@@ -717,6 +717,11 @@ the estimates of the effect of a death do not change very much (from
 when I add the extra controls. %The estimates for contracts are only
 %about half of what they are using the full data set, indicating that
 %the response to deaths is not constant over the duration of the entire sample.
+\
+\begin{table}
+\caption{Recruiter and Mortality Controls: LNlinear}
+\label{Flo:LNRec&Mort}\input{../Output/LNcontrolW.tex}
+\end{table}
 
 Another interesting test of these results is shown in Table \ref{Flo:Media}.
 Here I have included the number of deaths that occurred in contiguous
@@ -1004,13 +1009,7 @@ may be able to better explain the observed recruiting phenomenon.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TABLES
 
-%RECRUITER AND MORTALITY CONTROLS-DO IN LOG LINEAR!!!
-\clearpage{}
-\pagebreak{}
-\begin{table}
-\caption{DO IN LOG LINEAR!!!}
-\label{Flo:Poisson Rec&Mort}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPrec}
-\end{table}
+
 
 %MEDIA MARKET AND CONTIGUOUS-DO IN LOG LINEAR!!
 \pagebreak{}
@@ -1306,6 +1305,14 @@ can be for state deaths.
 \begin{table}
 \caption{}
 \label{Flo:Poisson Basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.91]{../Output/PDF/redefPbasic}
+\end{table}
+
+%POISSON RECRUITER AND MORTALITY CONTROLS
+\clearpage{}
+\pagebreak{}
+\begin{table}
+\caption{DO IN LOG LINEAR!!!}
+\label{Flo:Poisson Rec&Mort}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPrec}
 \end{table}
 
 %Completely Linear Regression

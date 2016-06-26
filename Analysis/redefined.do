@@ -84,7 +84,7 @@ outreg2 using ./Output/LinearW.tex, tex ti(County Applicants vs Deaths and Unemp
 *I think economists are biased against non-linear estimation. So I'm making the OLS estimates
 *the main estimates.
 
-gen LNactive=ln(active+1)
+
 /* If I resize deaths here I need to resize all of them*/
 replace monthcountydeath=monthcountydeath/100
 replace L1monthcountydeath=L1monthcountydeath/100

@@ -500,7 +500,9 @@ foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHA
 }
 /*CON IS MISSING RESERVE--ACTIVE DUTY ONLY*/
 gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
-
+gen LNactive=ln(active+1)
+label var active "Active Duty Recruits"
+label var LNactive "Log Active Duty Recruits"
 
 *************FINAL CLEANING************
 *This used to be at the beginning of each and every regression file.

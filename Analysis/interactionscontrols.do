@@ -2,7 +2,9 @@ cd $dir
 set more off
 cap log close
 log using ./Logs/interactionscontrols.log, replace
-cap rm ./Output/redefinteractions.txt
+cap rm ./Output/LNcontrolWR.tex
+cap rm ./Output/LNcontrolW.tex
+
 cap rm ./Output/redefinteractionselast.txt
 cap rm ./Output/redefinteractionsW.txt
 cap rm ./Output/redefinteractionselastW.txt
@@ -42,8 +44,6 @@ replace nationpop=15055210 if year==2004
 replace nationpop=15139739 if year==2005
 replace nationpop=15233351 if year==2006
 
-tab month, gen(monthfe)
-
 
 /*TEST WITH RECRUITER CONTROLS AND STUFF*/
 tostring qtr, replace
@@ -56,15 +56,21 @@ gen L1outofcountymort=L1monthstatemort-L1monthcountymort
 
 
 foreach type in "" R { /*DO WITH BOTH ACTIVE AND TOTAL DEATHS*/
-xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51 if yearqtr<=20042&totalrec!=.&L1monthcountymort!=.&L1outofcountymort!=., fe exposure(countypop) vce(robust)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp using ./Output/redefPrec`type'.txt, ct(`file'NoRec`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
+	countyunemp if yearqtr<=20042&totalrec!=.&L1monthcountymort!=.&L1outofcountymort!=., ///
+	absorb(fips month) vce(cluster fips)
+outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp ///
+	using ./Output/LNcontrolW`type'.tex, ct(`file'NoRec`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
 
-xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp totalrec L1monthcountymort L1outofcountymort monthfe3-monthfe33 statetrend1-statetrend51 if yearqtr<=20042, fe exposure(countypop) vce(robust)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp totalrec L1monthcountymort L1outofcountymort using ./Output/redefPrec`type'.txt, ct(`file'RecMort`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
+	countyunemp totalrec L1monthcountymort L1outofcountymort if yearqtr<=20042, ///
+	absorb(fips month) vce(cluster fips)
+outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp ///
+	totalrec L1monthcountymort L1outofcountymort using ./Output/LNcontrolW`type'.tex, ct(`file'RecMort`type') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
 } 
 
-*/
 
+stop
 
 /*REWORK INTERACTION VARIABLES*/
 replace PctWhite05=PctWhite05/100
