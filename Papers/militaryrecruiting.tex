@@ -613,38 +613,38 @@ rate of death of its soldiers, and the behavioral explanation is still reasonabl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{County-Level Analysis\label{sub:County OLS}}
 
-The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model \footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata \citep{reghdfe}. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitavely very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a square root specification, as well as negative binomial. Again, the results are very similar.} 
+The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model \footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata \citep{reghdfe}. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitatively very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a square root specification, as well as negative binomial. Again, the results are very similar.} 
 
 % Linear with logged LHS--Main specification
 % Made with redefined.do
+
 \begin{table}
 \caption{}
 \label{Flo:loglinear}
+\scalebox{0.9}{
 \input{../Output/LNLinearW.tex}
+}
 \end{table}
 
 
 Table \ref{Flo:loglinear}
 shows the results when linear regression is used to analyze the data
 at the county-month level. The left half of these regressions show the analysis done for applicants, the right hand side for contracts, one step further in the recruiting
-process. The first specification, for applicants in column one and contracts in column five, is the `horse race' specification, comparing in-county deaths, out-of-county but in-state deaths,  and out-of-state deaths. Of course this precludes the inclusion of monthly fixed effects, so this model is mis-specified to the extent that there is temporal heterogeneity in the recruiting response to deaths over the course of the wars, nevertheless, I find it illustrative that the coefficient for lagged in-county deaths is nearly five times that of the coefficient for an out-of-state death (1\% compared to 0.2\%). (A more detailed analysis of deaths at the national level is presented in the appendix.)
-
-Fixed effects for each county and for each month are included for the remaining specifications, and state specific linear time trends in specifications 4 and 8.
+process. %The first specification, for applicants in column one and contracts in column five, is the `horse race' specification, comparing in-county deaths, out-of-county but in-state deaths,  and out-of-state deaths. Of course this precludes the inclusion of monthly fixed effects, so this model is mis-specified to the extent that there is temporal heterogeneity in the recruiting response to deaths over the course of the wars, nevertheless, I find it illustrative that the coefficient for lagged in-county deaths is nearly five times that of the coefficient for an out-of-state death (1\% compared to 0.2\%). (A more detailed analysis of deaths at the national level is presented in the appendix.)
+Fixed effects for each county and for each month are included in all specifications, and state-year fixed effects  in specifications 3 and 6.
 Observations are weighted by county population, and standard errors
 are clustered by county. The results indicate that one additional
-in-county death is followed in the next month by a 0.79\% to 0.90\%
-decrease in applicants and a 0.77\% to 0.84\% reduction in contracts.
+in-county death is followed in the next month by a 1.1\%
+decrease in applicants and a similar reduction in contracts.
 \footnote{Note that all death figures have been divided by 100 to make more
 useful digits of the coefficients visible, and thus all coefficients
 for deaths should be interpreted as percents and not fractions (i.e.
 0.4 is 0.4 percent, not 40 percent).} Deaths from in-state but out-of-county
-appear to have a small positive effect, from 0.1\% to 0.2\%, which leads to some concern about the possible behavioral interpretation of my results---perhaps recruiters avoid an area after a death and instead spend their time recruiting from neighboring areas. This alternative mechanism, however, is complicated by the estimates below showing that deaths in contiguous counties do not lead to an increase in recruiting. 
+appear to have a small positive effect, from 0.1\% to 0.2\%, which leads to some concern about the possible behavioral interpretation of my results---perhaps recruiters avoid an area after a death and instead spend their time recruiting from neighboring areas. This alternative mechanism, however, is complicated by estimates below showing that deaths in contiguous counties do not lead to an increase in recruiting. 
 
 Unemployment at the state level has a negative effect: a one percentage point increase leads to a small but not always significant decrease in recruiting,
 while a one percentage point increase in county unemployment leads
-to a 1.6\% increase in recruiting.\footnote{It should not be surprising that specifications including both county and state unemployment show one positive and one negative coefficient: hold state unemployment constant and increasing county unemployment means the county in question is relatively unlucky within the state, so recruits in that county have fewer other options and are more likely to enlist. Conversely, hold county unemployment constant and increase state unemployment, and the county is relatively lucky employment-wise, leading to fewer recruits.}  A simple comparison of the coefficients
-on lagged county deaths and county unemployment indicates that one
-fewer county death would cause the same increase in recruiting as
+to a 1\% increase in recruiting.\footnote{It should not be surprising that specifications including both county and state unemployment show one positive and one negative coefficient: hold state unemployment constant and increasing county unemployment means the county in question is relatively unlucky within the state, so recruits in that county have fewer other options and are more likely to enlist. Conversely, hold county unemployment constant and increase state unemployment, and the county is relatively lucky employment-wise, leading to fewer recruits.}  A simple comparison of the coefficients on lagged county deaths and county unemployment indicates that one fewer county death would cause the same increase in recruiting as
 a 4 to 5 point increase in county unemployment. 
 
 %Unemployment levels are also closely correlated with recruiting levels.

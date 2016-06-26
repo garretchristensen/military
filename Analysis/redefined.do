@@ -90,7 +90,15 @@ replace monthcountydeath=monthcountydeath/100
 replace L1monthcountydeath=L1monthcountydeath/100
 replace outofcounty=outofcounty/100
 replace L1outofcounty=L1outofcounty/100
+label var monthcountydeath "Current In-County Deaths/100"
+label var L1monthcountydeath "Lag In-County Deaths/100"
+label var outofcounty "Current Out-of-County Deaths/100"
+label var L1outofcounty "Lag Out-of-County Deaths/100"
 summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
+if r(max)<.01|r(max)>1 {
+	display "you divided deaths by 100 too little/much"
+	throw a hissy fit
+}
 
 /******WEIGHTED REGRESSIONS*******/
 *THIS IS THE MAIN SPECIFICATION!
@@ -103,8 +111,7 @@ outreg2 using ./Output/LNLinearW.tex, tex label ///
 	ct(Basic) bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"as well as a state-specific linear trend. The first four columns show applicants", ///
-	"and the last four show contracts.", Filename:LNLinearW.tex) ///
+	"The first three columns show applicants and the last three show contracts.", Filename:LNLinearW.tex) ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  
 
@@ -142,7 +149,7 @@ addnote("Notes: Table shows linear regression estimates of log (national active 
 
 reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
 	F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty ///
-	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear)  vce(clusterfips)
+	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear)  vce(cluster fips)
 outreg2 using ./Output/forwardbasicWLN.txt, ct(`file'countyandstate) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
 
 
@@ -162,11 +169,10 @@ reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath [aweight=avgcountypop], /
 outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ti(Log County Applicants vs Active Duty Deaths and Unemployment) ///
 	ct(Basic) bdec(3) tdec(3) bracket se append ///
-	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on active duty deaths.", ///
+	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on \textit{only} active duty deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"as well as a state-specific linear trend. The first four columns show applicants", ///
-	"and the last four show contracts.", Filename:LNLinearW.tex) ///
-	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, NO)
+	"The first four columns show applicants and the last four show contracts.", Filename:LNLinearWR.tex) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
  
 
 /*STATE AND UNEMP*/
@@ -174,7 +180,7 @@ reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcoun
 	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
 outreg2 using ./Output/LNLinearWR.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
 	se append ///
-	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, NO)
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 	
 /*STATE TREND*/
 *reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty countyunemp ///
@@ -189,6 +195,6 @@ reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcoun
 	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
-	addtext(County FE, YES, Month FE, YES, State Trend, NO, Stateyear FE, YES)
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
 } /*END HUGE LOOP OVER BOTH FILES*/
