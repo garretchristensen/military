@@ -763,7 +763,7 @@ estimates.
 %Cumulative Lags
 \begin{table}
 %builtby redefrunninglags.do
-\caption{Cumulative Lage}
+\caption{Cumulative Lags}
 \label{Flo:Cumulative LagsLN}
 \scalebox{0.8}{\input{../Output/runninglagsLN}}
 \end{table}
@@ -943,15 +943,19 @@ Afghanistan). Casualties are found to have no significantly different
 deterrent effect based on gender, hostility-status, and race.%
 \footnote{%Although statistical tests cannot reject that the race of the death does not affect the size of the deterrent effect, I have also run regressions interacting the race of the death with county racial characteristics. The coefficient of interaction between black deaths and black population is twice the magnitude of the coefficient on the interaction of white deaths and black population, indicating that perhaps counties with more blacks are even more deterred by black soldier deaths, although the difference between these two interactions is again not significant.
 The appendix includes results in Tables \ref{Flo:Death by Same-Service Other-Service} and \ref{Flo: Death by Service} comparing deaths across military service branches, with no significant differences by branch.} 
+
 However, the war in which the death occurred has a significant effect of the recruiting response. Table \ref{Flo:Deaths by WarLN} shows that county deaths from Iraq lead to a 1.6 to 1.7\% decrease in recruiting in the following month, while county deaths from Afghanistan lead to an increase in recruiting of 2.3 to 2.9\% in the following month. 
 These effects are significant with high confidence, and tests of the
-equality of the coefficients are easily rejected. The same pattern holds, though slightly less pronounced, when one restricts the analysis to after March 2003 when both wars were occurring simultaneously. This seems to be further evidence that recruits are responding not only to the risk of death, but are also exhibiting a response based on a subjective valuation of the circumstances of the death, as well as how their politics affect that valuation. Perhaps the perception that the war in Afghanistan was `just' while the war in Iraq was not is enough to completely change the direction of the effect. (Only Representative Barbara Lee of California voted against the Authorization for Use of Military Force in September 2001, while 133 Representatives and 23 Sentators voted against the war in Iraq War Resolution in October 2002.)
+equality of the coefficients are easily rejected. The same pattern holds, though slightly less pronounced, when one restricts the analysis to after March 2003 when both wars were occurring simultaneously. 
+
+This seems to be further evidence that recruits are responding not only to the risk of death, but are also exhibiting a response based on a subjective valuation of the circumstances of the death, as well as how their politics affect that valuation. Perhaps the perception that the war in Afghanistan was `just' while the war in Iraq was not is enough to completely change the direction of the effect. (Only Representative Barbara Lee of California voted against the Authorization for Use of Military Force in September 2001, while 133 Representatives and 23 Sentators voted against the war in Iraq War Resolution in October 2002.)
 \begin{table}
 %built by redefhighquality.do
 \caption{Deaths in Different Wars}
 \label{Flo:Deaths by WarLN}
 \input{../Output/redefLNwar}
 \end{table}
+
 %New on Feb 18 2015:
 I have also tested specifications that separately interact Iraq and Afghanistan deaths with county characteristics. The coefficients on the interactions are not statistically different from one another, and go in the same direction for county population, percent African-American, and county unemployment---that is, both wars have positive interactions with unemployment, both negative for percent African-American, and both negative for population. However, the coefficients for the interaction of deaths with county percent George Bush vote share have different directions and are significantly different (p-values are between .05 and .10), with positive coefficients for Bush voteshare interacted with Iraq deaths, and negative coefficients for Bush voteshare interacted with Afghanistan deaths. This implies that the incentive effect of a death in Afghanistan is actually smaller in Bush voting counties than in non-Bush counties. That is, deaths in Afghanistan drew out more new recruits overall, and relatively more new recruits in non-Bush counties than in Bush counties. Deaths in Iraq led to an overall decrease in recruits, with an incentive effect in some Bush counties and a deterent effect in most non-Bush counties. This again seems to fit with the not uncommon perception that the country was united in response to 9/11 and the war in Afghanistan (the effects go in the same direction), but deeply divided over Iraq (the effects go in opposite directions in some counties). 
 
@@ -1072,23 +1076,37 @@ the county, let alone multiple measurements over time, thus the need
 for fixed effects to flexibly control for all immeasurable county
 characteristics fixed over time and reduce or eliminate omitted variable bias.
 
-\subsection{Distribution of Recruits Across States}
-Figure \ref{Flo: Figure: Recruits vs. Population}
-shows that, as one would expect, there are clearly differences in
-state populations. The horizontal axis is a state's percentage of
-the nation's male 18-24 year-old population, and the vertical axis
-shows a state's percentage of the applicants over the entire 16-year
-period for which I have data. With one observation for each state,
-a constant national propensity to enlist would yield a population
-weighted OLS regression coefficient of 1, which can be easily rejected
-statistically. Figure \ref{Flo:Figure: Pop vs. Deaths} shows a state's
-percentage of the young male population and its percentage of the
-deaths in Iraq and Afghanistan. This slope is also statistically different
-from 1, indicating that there is not one constant national likelihood
-of death in the military. This finding may be unsurprising, and is
-shown only since it may be interesting to know in and of itself which
-states have higher proportions of their young men enlist and die in
-the military. 
+%\subsection{Distribution of Recruits Across States}
+%Figure \ref{Flo: Figure: Recruits vs. Population}
+%shows that, as one would expect, there are clearly differences in
+%state populations. The horizontal axis is a state's percentage of
+%the nation's male 18-24 year-old population, and the vertical axis
+%shows a state's percentage of the applicants over the entire 16-year
+%period for which I have data. With one observation for each state,
+%a constant national propensity to enlist would yield a population
+%weighted OLS regression coefficient of 1, which can be easily rejected
+%statistically. Figure \ref{Flo:Figure: Pop vs. Deaths} shows a state's
+%percentage of the young male population and its percentage of the
+%deaths in Iraq and Afghanistan. This slope is also statistically different
+%from 1, indicating that there is not one constant national likelihood
+%of death in the military. This finding may be unsurprising, and is
+%shown only since it may be interesting to know in and of itself which
+%states have higher proportions of their young men enlist and die in
+%the military. 
+
+%Graph of recruit pct by population percent by state
+%\begin{figure}
+%\includegraphics[scale=0.6]{../Output/graph_table1_rec_pop}
+%\caption{State Percentage of Recruits by State Percentage of Young Male Population}
+%\label{Flo: Figure: Recruits vs. Population}
+%\end{figure}
+
+%Graph of population percentage and death by state
+%\begin{figure}
+%\includegraphics[scale=0.6]{../Output/graph_table1_death_pop}
+%\caption{State Percentage of Population vs. State Percentage of Deaths}
+%\label{Flo:Figure: Pop vs. Deaths}
+%\end{figure}
 
 \subsection {Additional Robustness Checks}
 \paragraph{Other functional forms}
@@ -1242,19 +1260,7 @@ can be for state deaths.
 \end{table}
 \clearpage{}
 
-%Graph of recruit pct by population percent by state
-\begin{figure}
-\includegraphics[scale=0.6]{../Output/graph_table1_rec_pop}
-\caption{State Percentage of Recruits by State Percentage of Young Male Population}
-\label{Flo: Figure: Recruits vs. Population}
-\end{figure}
 
-%Graph of population percentage and death by state
-\begin{figure}
-\includegraphics[scale=0.6]{../Output/graph_table1_death_pop}
-\caption{State Percentage of Population vs. State Percentage of Deaths}
-\label{Flo:Figure: Pop vs. Deaths}
-\end{figure}
 
 %POISSON BASIC
 \pagebreak{}

@@ -634,6 +634,9 @@ merge m:1 statefips countyfips year using ./Population/countyyoungmalepop.dta
 drop if _merge==2
 rename _merge merge_countypop
 bysort fips: egen avgcountypop=mean(age1824_male)
+label var avgcountypop "Young Male 18-24 Population, Average for County"
+rename age1824_male countypopmonth
+label var countypopmonth "Young Male 18-24 Population By Month"
 
 /*ADD SLIGHTLY ALTERED/EXCLUSIVE DEATH DEFINITIONS*/
 gen outofstate=monthtotaldeath-monthstatedeath

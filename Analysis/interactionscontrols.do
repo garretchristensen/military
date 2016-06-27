@@ -29,7 +29,7 @@ drop if _merge!=3 /*WHO ARE THESE 33 FUCKERS, AND WHERE DID THEY COME FROM?*/
 rename _merge mergestatepop
 
 /*CREATE POP VARIABLES FOR STATE, AND NATION*/
-rename age1824_male countypopmonth
+
 gen statepop=.
 gen nationpop=.
 destring month, replace
@@ -87,7 +87,7 @@ replace Rural2=0 if Rural2==.
  summ countypopmonth /*calc average of county populations*/
 	/*doesn't matter whether you use this or avgcountypop, which is avg'd by fips already*/
  local avgcountypop=r(mean)
- gen countypopZ=countypop-`avgcountypop' //subtract off mean
+ gen countypopZ=avgcountypop-`avgcountypop' //subtract off mean
  gen deathcountypop=L1monthcountydeath/countypopZ //create interaction
 
 /*ALL THE REST OF THE INTERACTIONS INDIVIDUALLLY*/

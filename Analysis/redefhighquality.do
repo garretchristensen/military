@@ -182,9 +182,11 @@ outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) br
 
  /*GEN AFGHAN/IRAQ INTERACTIONS*/ 
  //*RESTORE DEATHS TO FULL SIZE for INTERACTION *replace L1monthcountydeath=L1monthcountydeath*100 *replace countypop=countypop/1000
+ 
+ rename age1824_male countypopmonth
  summ countypopmonth
  local avgcountypop=r(mean)
- cap gen countypopZ=countypop-`avgcountypop'
+ cap gen countypopZ=avgcountypop-`avgcountypop'
  gen `type'deathcountypopIRAQ=L1IRAQ`type'monthcountydeath/countypopZ
  gen `type'deathcountypopAFGHAN=L1AFGHAN`type'monthcountydeath/countypopZ
  gen `type'deathOOCcountypopIRAQ=L1IRAQ`type'outofcounty/countypopZ
