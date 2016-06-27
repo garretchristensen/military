@@ -1008,14 +1008,7 @@ of risk alone. Models of non-standard decision making that include
 a salience parameter such as \cite{ChettySalience} or \cite{eBayEarly}
 may be able to better explain the observed recruiting phenomenon. 
 
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%TABLES
 
-
-
-\clearpage{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %References here (manual or bibTeX). If you are using bibTeX, add your bib file 
@@ -1027,6 +1020,7 @@ may be able to better explain the observed recruiting phenomenon.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The appendix command is issued once, prior to all appendices, if any.
+\newpage
 \appendix
 
 \section{Supplementary Appendix}
@@ -1076,6 +1070,21 @@ the county, let alone multiple measurements over time, thus the need
 for fixed effects to flexibly control for all immeasurable county
 characteristics fixed over time and reduce or eliminate omitted variable bias.
 
+%both built by deathsvrecruits.do
+%National Time Series
+%National-LogLinear (SEMI)
+\begin{table}
+\caption{}
+\label{Flo:TABLE: Simple Time Series}\input{../Output/deathsvrecruitsSEMI.tex}
+\end{table}
+
+%National-Poisson
+\begin{table}
+\caption{}
+\label{Flo:TABLE: Simple Time Series P}\input{../Output/deathsvrecruitsP.tex}
+\end{table}
+\clearpage{}
+
 %\subsection{Distribution of Recruits Across States}
 %Figure \ref{Flo: Figure: Recruits vs. Population}
 %shows that, as one would expect, there are clearly differences in
@@ -1110,7 +1119,7 @@ characteristics fixed over time and reduce or eliminate omitted variable bias.
 
 \subsection {Additional Robustness Checks}
 \paragraph{Other functional forms}
-Economists tend to favor linear models, which are shown in the main body of the paper, but some would consider Poisson regressions to be the most natural fit for count data with a large number of zeros that have no log, so I have exhaustively tested other models and find generally similar results across all specifications. I present all these results here. 
+Economists tend to favor linear models, which are shown in the main body of the paper, but some would consider Poisson regressions to be the most natural fit for count data with a large number of zeros that have no log, so I have exhaustively tested other models and find generally similar results across all specifications. I present these results here. 
 
 Poisson regression fits a generalized linear model of the form $log(\mu_{i})=x'_{i}\beta$, so $\mu_{i}=exp(x'_{i}\beta)$ and a one unit increase in $x_{j}$ multiplies $\mu_{j}$ by $exp(\beta_{j})$. However, as I am modeling an underlying rate of enlistment, $\mu_{i}=e^{x'_{i}\beta}$, the observed number of recruits is the rate times the exposure, which in my case is the population of young males. If $R_{i}$ is the expected number of recruits, then $R_{i}=Population_{i}\cdot e^{x'_{i}\beta}=e^{ln(Population_{i})+x'_{i}\beta}$.
 Thus all the Poisson models have been fitted with a coefficient constrained
@@ -1246,19 +1255,6 @@ run tests of equivalence of the coefficients for all the service branches.
 The hypotheses of equality cannot be rejected for county deaths, but
 can be for state deaths. 
 
-%National Time Series
-%National-LogLinear (SEMI)
-\begin{table}
-\caption{}
-\label{Flo:TABLE: Simple Time Series}\input{../Output/deathsvrecruitsSEMI.tex}
-\end{table}
-
-%National-Poisson
-\begin{table}
-\caption{}
-\label{Flo:TABLE: Simple Time Series P}\input{../Output/deathsvrecruitsP.tex}
-\end{table}
-\clearpage{}
 
 
 
