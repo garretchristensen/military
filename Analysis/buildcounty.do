@@ -713,9 +713,9 @@ foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp na
  } 
 }
 
-label var monthcountydeath "Current In-County Deaths"
+label var monthcountydeath "In-County Deaths"
 label var L1monthcountydeath "Lag In-County Deaths"
-label var outofcounty "Current Out-of-County Deaths"
+label var outofcounty "Out-of-County Deaths"
 label var L1outofcounty "Lag Out-of-County Deaths"
 
 compress
