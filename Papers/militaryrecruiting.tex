@@ -765,7 +765,7 @@ estimates.
 %builtby redefrunninglags.do
 \caption{Cumulative Lags}
 \label{Flo:Cumulative LagsLN}
-\scalebox{0.8}{\input{../Output/runninglagsLN}}
+\scalebox{0.75}{\input{../Output/runninglagsLN}}
 \end{table}
 
 As a robustness check on my main specification, I have included one and two period leads of deaths. As expected, a death from the county one or two months into the future has no significant relationship with recruits. These regressions are shown in Appendix Table~\ref{Flo:forwardbasicLN}. 
@@ -896,8 +896,8 @@ with the needs of the services.
 \begin{table}
 \caption{Recruits by Quality}
 \label{Flo: Recs by QualityLN}
-\scalebox{0.7}{%\rotatebox{90}{
-\input{../Output/highqualitybytypeLN}}%}
+\scalebox{1}{\rotatebox{90}{
+\input{../Output/highqualitybytypeLN}}}
 \end{table}
 
 Table \ref{Flo: Recs by QualityLN} shows results for recruits
@@ -953,7 +953,9 @@ This seems to be further evidence that recruits are responding not only to the r
 %built by redefhighquality.do
 \caption{Deaths in Different Wars}
 \label{Flo:Deaths by WarLN}
+\scalebox{0.8}{
 \input{../Output/redefLNwar}
+}
 \end{table}
 
 %New on Feb 18 2015:
@@ -1241,7 +1243,7 @@ I also use additional data on deaths acquired through a FOIA request. This data 
 \begin{table}
 \caption{}
 \label{Flo:alldeaths90}
-\includegraphics[bb=45bp 0bp 692bp 780bp,clip,scale=1.0]{../Output/PDF/redefPbasic90}
+\input{../Output/redefPbasic90}
 \end{table}
 
 \subsection{Recruits and Deaths Across Service Branches}
