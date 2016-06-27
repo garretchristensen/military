@@ -1129,45 +1129,40 @@ The detailed specification I estimate follows the equation:
 $$Recruits_{it}=Population_{i}\cdot e^{\beta_{0}Deaths_{i,t}+\beta_{1}Deaths_{i,t-1}+\beta_{2}Unemployment_{it}\\
 +x'_{it}\eta+\alpha_{i}+\gamma_{t}+u_{it}}$$
 where Deaths implies deaths from the given county, Unemployment county unemployment, and $x$ includes in-state (but out of county) deaths as well as
-state unemployment. $\alpha_{i}$ is a set of fixed effects for each county, which flexibly control for any county characteristics such as the presence of a military base or political support for the military. $\gamma_{t}$ is a set of fixed effects for every month,
-so national characteristics that are the same across counties in any
+state unemployment. $\alpha_{i}$ is a set of fixed effects for each county, which flexibly control for any county characteristics such as the presence of a military base or political support for the military. $\gamma_{t}$ is a set of fixed effects for every month, so national characteristics that are the same across counties in any
 given time period such as the total national number of deaths, national
 unemployment rate, or the military wage rate are also flexibly controlled for and cannot be separately estimated. 
-Ordinary least squares results
- for recruit levels (as opposed to logs) are shown in Appendix Table \ref{Flo:County-basic}. All observations are weighted by county population. 
+
+%Ordinary least squares results for recruit levels (as opposed to logs) are shown in Appendix Table \ref{Flo:County-basic}. All observations are weighted by county population. 
+%Completely Linear Regression
+%could be done now in redefined.do but no one cares
+%\pagebreak{}
+%\begin{table}
+%\caption{}
+%\label{Flo:County-basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/redefW}
+%\end{table}
+
  
 %(I have
 %run un-weighted regressions, in which the results are equally significant,
 %if only about 1/3 as large). 
 
-One can see that with a full set of fixed effects, in-county deaths in the previous month are associated with 15 fewer applicants and nearly 10 fewer contracts. In-state deaths
-are associated with 0.3 to 1.1 fewer applicants, and 0.2 to 0.7 contracted
-recruits fewer, although the estimate is sometimes positive and not
-always statistically different from zero. The coefficient on lagged
-in-county deaths is the main estimate of interest, and is remarkably
-stable across different sets of fixed effects after county-level fixed
-effects are included.
+%One can see that with a full set of fixed effects, in-county deaths in the previous month are associated with 15 fewer applicants and nearly 10 fewer contracts. In-state deaths are associated with 0.3 to 1.1 fewer applicants, and 0.2 to 0.7 contracted recruits fewer, although the estimate is sometimes positive and not always statistically different from zero. The coefficient on lagged in-county deaths is the main estimate of interest, and is remarkably stable across different sets of fixed effects after county-level fixed effects are included.
 
-I have calculated, but do not show estimates of the elasticity of
-the recruiting response to death based on least squares regressions.
-They indicate that a one percent increase in the number of in-county
-deaths leads to a 2.7\% reduction in in-county recruits in the next
-month. However, I put less emphasis on this result for two reasons.
-First, the vast majority of county-months do not observe a death,
-and thus one cannot take the natural log of the data for simple elasticity
-calculations. Second, since most county-months have zero deaths, when
-any number of deaths is observed, there has actually been an infinite
-percent increase in the number of deaths. 
+%I have calculated, but do not show estimates of the elasticity of the recruiting response to death based on least squares regressions. They indicate that a one percent increase in the number of in-county deaths leads to a 2.7\% reduction in in-county recruits in the next month. However, I put less emphasis on this result for two reasons. First, the vast majority of county-months do not observe a death, and thus one cannot take the natural log of the data for simple elasticity calculations. Second, since most county-months have zero deaths, when any number of deaths is observed, there has actually been an infinite percent increase in the number of deaths. 
 
-%There are of course methods
-%to deal with the first problem and other ways to calculate elasticities,
-%however the second reason makes the interpretation of the 2.7 coefficient
-%fairly odd. It's hard to know what sort of effect is implied by a
-%$2.7*\infty\%$ decrease in recruits. 
-Semi-elasticity estimates, where the right-hand side variable is in levels and the left hand side is logged eliminates some of the problems with logs of zero, but a non-trivial 30\% of county-months have zero active-duty recruits, so the log-linear OLS model is by no means ideal, even if it is more easily comparable to the Poisson estimates shown above.  One advantage of these linear models, however, is that I can test inclusion of state-by-year fixed effects which improves my case for causal identification. Unfortunately I cannot include these state-by-year fixed effects in Poisson regression due to convergence issues, however, the extra fixed effects result in similar estimates as the other specification; in some cases they make the effect appear even larger. 
+%There are of course methods to deal with the first problem and other ways to calculate elasticities, however the second reason makes the interpretation of the 2.7 coefficient fairly odd. It's hard to know what sort of effect is implied by a $2.7*\infty\%$ decrease in recruits. 
+%Semi-elasticity estimates, where the right-hand side variable is in levels and the left hand side is logged eliminates some of the problems with logs of zero, but a non-trivial 30\% of county-months have zero active-duty recruits, so the log-linear OLS model is by no means ideal, even if it is more easily comparable to the Poisson estimates shown above.  One advantage of these linear models, however, is that I can test inclusion of state-by-year fixed effects which improves my case for causal identification. Unfortunately I cannot include these state-by-year fixed effects in Poisson regression due to convergence issues, however, the extra fixed effects result in similar estimates as the other specification; in some cases they make the effect appear even larger. 
 
-Appendix Table \ref{Flo:Elasticities} shows the semi-elasticity estimates for both applicants and contracts. The dependent variable is the log of active duty recruits. Observations have been weighted by county population. The semi-elasticity estimates show that an in-county death
-in the previous month leads to a 0.8 to 2\% reduction in both applicants and recruits, very similar to the Poisson regressions in the main body of the paper. Out-of-county deaths lead to small increases in recruiting, although the effect is slightly more volatile than that for in-county deaths and becomes negative when state{*}year interacted fixed effects are added. 
+Appendix Table \ref{Flo:Poisson Basic} shows the semi-elasticity estimates for both applicants and contracts. The dependent variable is the log of active duty recruits. Observations have been weighted by county population. The semi-elasticity estimates show that an in-county death in the previous month leads to a 0.8 to 2\% reduction in both applicants and recruits, very similar to the Poisson regressions in the main body of the paper. Out-of-county deaths lead to small increases in recruiting, although the effect is slightly more volatile than that for in-county deaths and becomes negative when state{*}year interacted fixed effects are added. 
+
+%POISSON BASIC
+%built by redefpoisson.do
+\pagebreak{}
+\begin{table}
+\caption{}
+\label{Flo:Poisson Basic}\input{../Output/redefPbasic}
+\end{table}
 
 Additional specifications include modeling the left hand side variable as the square root of recruits, with results shown in Table~\ref{Flo:sqrt}, and a negative binomial conditional fixed effects regression, with results shown in Table~\ref{Flo:negbinom}. Again, results are very similar: by far the largest deterrant effect comes from in-county deaths. Problems exist with negative binomial fixed effects regression, as explained in \cite{negbinom}, so these results are presented only to exhaustively test other functional forms. 
 
@@ -1258,12 +1253,7 @@ can be for state deaths.
 
 
 
-%POISSON BASIC
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo:Poisson Basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.91]{../Output/PDF/redefPbasic}
-\end{table}
+
 
 %POISSON RECRUITER AND MORTALITY CONTROLS
 \clearpage{}
@@ -1304,12 +1294,6 @@ can be for state deaths.
 \label{Flo: Recs by QualityP}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/highqualitybytypeP}
 \end{table}
 
-%Completely Linear Regression
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo:County-basic}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/redefW}
-\end{table}
 
 
 %Square Root
