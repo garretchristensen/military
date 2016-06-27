@@ -6,7 +6,7 @@ clear all
 set more off
 cd $dir
 cap log close
-log using ./Logs/redefined.txt, replace
+log using ./Logs/redefined.smcl, replace
 
 //since outreg is inside loop, they're all append and must be rm'd manually
 cap rm ./Output/LinearW.tex //level regs

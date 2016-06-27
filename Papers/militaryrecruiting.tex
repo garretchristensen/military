@@ -1224,7 +1224,8 @@ Appendix Tables~\ref{Flo:forwardbasicLN} and ~\ref{Flo:redefPF1} repeat the main
 %built by redefined.do
 \caption{Leads Have No Effect: Linear}
 \label{Flo:forwardbasicLN}
-\input{../Output/forwardbasicWLN}
+\scalebox{0.8}{
+\input{../Output/forwardbasicWLN}}
 \end{table}
 
 %Future Deaths Have No Effect
@@ -1235,11 +1236,16 @@ Appendix Tables~\ref{Flo:forwardbasicLN} and ~\ref{Flo:redefPF1} repeat the main
 \label{Flo:redefPF1}\input{../Output/forwardPbasic}
 \end{table}
 
-I also use additional data on deaths acquired through a FOIA request. This data consists of all deaths of anyone in the military from 1990-2006, regardless of circumstance or location. Thus it includes numerous deaths that are completely unrelated to the wars in Iraq or Afghanistan, and even unrelated to the military---heart attacks, car accidents, etc. As I expected given the comparatively banal circumstances of the majority of these deaths, all regressions indicate no significant recruiting response to in-county deaths, neither in the entire 1990-2006 period nor the 2001-2006 period used in the main regression tables. These results are shown in Appendix Table~\ref{Flo:alldeaths90}.
+I also use additional data on deaths acquired through a FOIA request. This data consists of all deaths of anyone in the military from 1990-2006, regardless of circumstance or location. Thus it includes numerous deaths that are completely unrelated to the wars in Iraq or Afghanistan, and even unrelated to the military---heart attacks, car accidents, etc. As I expected given the comparatively banal circumstances of the majority of these deaths, all regressions indicate no significant recruiting response to in-county deaths, neither in the entire 1990-2006 period nor the 2001-2006 period used in the main regression tables. These results are shown in Appendix Tables~\ref{Flo:LNlinearW90} and ~\ref{Flo:alldeaths90}.
 
-%Non-Combat Deaths, 1990-2006 and 2001-2006
-\pagebreak{}
-\clearpage{}
+%Non-Combat Deaths, 1990-2006
+%buily by PandLN90.do
+\begin{table}
+\caption{}
+\label{Flo:LNlinearW90}
+\input{../Output/LNlinearW90}
+\end{table}
+
 \begin{table}
 \caption{}
 \label{Flo:alldeaths90}

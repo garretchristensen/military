@@ -4,7 +4,7 @@ set more off
 cd $dir
 
 cap log close
-log using ./Logs/highquality.txt, replace
+log using ./Logs/highquality.smcl, replace
 
 /*HAVE TO KEEP FILE MANAGEMENT STUFF UP HERE, OUTSIDE APP/CON LOOP*/
 *cap rm ./Output/highqualitybyserviceP.txt
