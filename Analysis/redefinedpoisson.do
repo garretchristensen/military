@@ -1,6 +1,6 @@
 *2014.12.7 began testing rate of death instead of number of death
 
-cd C:/Users/garret/Documents/Research/Military/
+cd $dir
 cap log close
 log using ./Logs/redefpoisson.log, replace
 
@@ -11,199 +11,107 @@ log using ./Logs/redefpoisson.log, replace
 *cap rm ./Output/redefPrecR.txt
 *cap rm ./Output/redefPrace.txt
  cap rm ./Output/redefPbasic.txt
+ cap rm ./Output/redefPbasic.tex
  cap rm ./Output/redefPbasicR.txt
+ cap rm ./Output/redefPbasicR.tex
+ cap rm ./Output/forwardPbasic.tex
+ cap rm ./Output/forwardPbasic.txt
+ cap rm ./Output/forwardPbasicR.tex
+ cap rm ./Output/forwardPbasicR.txt
+ 
  
 clear all
-*set maxvar 32767
-set matsize 800
-set maxiter 30
+
 set more off
 
-foreach file in county countyCON /*county90 countyCON90*/ {   /*BEGIN HUGE LOOP OVER BOTH FILES*/
+foreach file in APP CON/*county90 countyCON90*/ {   /*BEGIN HUGE LOOP OVER BOTH FILES*/
 
 /*ONLY DO ALL THIS CONSTRUCTION ONCE*/
 
-use ./Data/`file'_raw.dta, clear
-*drop *Q*
-/*drop ID-McareB03*/
-drop if fips==0
-drop if countyfips=="999"
-/*GENERATE YEAR FIXED EFFECTS*/
-gen year1999=1 if year==1999
-gen year2000=1 if year==2000
-gen year2001=1 if year==2001
-gen year2002=1 if year==2002
-gen year2003=1 if year==2003
-gen year2004=1 if year==2004
-gen year2005=1 if year==2005
-gen year2006=1 if year==2006
-foreach var in 1999 2000 2001 2002 2003 2004 2005 2006{
- replace year`var'=0 if year`var'==.
-}
-/*GEN MONTH FE*/
-cap tab month, gen(monthfe)
-
-/* (1) CREATE LAGS*/
-sort fips month
-foreach var in outofstate Rmonthcountydeath Routofcounty Routofstate countyunemp stateunemp nationalunemp monthnationalmort monthstatemort monthcountymort{
- foreach X of numlist 1/12 {
-  quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
-  quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X']
-  label var L`X'`var' "Value for `var' `X' months ago"
-  label var F`X'`var' "Value for `var' `X' months in future"
- } 
-}
-
-foreach var in monthcountydeath{
-gen `var'bin=(`var'>0 & `var'<.) /*binary*/
-foreach X of numlist 1/12 {
-  quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X'] /*lags*/
-  quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X'] /*leads*/
-  quietly gen L`X'`var'bin=(`var'[_n-`X']>0 &`var'[_n-`X']<.) if fips[_n]==fips[_n-`X'] /*binary lag*/
-  quietly gen F`X'`var'bin=(`var'[_n+`X']>0 &`var'[_n-`X']<.) if fips[_n]==fips[_n+`X'] /*binary leads*/
-  label var L`X'`var' "County deaths `X' months ago"
-  label var F`X'`var' "County deaths `X' months hence"
- } 
-}
-foreach var in outofcounty{
-gen `var'bin=(`var'>0 & `var'<.) /*binary*/
-foreach X of numlist 1/12 {
-  quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
-  quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X']
-  quietly gen L`X'`var'bin=(`var'[_n-`X']>0 &`var'[_n-`X']<.) if fips[_n]==fips[_n-`X'] /*binary lag*/
-  quietly gen F`X'`var'bin=(`var'[_n+`X']>0 &`var'[_n-`X']<.) if fips[_n]==fips[_n+`X'] /*binary leads*/
-  label var L`X'`var' "State deaths `X' months ago"
-  label var F`X'`var' "State deaths `X' months hence"
- } 
- }
- label var monthcountydeath "In-county deaths this month"
- label var outofcounty "In-State deaths this month"
- 
-/*CREATE TIME SERIES, STATE TREND*/
-gen mo=substr(month,5,2)
-destring year, replace
-destring mo, replace
-gen fancymonth=ym(year,mo)
-destring fips, replace
-tsset fips fancymonth
-gen t=fancymonth-501
-tab statefips, gen(statetrend)
-forvalues X=1/51 {
- replace statetrend`X'=statetrend`X'*t
-}
-
-/*CREATE INTERACTED FE*/
-gen stateyear=string(year)+string(statefips)
-tab stateyear, gen(stateyearfe)
-
-gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
-label var active "Active duty recruits this month"
-
-/*MERGE IN THE POPULATION DATA*/
-/*drop ID-McareB03*/
-destring statefips, replace
-destring countyfips, replace
-destring year, replace
-drop if statefips==72
-sort statefips countyfips
-merge m:1 statefips countyfips year using ./Population/countyyoungmalepop.dta
-drop if _merge==2 /*ALASKA DIVISIONS ARE INCONSISTENT. DROP IT*/
-rename _merge mergecountypop
-merge m:1 statefips using ./Population/statenationyoungmalepop.dta
-drop if _merge!=3 /*WHO ARE THESE 33 FUCKERS, AND WHERE DID THEY COME FROM?*/
-rename _merge mergestatepop
-
-/*MERGE IN THE BUSH '00 DATA*/
-sort statefips countyfips
-merge m:1 statefips countyfips using ./Political/pctbush2000.dta
-drop if _merge==2
-rename _merge mergeBush00
-
-/*CREATE POPULATION VARIABLES FOR COUNTY, STATE, AND NATION*/
-bysort fips:egen countypop=mean(age1824_male)
-rename age1824_male countypopmonth
-drop if countypop==0 /*CAN'T USE THESE FOR EXPOSURE*/
-gen statepop=.
-gen nationpop=.
-destring month, replace
-replace statepop=totalpop2001 if year==2001
-replace statepop=totalpop2002 if year==2002
-replace statepop=totalpop2003 if year==2003
-replace statepop=totalpop2004 if year==2004
-replace statepop=totalpop2005 if year==2005
-replace statepop=totalpop2006 if year==2006
-gen avgstatepop=(totalpop2001+totalpop2002+totalpop2003+totalpop2004+totalpop2005+totalpop2006)/6
-replace nationpop=14358348 if year==2001
-replace nationpop=14626517 if year==2002
-replace nationpop=14834115 if year==2003
-replace nationpop=15055210 if year==2004
-replace nationpop=15139739 if year==2005
-replace nationpop=15233351 if year==2006
-
-/*TEST FOR ANY DEATHS BY MONTH*/
-bysort month: egen anydeaththismonth=max(monthcountydeath)
-replace anydeaththismonth=1 if anydeaththismonth>1
-drop if fips==8014|fips==30069|fips==31091|fips==51515|fips==51580|fips==51595|fips==51600|fips==51678|fips==51685|fips==51690
-drop if month==200608
-/*DROP THESE COUNTIES AND MONTHS BECAUSE THEY HAVE NO DEATHS (recruits?) OR ALL ZEROES, PREVENTING CONVERGENCE*/
+use ./Data/county`file'_raw.dta, clear
 
 /*GENERATE POLYNOMIALS OF DEATHS*/
-foreach var in monthcountydeath Rmonthcountydeath outofcounty Routofcounty outofstate Routofstate monthstatemort monthcountymort{
- foreach lag in F12 F11 F10 F9 F8 F7 F6 F5 F4 F3 F2 F1 "" L1 L2 L3 L4 L5 L6 L7 L8 L9 L10 L11 L12{
-  quietly gen `lag'`var'SQ=`lag'`var'*`lag'`var'
-  label var `lag'`var'SQ "`lag'`var' Squared"
- }
-}
+*foreach var in monthcountydeath Rmonthcountydeath outofcounty Routofcounty outofstate Routofstate monthstatemort monthcountymort{
+* foreach lag in F12 F11 F10 F9 F8 F7 F6 F5 F4 F3 F2 F1 "" L1 L2 L3 L4 L5 L6 L7 L8 L9 L10 L11 L12{
+*  quietly gen `lag'`var'SQ=`lag'`var'*`lag'`var'
+*  label var `lag'`var'SQ "`lag'`var' Squared"
+* }
+*}
 
 /*REPLACE DEATHS BY /100 SO THAT ESTIMATES ARE EASY TO READ/INTERPRET*/
-foreach var in monthcountydeath Rmonthcountydeath outofcounty Routofcounty outofstate Routofstate monthstatemort monthcountymort{
- foreach lag in F12 F11 F10 F9 F8 F7 F6 F5 F4 F3 F2 F1 "" L1 L2 L3 L4 L5 L6 L7 L8 L9 L10 L11 L12 {
-  foreach poly in "" SQ{
-   quietly replace `lag'`var'`poly'=`lag'`var'`poly'/100
-  }
- }
-} 
-
-
-save temp_`file'_P.dta, replace
-/**/
-
-
-/*END ALL CONSTRUCTION GARBAGE*/
-use temp_`file'_P.dta, clear
-
-
+replace monthcountydeath=monthcountydeath/100
+replace L1monthcountydeath=L1monthcountydeath/100
+replace outofcounty=outofcounty/100
+replace L1outofcounty=L1outofcounty/100
+label var monthcountydeath "In-County Deaths/100"
+label var L1monthcountydeath "Lag In-County Deaths/100"
+label var outofcounty "Out-of-County Deaths/100"
+label var L1outofcounty "Lag Out-of-County Deaths/100"
+summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
+if r(max)<.01|r(max)>1 {
+	display "you divided deaths by 100 too little/much"
+	throw a hissy fit
+}
 
 /*MAIN POISSON TABLE*/
 foreach type in "" R {/*DO WITH BOTH ACTIVE AND TOTAL DEATHS*/
 
-disp "HORSE RACE BTW DEATH TYPES%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty `type'outofstate L1`type'outofstate, fe exposure(countypop) vce(robust)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty `type'outofstate L1`type'outofstate using ./Output/redefPbasic`type'.txt, ct(`file'`type'HORSERACE) append bdec(3) tdec(3) bracket se addstat(Likelihood, e(ll))
+*disp "HORSE RACE BTW DEATH TYPES%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+*xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty `type'outofstate L1`type'outofstate, fe exposure(countypop) vce(robust)
+*outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty `type'outofstate L1`type'outofstate using ./Output/redefPbasic`type'.txt, ct(`file'`type'HORSERACE) append bdec(3) tdec(3) bracket se addstat(Likelihood, e(ll))
 
 disp "BASIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 xtpoisson active `type'monthcountydeath L1`type'monthcountydeath monthfe3-monthfe58, fe exposure(countypop) vce(robust)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath using ./Output/redefPbasic`type'.txt, ct(`file'`type'Basic) addnote(redefPbasic`type'.txt on EML) append bdec(3) tdec(3) bracket se addstat(Likelihood, e(ll))
+outreg2 using ./Output/redefPbasic`type'.txt, lab tex keep(`type'monthcountydeath L1`type'monthcountydeath) 
+	ct(`file'`type'Basic) addnote("Notes: Table shows Poisson regression estimates of national active duty recruits on deaths.", ///
+	"Fixed effects are included separately by county and month, and linear state trends, as indiciated,", ///
+	"The first four columns show applicants and the last three show contracts.", Filename:redefPbasic`type'.tex) ///
+	addtext(County FE, YES, Month FE, YES, State Trends, NO) append bdec(3) tdec(3) bracket se addstat(Likelihood, e(ll))
 
 disp "OUT OF COUNTY%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp monthfe3-monthfe58, fe exposure(countypop) vce(robust)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp using ./Output/redefPbasic`type'.txt, ct(w/State) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
-
-*disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
-*xtpoisson active F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath stateunemp countyunemp monthfe10-monthfe52, fe exposure(countypop) vce(robust)
-*outreg2 F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath stateunemp countyunemp using ./Output/forwardPbasic`type'.txt, ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
-*coefplot, drop(monthfe* stateunemp countyunemp _cons) xline(0) title(County Recruits)
-*graph export ./Output/forwardPcounty`file'.png, replace
-
-*xtpoisson active F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath F6outofcounty F5outofcounty F4outofcounty F3outofcounty F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty L3outofcounty L4outofcounty L5outofcounty L6outofcounty stateunemp countyunemp monthfe10-monthfe52, fe exposure(countypop) vce(robust)
-*outreg2 F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath L3monthcountydeath L4monthcountydeath L5monthcountydeath L6monthcountydeath L7monthcountydeath L8monthcountydeath L9monthcountydeath L10monthcountydeath L11monthcountydeath L12monthcountydeath F6outofcounty F5outofcounty F4outofcounty F3outofcounty F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty L3outofcounty L4outofcounty L5outofcounty L6outofcounty stateunemp countyunemp using ./Output/forwardPbasic`type'.txt, ct(`file'countyandstate) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
-*coefplot, drop(monthfe* stateunemp countyunemp _cons) xline(0) title (County and State Recruits)
-*graph export ./Output/forwardPcountystate`file'.png, replace
+xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp //
+	countyunemp monthfe3-monthfe58, fe exposure(countypop) vce(robust)
+outreg2 using ./Output/redefPbasic`type'.txt, ct(w/State) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) //
+	keep(`type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp) //
+	addtext(County FE, YES, Month FE, YES, State Trends, NO)
 
 /*STATE TRENDS*/
-xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend1-statetrend51, fe exposure(countypop) vce(robust)
-outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp using ./Output/redefPbasic`type'.txt, ct(w/StateTrend) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
+xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp //
+	countyunemp monthfe3-monthfe58 statetrend1-statetrend51, fe exposure(countypop) vce(robust)
+outreg2 using ./Output/redefPbasic`type'.txt, ct(w/StateTrend) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) //
+	keep(`type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp) //
+	addtext(County FE, YES, Month FE, YES, State Trends, YES)
 
+
+reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
+	F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty ///
+	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear)  vce(cluster fips)
+outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`file'countyandstate) bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
+	
+	
+	
+disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
+xtpoisson active F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
+	stateunemp countyunemp monthfe4-monthfe52, fe exposure(countypop) vce(robust)
+outreg2 using ./Output/forwardPbasic`type'.txt, lab tex ct(`file') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) //
+	keep(F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath stateunemp countyunemp)
+
+
+xtpoisson active F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
+	F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty ///
+	stateunemp countyunemp monthfe10-monthfe52, fe exposure(countypop) vce(robust)
+outreg2 using ./Output/forwardPbasic`type'.txt, lab tex ct(`file') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) //
+	keep(F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath F2outofcounty ///
+	F1outofcounty outofcounty L1outofcounty L2outofcounty stateunemp countyunemp)
+
+}/*END BOTH ACTIVE AND TOTAL DEATHS*/
+}/*END HUGE LOOP OVER BOTH FILES*/
+
+
+****************************************************************************************************************
+*I don't need to rerun EVERYTHING in Poisson
+***************************************************************************************************************
 /*SHOULD I HAVE ONLY ONE UNEMP?*/
 *xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty countyunemp monthfe3-monthfe58 statetrend1-statetrend51, fe exposure(countypop) vce(robust)
 *outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty countyunemp using ./Output/redefPbasic`type'.txt, ct(No State Unemp) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
@@ -217,11 +125,6 @@ xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcoun
 outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp using ./Output/redefPbasic.txt, ct(w/State*Year) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
 */
 
-}/*END BOTH ACTIVE AND TOTAL DEATHS*/
-}/*END HUGE LOOP OVER BOTH FILES*/
-
-
-****************************************************************************************************************
 /*MAIN POISSON TABLE, EXCEPT WITH ALL RECRUITS, BECAUSE SOME REFERREE DOESN'T UNDERSTAND MEASUREMENT ERROR*/
 *That means use "monthcountyrecruit" instead of "active"
 *Still doing both active and all recruits
@@ -263,10 +166,6 @@ outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`typ
 *xtpoisson monthcountyrecruit `type'monthcountydeath L1`type'monthcountydeath L1`type'monthcountydeathSQ `type'outofcounty L1`type'outofcounty L1`type'outofcountySQ stateunemp countyunemp monthfe3-monthfe58 statetrend1-statetrend51, fe exposure(countypop) vce(robust)
 *outreg2 `type'monthcountydeath L1`type'monthcountydeath L1`type'monthcountydeathSQ `type'outofcounty L1`type'outofcounty L1`type'outofcountySQ stateunemp countyunemp using ./Output/allrecPbasic`type'.txt, ct(w/Poly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
 
-} /*END OF BOTH ACTIVE AND TOTAL DEATHS*/
-
-
-
 
 /********************************************************************************/
 /*
@@ -293,7 +192,7 @@ outreg2 `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`typ
 
 /*************************************************************************************/
 /*************************************************************************************/
-/* IGNORE JAN16 FOR BASIC ONLY*/
+/* IGNORE JAN16 FOR BASIC ONLY*
 
 /*REGS WITH INTERACTIONS*/
 /*REWORK INTERACTION VARIABLES*/
@@ -406,7 +305,3 @@ replace Rural2=0 if Rural2==.
 
  */
  
-}/*END BOTH ACTIVE AND TOTAL DEATHS*/
-
-
-}/*END HUGE LOOP OVER BOTH FILES*/

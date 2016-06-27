@@ -1119,7 +1119,7 @@ characteristics fixed over time and reduce or eliminate omitted variable bias.
 
 \subsection {Additional Robustness Checks}
 \paragraph{Other functional forms}
-Economists tend to favor linear models, which are shown in the main body of the paper, but some would consider Poisson regressions to be the most natural fit for count data with a large number of zeros that have no log, so I have exhaustively tested other models and find generally similar results across all specifications. I present these results here. 
+Economists often favor linear models in applied work, and these are shown in the main body of the paper, but some would consider Poisson regressions to be the most natural fit for count data with a large number of zeros that have no log, so I have exhaustively tested other models and find generally similar results across all specifications. I present these results here. 
 
 Poisson regression fits a generalized linear model of the form $log(\mu_{i})=x'_{i}\beta$, so $\mu_{i}=exp(x'_{i}\beta)$ and a one unit increase in $x_{j}$ multiplies $\mu_{j}$ by $exp(\beta_{j})$. However, as I am modeling an underlying rate of enlistment, $\mu_{i}=e^{x'_{i}\beta}$, the observed number of recruits is the rate times the exposure, which in my case is the population of young males. If $R_{i}$ is the expected number of recruits, then $R_{i}=Population_{i}\cdot e^{x'_{i}\beta}=e^{ln(Population_{i})+x'_{i}\beta}$.
 Thus all the Poisson models have been fitted with a coefficient constrained
@@ -1154,7 +1154,7 @@ unemployment rate, or the military wage rate are also flexibly controlled for an
 %There are of course methods to deal with the first problem and other ways to calculate elasticities, however the second reason makes the interpretation of the 2.7 coefficient fairly odd. It's hard to know what sort of effect is implied by a $2.7*\infty\%$ decrease in recruits. 
 %Semi-elasticity estimates, where the right-hand side variable is in levels and the left hand side is logged eliminates some of the problems with logs of zero, but a non-trivial 30\% of county-months have zero active-duty recruits, so the log-linear OLS model is by no means ideal, even if it is more easily comparable to the Poisson estimates shown above.  One advantage of these linear models, however, is that I can test inclusion of state-by-year fixed effects which improves my case for causal identification. Unfortunately I cannot include these state-by-year fixed effects in Poisson regression due to convergence issues, however, the extra fixed effects result in similar estimates as the other specification; in some cases they make the effect appear even larger. 
 
-Appendix Table \ref{Flo:Poisson Basic} shows the semi-elasticity estimates for both applicants and contracts. The dependent variable is the log of active duty recruits. Observations have been weighted by county population. The semi-elasticity estimates show that an in-county death in the previous month leads to a 0.8 to 2\% reduction in both applicants and recruits, very similar to the Poisson regressions in the main body of the paper. Out-of-county deaths lead to small increases in recruiting, although the effect is slightly more volatile than that for in-county deaths and becomes negative when state{*}year interacted fixed effects are added. 
+Appendix Table \ref{Flo:Poisson Basic} shows the Poisson semi-elasticity estimates for both applicants and contracts. The dependent variable is active duty recruits. Observations have been weighted by county population. The semi-elasticity estimates show that an in-county death in the previous month leads to a 0.8 to 2\% reduction in both applicants and recruits, very similar to the log-linear regressions in the main body of the paper. Out-of-county deaths lead to small increases in recruiting.
 
 %POISSON BASIC
 %built by redefpoisson.do
@@ -1164,47 +1164,99 @@ Appendix Table \ref{Flo:Poisson Basic} shows the semi-elasticity estimates for b
 \label{Flo:Poisson Basic}\input{../Output/redefPbasic}
 \end{table}
 
-Additional specifications include modeling the left hand side variable as the square root of recruits, with results shown in Table~\ref{Flo:sqrt}, and a negative binomial conditional fixed effects regression, with results shown in Table~\ref{Flo:negbinom}. Again, results are very similar: by far the largest deterrant effect comes from in-county deaths. Problems exist with negative binomial fixed effects regression, as explained in \cite{negbinom}, so these results are presented only to exhaustively test other functional forms. 
+Additional specifications include modeling the left hand side variable as the square root of recruits, with results shown in Table~\ref{Flo:sqrt}, and a negative binomial conditional fixed effects regression, with results shown in Table~\ref{Flo:negbinom}. Again, results are very similar: by far the largest deterrant effect comes from in-county deaths. Problems exist with negative binomial fixed effects regression, as explained in \cite{negbinom}, so these results are presented only to exhaustively test other functional forms and show that results are robust. 
+
+
+%Square Root
+\pagebreak{}
+\clearpage{}
+\begin{table}
+\caption{}
+\label{Flo:sqrt}
+\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/sqrt}
+\end{table}
+
+%Negative Binomial
+\pagebreak{}
+\clearpage{}
+\begin{table}
+\caption{}
+\label{Flo:negbinom}
+\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/negbinom}
+\end{table}
+
 
 \paragraph{Tests of Additional Data}
-The main Poisson regression specification from Table~\ref{Flo:Poisson Basic} is repeated in Appendix Table~\ref{Flo:allrecruits} using all recruits, including the reserve and guard contracts that appear to be underreported in the FOIA data. Results are very similar. 
+In additionally to exhaustively testing functional forms and getting similar results, I also obtain extremely similar results when I test only subsets on the data. For instance 
+in addition to testing every recruit, I also test the model by using only deaths from active duty soldiers, as opposed to deaths of all soldiers (active, reserve, and guard) as in all other specification. Results, shown in Appendix Table~\ref{Flo:Rdeathslinear} appear slightly \textit{stronger}, in that deterrent effects of in-county deaths are estimated to be slightly larger than one percent. Appendix Table~\ref{Flo:RdeathsP} shows Poisson regressions using only active duty deaths and again, the results are robust
 
-In addition to testing every recruit, I also test the model by using only deaths from active duty soldiers, as opposed to deaths of all soldiers (active, reserve, and guard) as in all other specification. Results, shown in Appendix Table~\ref{Flo:Rdeathslinear} appear slightly stronger, in that deterrent effects of in-county deaths are estimated to be slightly larger than one percent. Appendix Table~\ref{RdeathsP} shows Poisson regressions using only active duty deaths.
+%The main Poisson regression specification from Table~\ref{Flo:Poisson Basic} is repeated in Appendix Table~\ref{Flo:allrecruits} using all recruits, including the reserve and guard contracts that appear to be underreported in the FOIA data. Results are very similar. 
 
-Appendix Table~\ref{Flo:redefPF1} repeats the main specification but adds one lead period of deaths as a falsification test of the model. As expected, deaths in the future have no relation to current recruiting.
+
+%Using Only Active Duty DEATHS (all the R variables)
+%Linear. Have Poisson as well.
+\pagebreak{}
+\clearpage{}
+\begin{table}
+\caption{Active Duty Deaths Linear}
+\label{Flo:Rdeathslinear}
+\scalebox{0.9}{
+\input{../Output/LNLinearWR.tex}
+}
+%built in redefined.do
+\end{table}
+
+
+\begin{table}
+%built in redefinedpoisson.do
+\caption{Active Duty Deaths Poisson}
+\label{Flo:RdeathsP} \input{../Output/redefPbasicR}
+\end{table}
+
+Appendix Tables~\ref{Flo:forwardbasicLN} and ~\ref{Flo:redefPF1} repeat the main specification but add lead periods of deaths as a falsification test of the model. As expected, deaths in the future have no relation to current recruiting.
+
+
+\pagebreak{}
+\clearpage{}
+\begin{table}
+%built by redefined.do
+\caption{Leads Have No Effect: Linear}
+\label{Flo:forwardbasicLN}
+\input{../Output/forwardbasicWLN}
+\end{table}
+
+%Future Deaths Have No Effect
+\pagebreak{}
+\clearpage{}
+\begin{table}
+\caption{Leads Have No Effect: Poisson}
+\label{Flo:redefPF1}\input{../Output/forwardPbasic}
+\end{table}
 
 I also use additional data on deaths acquired through a FOIA request. This data consists of all deaths of anyone in the military from 1990-2006, regardless of circumstance or location. Thus it includes numerous deaths that are completely unrelated to the wars in Iraq or Afghanistan, and even unrelated to the military---heart attacks, car accidents, etc. As I expected given the comparatively banal circumstances of the majority of these deaths, all regressions indicate no significant recruiting response to in-county deaths, neither in the entire 1990-2006 period nor the 2001-2006 period used in the main regression tables. These results are shown in Appendix Table~\ref{Flo:alldeaths90}.
 
-\subsection{Recruits and Deaths Across Service Branches}
-In this section I examine how the individual services fare in their
-recruiting. There are clearly differences between the services in
-terms of their operations; perhaps stemming from this there are often
-assumed to be significant cultural differences between the branches,
-leading to a difference in the type of people who make up the potential
-applicant pool for each of the services, and the possibility for a
-difference in the potential applicants' response to a local death.
-Table \ref{Flo:Recruits by Service} shows these estimates, again
-using Poisson regression analysis at the month-county level, with county
-and monthly fixed effects and state time trends. It appears that Marine
-recruiting decreases at a rate of over 2\% for every death, while
-the Air Force reaction to death is a statistically insignificant 0.05\%
-reduction in recruits. Deaths at the state level and state and county
-unemployment seem to have effects that are less clearly distinguishable
-across service branches. This makes sense given that very few of the
-deaths in Iraq and Afghanistan have come from the Air Force, while
-many have come from the Marines. But an even larger proportion have
-come from the Army, so if potential recruits were simply steering
-away from the branches of the military with the most deaths, the Army
-would be the branch with the largest recruiting response to deaths,
-which is not the case. I have repeated this exercise using weighted
-least squares regressions of the log of the recruits of each service
-branch, and the deterrent effects by service branch maintain the same
-ratios relative to one another, exhibiting further evidence that the
-recruiting deterrent is greatest for the Marine Corps. 
+%Non-Combat Deaths, 1990-2006 and 2001-2006
+\pagebreak{}
+\clearpage{}
+\begin{table}
+\caption{}
+\label{Flo:alldeaths90}
+\includegraphics[bb=45bp 0bp 692bp 780bp,clip,scale=1.0]{../Output/PDF/redefPbasic90}
+\end{table}
 
-Amongst the four branches of the military, the deaths in Iraq and
-Afghanistan have been highly concentrated amongst soldiers in the
-Army and the Marines. In the data used in this paper, roughly 2000
+\subsection{Recruits and Deaths Across Service Branches}
+In this section I examine how the individual services fare in their recruiting. There are clearly differences between the services in terms of their operations; perhaps stemming from this there are often assumed to be significant cultural differences between the branches, leading to a difference in the type of people who make up the potential applicant pool for each of the services, and the possibility for a difference in the potential applicants' response to a local death.
+
+Table \ref{Flo:Recruits by Service} shows these estimates, again using Poisson regression analysis at the month-county level, with county and monthly fixed effects and state time trends. It appears that Marine recruiting decreases at a rate of over 2\% for every death, while the Air Force reaction to death is a statistically insignificant 0.05\% reduction in recruits. Deaths at the state level and state and county unemployment seem to have effects that are less clearly distinguishable across service branches. This makes sense given that very few of the deaths in Iraq and Afghanistan have come from the Air Force, while many have come from the Marines. But an even larger proportion have come from the Army, so if potential recruits were simply steeringaway from the branches of the military with the most deaths, the Army would be the branch with the largest recruiting response to deaths, which is not the case. I have repeated this exercise using weighted least squares regressions of the log of the recruits of each service branch, and the deterrent effects by service branch maintain the same ratios relative to one another, exhibiting further evidence that the recruiting deterrent is greatest for the Marine Corps. 
+% Break recruits out by service branch
+%\pagebreak{}
+%\clearpage{}
+\begin{table}
+\caption{}
+\label{Flo:Recruits by Service}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/highqualitybyserviceP}
+\end{table}
+
+Amongst the four branches of the military, the deaths in Iraq and Afghanistan have been highly concentrated amongst soldiers in the Army and the Marines. In the data used in this paper, roughly 2000
 deaths are from the Army, 800 from the Marines, 85 from the Navy,
 and 50 from the Air Force. Since there have been 40 times more deaths
 in the Army than the Air Force, it is entirely possible that potential
@@ -1253,15 +1305,13 @@ can be for state deaths.
 
 
 
-
-
 %POISSON RECRUITER AND MORTALITY CONTROLS
-\clearpage{}
-\pagebreak{}
-\begin{table}
-\caption{DO IN LOG LINEAR!!!}
-\label{Flo:Poisson Rec&Mort}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPrec}
-\end{table}
+%\clearpage{}
+%\pagebreak{}
+%\begin{table}
+%\caption{DO IN LOG LINEAR!!!}
+%\label{Flo:Poisson Rec&Mort}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPrec}
+%\end{table}
 
 %MEDIA MARKET AND CONTIGUOUS-IN POISSON
 %built by redefcontig.do
@@ -1272,140 +1322,63 @@ can be for state deaths.
 %\end{table}
 
 %POISSON Cumulative Lags
-\clearpage{}
-\pagebreak{}
-\begin{table}
-\caption{DO IN LOG LINEAR!!}
-\label{Flo:Cumulative LagsP}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/redefrunninglagsP}
-\end{table}
+%\clearpage{}
+%\pagebreak{}
+%\begin{table}
+%\caption{}
+%\label{Flo:Cumulative LagsP}\input{../Output/redefrunninglagsP}
+%\end{table}
 
 %POISSON INTERACTIONS
-\clearpage{}
-\pagebreak{}
-\begin{table}
-\caption{DO IN LOG LINEAR!!}
-\label{Flo:Poisson Interactions}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPinteractions}
-\end{table}
+%\clearpage{}
+%\pagebreak{}
+%\begin{table}
+%\caption{Interactions in Poisson}
+%\label{Flo:Poisson Interactions}\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPinteractions}
+%\end{table}
 
 %POISSON QUALITY OF RECRUIT
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo: Recs by QualityP}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.95]{../Output/PDF/highqualitybytypeP}
-\end{table}
+%\pagebreak{}
+%\begin{table}
+%\caption{}
+%\label{Flo: Recs by QualityP}\input{../Output/highqualitybytypeP}
+%\end{table}
 
-
-
-%Square Root
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:sqrt}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/sqrt}
-\end{table}
-
-%Negative Binomial
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:negbinom}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/negbinom}
-\end{table}
 
 %All Recruits, including the messed up reserve/guard
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{I NEED TO SWITCH THIS TO LOG LINEAR!}
-\label{Flo:allrecruits}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/allrecPbasic}
-\end{table}
-
-
-%Using Only Active Duty DEATHS (all the R variables)
-%Linear. Have Poisson as well.
-
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:Rdeathslinear}
-\scalebox{0.9}{
-\input{../Output/LNLinearWR.tex}
-}
-%built in redefined.do
-\end{table}
-
 %\pagebreak{}
 %\clearpage{}
 %\begin{table}
-%\caption{}
-%\label{Flo:RdeathsP}
-%\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPbasicR}
+%\caption{I NEED TO SWITCH THIS TO LOG LINEAR!}
+%\label{Flo:allrecruits}
+%\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/allrecPbasic}
 %\end{table}
 
 
 
-%Future Deaths Have No Effect
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{Leads Have No Effect: Poisson}
-\label{Flo:redefPF1}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/redefPF1}
-\end{table}
-
-\pagebreak{}
-\clearpage{}
-\begin{table}
-%built by redefined.do
-\caption{Leads Have No Effect: Linear}
-\label{Flo:forwardbasicLN}
-\input{../Output/forwardbasicWLN}
-\end{table}
-
-%Non-Combat Deaths, 1990-2006 and 2001-2006
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:alldeaths90}
-\includegraphics[bb=45bp 0bp 692bp 780bp,clip,scale=1.0]{../Output/PDF/redefPbasic90}
-\end{table}
-
-%9 Break recruits out by service branch
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:Recruits by Service}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/highqualitybyserviceP}
-\end{table}
-
 %13
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo:Deaths by WarP}
-\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefPwar}
-\end{table}
+%\pagebreak{}
+%\begin{table}
+%\caption{}
+%\label{Flo:Deaths by WarP}
+%\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefPwar}
+%\end{table}
 
 %11 Monthly county service branch observations 
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:Death by Same-Service Other-Service}\includegraphics[bb=45bp 0bp 612bp 730bp,scale=0.91]{../Output/PDF/redefbyserviceP}
-\end{table}
+%\pagebreak{}
+%\clearpage{}
+%\begin{table}
+%\caption{}
+%\label{Flo:Death by Same-Service Other-Service}\includegraphics[bb=45bp 0bp 612bp 730bp,scale=0.91]{../Output/PDF/redefbyserviceP}
+%\end{table}
 
 %12 Break deaths out by service branch
-\clearpage{}
-\pagebreak{}
-\begin{table}
-\caption{}
-\label{Flo: Death by Service}\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefbyservicedeath}
-\end{table}
+%\clearpage{}
+%\pagebreak{}
+%\begin{table}
+%\caption{}
+%\label{Flo: Death by Service}\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefbyservicedeath}
+%\end{table}
 
 
 \end{document}

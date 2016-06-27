@@ -140,33 +140,6 @@ test L1IRAQoutofcounty=L1AFGHANoutofcounty
 outreg2 using ./Output/redefLNwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
 	addstat("State", r(p), "County", `county') addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 
-
-/*POISSON*/
-/*CURRENT*/
-xtpoisson active IRAQmonthcountydeath AFGHANmonthcountydeath outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
-test IRAQmonthcountydeath=AFGHANmonthcountydeath
-outreg2 using ./Output/redefPwar.txt, ct(`file'Race current only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), " Test", r(p))
-
-/*LAGGED*/
-xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
-test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p))
-
-/*BOTH*/
-xtpoisson active IRAQmonthcountydeath AFGHANmonthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
-test IRAQmonthcountydeath=AFGHANmonthcountydeath
-local current=r(p)
-test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p), "Current", `current')
-
-/*IN AND OUT OF COUNTY*/
-xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
-test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-local county=r(p)
-test L1IRAQoutofcounty=L1AFGHANoutofcounty
-outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "State", r(p), "County", `county')
-
-
 *ADDED 2015/2/18--TEST INTERACTIONS WITH AFGHAN AND IRAQ, SINCE THAT'S INTERESTING TO A LOT OF PEOPLE
 /*REGS WITH INTERACTIONS*/
 /*REWORK INTERACTION VARIABLES*/
@@ -183,7 +156,6 @@ outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) br
  /*GEN AFGHAN/IRAQ INTERACTIONS*/ 
  //*RESTORE DEATHS TO FULL SIZE for INTERACTION *replace L1monthcountydeath=L1monthcountydeath*100 *replace countypop=countypop/1000
  
- rename age1824_male countypopmonth
  summ countypopmonth
  local avgcountypop=r(mean)
  cap gen countypopZ=avgcountypop-`avgcountypop'
@@ -194,7 +166,7 @@ outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) br
  //*1000 here would make the coefficient less ridiculous, but it makes sense either way.
  
  foreach var in /*avg*/countyunemp PctBlack05 PctBush04 /*avgcov*/{
-  quietly summ `var' [aweight=countypop] //calculate the weighted average of the interaction characteristics
+  quietly summ `var' [aweight=avgcountypop] //calculate the weighted average of the interaction characteristics
   quietly cap gen avg`var'=r(mean) //make that weighted average a variable
   quietly cap gen `var'Z=`var'-avg`var' //calculate the above-averageness of the characteristic
   foreach type in IRAQ AFGHAN{
@@ -203,8 +175,7 @@ outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) br
   } 
  } /*END MULTIPLE INTERACTION VARS*/ 
 
- 
- 
+
 *interact deaths separately by ware an characteristic. Only in-county deaths
 *LINEAR
  reghdfe LNactive monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty ///
@@ -224,19 +195,54 @@ outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) br
 	deathcountyunempAFGHAN deathcountypopAFGHAN deathPctBlack05AFGHAN deathPctBush04AFGHAN stateunemp countyunemp, ///
 	absorb(fips month) vce(cluster fips)
 
- 
-*POISSON 
+	
+/*POISSON*/
+/*CURRENT*/
+xtpoisson active IRAQmonthcountydeath AFGHANmonthcountydeath outofcounty stateunemp countyunemp monthfe3-monthfe33 ///
+	statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
+test IRAQmonthcountydeath=AFGHANmonthcountydeath
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race current only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), " Test", r(p))
+
+/*LAGGED*/
+xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty stateunemp ///
+	countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
+test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p))
+
+/*BOTH*/
+xtpoisson active IRAQmonthcountydeath AFGHANmonthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty ///
+	stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
+test IRAQmonthcountydeath=AFGHANmonthcountydeath
+local current=r(p)
+test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "Test", r(p), "Current", `current')
+
+/*IN AND OUT OF COUNTY*/
+xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty ///
+	stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
+test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
+local county=r(p)
+test L1IRAQoutofcounty=L1AFGHANoutofcounty
+outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "State", r(p), "County", `county')
+
+*POISSON INTERACTIONS
  xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty ///
 	deathcountyunempIRAQ deathcountyunempAFGHAN deathcountypopIRAQ deathcountypopAFGHAN deathPctBlack05IRAQ ///
 	deathPctBlack05AFGHAN deathPctBush04IRAQ deathPctBush04AFGHAN stateunemp countyunemp monthfe3-monthfe58, ///
-	fe exposure(countypop) vce(robust)
+	fe exposure(avgcountypop) vce(robust)
  outreg2 using ./Output/redefPinteractions.txt, lab tex ct(black) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll))
 
  *in and out of county deaths interacted
- xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty deathcountyunempIRAQ deathcountyunempAFGHAN deathcountypopIRAQ deathcountypopAFGHAN deathPctBlack05IRAQ deathPctBlack05AFGHAN deathPctBush04IRAQ deathPctBush04AFGHAN deathOOCcountyunempIRAQ deathOOCcountyunempAFGHAN deathOOCcountypopIRAQ deathOOCcountypopAFGHAN deathOOCPctBlack05IRAQ deathOOCPctBlack05AFGHAN deathOOCPctBush04IRAQ deathOOCPctBush04AFGHAN /*no rural*/ stateunemp countyunemp monthfe3-monthfe58, fe exposure(countypop) vce(robust)
+ xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty ///
+	L1AFGHANoutofcounty deathcountyunempIRAQ deathcountyunempAFGHAN deathcountypopIRAQ deathcountypopAFGHAN deathPctBlack05IRAQ ///
+	deathPctBlack05AFGHAN deathPctBush04IRAQ deathPctBush04AFGHAN deathOOCcountyunempIRAQ deathOOCcountyunempAFGHAN ///
+	deathOOCcountypopIRAQ deathOOCcountypopAFGHAN deathOOCPctBlack05IRAQ deathOOCPctBlack05AFGHAN deathOOCPctBush04IRAQ ///
+	deathOOCPctBush04AFGHAN /*no rural*/ stateunemp countyunemp monthfe3-monthfe58, fe exposure(avgcountypop) vce(robust)
 
  *test only afghan deaths and interactions
- xtpoisson active AFGHANmonthcountydeath L1AFGHANmonthcountydeath AFGHANoutofcounty L1AFGHANoutofcounty /*took out avg*/deathcountyunempAFGHAN deathcountypopAFGHAN deathPctBlack05AFGHAN deathPctBush04AFGHAN /*no rural*/ stateunemp countyunemp monthfe3-monthfe58, fe exposure(countypop) vce(robust)
+ xtpoisson active AFGHANmonthcountydeath L1AFGHANmonthcountydeath AFGHANoutofcounty L1AFGHANoutofcounty ///
+	deathcountyunempAFGHAN deathcountypopAFGHAN deathPctBlack05AFGHAN deathPctBush04AFGHAN stateunemp countyunemp ///
+	monthfe3-monthfe58, fe exposure(avgcountypop) vce(robust)
 
 } /*END OF HUGE LOOP OVER BOTH APP AND CON FILES*/
 

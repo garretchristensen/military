@@ -14,7 +14,7 @@ cd $dir
 *do ./Analysis/buildunemployment.do //Formats BLS unemployment data
 do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mortality data
 							 // separately does the same with CONTRACTS
-*do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths from 1990 on,
+do ./Analysis/buildcounty90.do //puts together APPLICANTS DATA with ALL deaths from 1990 on,
 							//not just 2001-on combat
 							//separately does the same with CONTRACTS
 													
@@ -30,18 +30,18 @@ do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mort
 *do ./Analysis/deathsvrecruits.do
 
 /*RUN MAIN LINEAR REGRESSIONS*/
-*do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
-*do ./Analysis/interactionscontrols.do /*linear regression recruit/mort controls and interactions*/
-*do ./Analysis/redefcontig.do /*linear and poisson regressions of neighboring/media market counties*/
+do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
+do ./Analysis/interactionscontrols.do /*LN regression recruit/mort controls and interactions*/
+do ./Analysis/redefcontig.do /*LN&P regressions of neighboring/media market counties*/
 
 /*OTHER*/
-*do ./Analysis/redefrunninglags.do /*poisson and linear regs for longer-term lags*/
-do ./Analysis/redefhighquality.do /*regs of LQ/HQ recruits, plus deaths of many ifferent types, and interactions with diff war deaths*/
+do ./Analysis/redefrunninglags.do /*LN&P regs for longer-term lags*/
+do ./Analysis/redefhighquality.do /*LN&P regs of LQ/HQ recruits, plus deaths of many ifferent types, and interactions with diff war deaths*/
 
 *do ./Analysis/90deaths/redefinedpoisson90_2015.02.17.do /*Main P-regs with 90-2006 deaths*/
 *do ./Analysis/redefbyservice2013.12.11.do /*reshape the data month-county-service branch, run linear and possion regs*/
 
 /*OTHER FUNCTIONAL FORMS*/
-*do ./Analysis/redefinedpoisson2015.02.17.do /*poission regs, with recruit/mort controls, and interactions*/
+do ./Analysis/redefinedpoisson.do /*Main poission regs, R & Total deaths, future leads, with recruit/mort controls, and interactions*/
 *do ./Analysis/squareroot2015.2.17.do /*square root of recruits*/
 *do ./Analaysis/nebinom2015.2.17.do /*negative binomial*/
