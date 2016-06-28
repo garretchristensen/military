@@ -6,8 +6,8 @@ log using ./Logs/PandLN90.smcl, replace
 
 /*HAVE TO KEEP THIS FILE MANAGEMENT UP HERE, OUTSIDE THE APP/CON LOOP*/
 
-cap rm ./Output/redefPbasic90.txt
-cap rm ./Output/redefPbasic90.tex
+*cap rm ./Output/redefPbasic90.txt
+*cap rm ./Output/redefPbasic90.tex
 cap rm ./Output/LNLinear90.tex
 cap rm ./Output/LNLinear90.txt
  
@@ -72,6 +72,9 @@ outreg2 using ./Output/LNLinear90.tex, tex label ///
 	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
+	
+/*	
+*WARNING: THE 199 MONTHLY FIXED EFFECTS TAKE FOREVER TO ESTIMATE	
 /*MAIN POISSON TABLE*/
 disp "BASIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 xtpoisson active monthcountydeath L1monthcountydeath monthfe3-monthfe199, fe exposure(avgcountypop) vce(robust)
@@ -84,17 +87,17 @@ outreg2 using ./Output/redefPbasic90.txt, lab tex keep(monthcountydeath L1monthc
 disp "OUT OF COUNTY%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 xtpoisson active monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp ///
 	countyunemp monthfe3-monthfe199, fe exposure(avgcountypop) vce(robust)
-outreg2 using ./Output/redefPbasic90.txt, ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
+outreg2 using ./Output/redefPbasic90.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
 	keep(monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp) ///
 	addtext(County FE, YES, Month FE, YES, State Trends, NO)
 
 /*STATE TRENDS*/
 xtpoisson active monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp ///
 	countyunemp monthfe3-monthfe199 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
-outreg2 using ./Output/redefPbasic90.txt, ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
+outreg2 using ./Output/redefPbasic90.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
 	keep(monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp) ///
 	addtext(County FE, YES, Month FE, YES, State Trends, YES)
-
+*/
 
 } /*END OF APP AND CON*/
 

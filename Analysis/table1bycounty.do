@@ -11,7 +11,7 @@ log using ./Logs/table1bycounty.smcl, replace
 /* JUST TEST HOW WELL THEY FIT TO A BINOMIAL DISTRIBUTION*/
 /****************************************************/
 /*ACTIVE DEATHS ACTIVE APPS*/
-use ./Data/county_raw.dta, clear
+use ./Data/countyAPP_raw.dta, clear
 gen WorstP=.
 gen Rmonthcounty=ARmonthcounty+FRmonthcounty+NRmonthcounty+MRmonthcounty
 bysort fips: egen countyactiveapps=sum(Rmonthcounty)
@@ -28,8 +28,8 @@ label var WorstP "County P-Value"
 histogram WorstP if WorstP!=1, width(.01) frequency ti(Active Duty Deaths and Applicants) //addl
 graph save ./Output/hist_binomial.gph, replace
 
-count if WorstP<(.05/3129) //was 9 last time I checked
-if r(N)!=9{
+count if WorstP<(.05/3129) //was 8 last time I checked
+if r(N)!=8{
  throw a hissy fit
 }
 disp "this is how many counties couldn't come from the average dist"
@@ -45,7 +45,7 @@ disp "Active Deaths/Active Apps " r(sd)/r(mean)
 *summ hazard_aaa [aweight=percentpop]
 *disp "Active Deaths/Active Apps WEIGHTED " r(sd)/r(mean)
 label var hazard_aaa "Active Deaths/Active Applicants"
-histogram hazard_aaa, addl frequency //title("Hazard Rate by County")
+histogram hazard_aaa, frequency //addl title("Hazard Rate by County")
 graph save ./Output/hist_county_aaa.gph, replace
 /*TOTAL ACTIVE APPS*/
 gen hazard_taa=deaths/countyactiveapps
@@ -54,7 +54,7 @@ disp "Total Deaths/Active Apps "r(sd)/r(mean)
 *summ hazard_taa [aweight=percentpop]
 *disp "Total Deaths/Active Apps WEIGHTED "r(sd)/r(mean)
 label var hazard_taa "Total Deaths/Active Applicants"
-histogram hazard_taa, frequency addl //title("Hazard Rate by County")
+histogram hazard_taa, frequency //addl title("Hazard Rate by County")
 graph save ./Output/hist_county_taa.gph, replace
 
 /*****************************************************/
@@ -106,7 +106,7 @@ disp "Active Deaths/Active Cons "r(sd)/r(mean)
 *summ hazard_aac [aweight=percentpop]
 *disp "Active Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_aac "Active Deaths/Active Contracts"
-histogram hazard_aac, addl frequency
+histogram hazard_aac, frequency //addl
 graph save ./Output/hist_county_aac.gph, replace
 /*TOTAL ACTIVE CON*/
 gen hazard_tac=deaths/countyactivecons
@@ -115,7 +115,7 @@ disp "Total Deaths/Active Cons "r(sd)/r(mean)
 *summ hazard_tac [aweight=percentpop]
 disp "Total Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_tac "Total Deaths/Active Contracts"
-histogram hazard_tac, addl frequency
+histogram hazard_tac, frequency //addl
 graph save ./Output/hist_county_tac.gph, replace
 
 **COMBINE ALL FOUR COUNTY GRAPHS

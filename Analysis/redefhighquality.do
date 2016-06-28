@@ -65,7 +65,6 @@ if r(max)<.01|r(max)>1 {
 	throw a hissy fit
 }
 
-/*
 /*(2)RECRUITS OF DIFFERENT QUALITY--OLS*/
 
 /*GENERATE ACTIVE DUTY ONLY VARIABLES*/
@@ -104,7 +103,7 @@ foreach TYPE in LQ HQ50 HQ50alt HQ75 {
  *xtpoisson R`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty outofstate L1outofstate stateunemp countyunemp, fe exposure(avgcountypop) vce(robust)
  *outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty outofstate L1outofstate stateunemp countyunemp  using ./Output/highqualitybytypePX.txt, ct(`file'`TYPE') bdec(3) tdec(3) bracket se append
 }
-*/
+
 /****************************************************************************************/
 /*(7) DEATHS OF DIFFERENT WARS*/
 
@@ -117,7 +116,7 @@ outreg2  using ./Output/redefLNwar.txt, lab tex ct(`header1') bdec(3) tdec(3) br
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative ", ///
 	"lagged deaths by war. Fixed effects are included separately by county and month as indiciated,", ///
 	"The first four columns show applicants and the last four show contracts.", Filename:redefLNwar.tex) ///
-	addstat("Test In-County", r(p)) addtext(County FE, YES, Month FE, YES, Stateyear FE, yes)
+	addstat("Test In-County", r(p)) addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 	
 /*BOTH*/
 reghdfe LNactive monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty ///
@@ -126,7 +125,8 @@ test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
 local incounty=r(p)
 test L1IRAQoutofcount=L1AFGHANoutofcounty
 outreg2 using ./Output/redefLNwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
-	addstat("Test In-County", `incounty', "Test Out-of-County", r(p)) addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
+	addstat("Test In-County", `incounty', "Test Out-of-County", r(p)) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
 *ADDED 2015/2/18--TEST INTERACTIONS WITH AFGHAN AND IRAQ, SINCE THAT'S INTERESTING TO A LOT OF PEOPLE
 /*REGS WITH INTERACTIONS*/
@@ -161,7 +161,7 @@ outreg2 using ./Output/redefLNwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bra
    quietly gen death`var'`type'=L1`type'monthcountydeath*`var'Z //Interact the death/100 with the above-averageness of the characteristic
    quietly gen deathOOC`var'`type'=L1`type'outofcounty*`var'Z 
   } 
- } /*END MULTIPLE INTERACTION VARS*/ 
+ } /*END INTERACTION VAR CONSTRUCTION*/ 
 
 
 *interact deaths separately by war an characteristic. Only in-county deaths
@@ -170,14 +170,14 @@ foreach var in deathcountypop deathcountyunemp deathPctBlack05 deathPctBush04{
 reghdfe LNactive monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty ///
 	`var'IRAQ `var'AFGHAN  stateunemp countyunemp , absorb(fips month stateyear) vce(cluster fips)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-local test=r(p)
+local incounty=r(p)
 test `var'IRAQ=`var'AFGHAN
-outreg2 using ./Output/redefLNwarINT.txt, lab tex ct(black) bdec(3) tdec(3) bracket se append ///
+outreg2 using ./Output/redefLNwarINT.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths ", ///
 	"from different wars, interacted. Fixed effects are included separately by county and month as indiciated,", ///
 	"The first four columns show applicants and the last four show contracts.", Filename:redefLNwar.tex) ///
-	addstat("Test In-County", `tes', "Test Interaction", r(p)) ///
-	addtext(County FE, YES, Month FE, YES, Stateyear FE, yes)
+	addstat("Test In-County", `incounty', "Test Interaction", r(p)) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 }
 	
 /*POISSON*/
@@ -187,7 +187,7 @@ outreg2 using ./Output/redefLNwarINT.txt, lab tex ct(black) bdec(3) tdec(3) brac
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty stateunemp ///
 	countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append ///
+outreg2 using ./Output/redefPwar.txt, ct(`header1') bdec(3) tdec(3) bracket se append ///
 	addstat("Likelihood", e(ll), "Test", r(p))
 
 /*IN AND OUT OF COUNTY*/
@@ -196,21 +196,22 @@ xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeat
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
 local county=r(p)
 test L1IRAQoutofcounty=L1AFGHANoutofcounty
-outreg2 using ./Output/redefPwar.txt, ct(`file'Race lag only) bdec(3) tdec(3) bracket se append addstat("Likelihood", e(ll), "State", r(p), "County", `county')
+outreg2 using ./Output/redefPwar.txt, ct(`header1') bdec(3) tdec(3) bracket se append ///
+	addstat("Likelihood", e(ll), "State", r(p), "County", `county')
 
 *POISSON INTERACTIONS, ONE AT A TIME
 foreach var in deathcountypop deathcountyunemp deathPctBlack05 deathPctBush04{
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty ///
 	`var'IRAQ `var'AFGHAN  stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51 , fe exposure(avgcountypop) vce(robust)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-local test=r(p)
+local incounty=r(p)
 test `var'IRAQ=`var'AFGHAN
-outreg2 using ./Output/redefPwarINT.txt, lab tex ct(black) bdec(3) tdec(3) bracket se append ///
+outreg2 using ./Output/redefPwarINT.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows Poisson regression estimates of national active duty recruits on deaths ", ///
 	"from different wars, interacted. Fixed effects are included separately by county and month as indiciated,", ///
 	"The first four columns show applicants and the last four show contracts.", Filename:redefLNwar.tex) ///
-	addstat("Test In-County", `tes', "Test Interaction", r(p)) ///
-	addtext(County FE, YES, Month FE, YES, State Trend FE, yes)
+	addstat("Test In-County", `incounty', "Test Interaction", r(p)) ///
+	addtext(County FE, YES, Month FE, YES, State Trend FE, YES)
 }
 
 } /*END OF HUGE LOOP OVER BOTH APP AND CON FILES*/
