@@ -50,12 +50,17 @@ else{
 /*NO STATE*/
 reghdfe LNactive monthcountydeath L1monthcountydeath [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)
+display "`file'"
+if "`file'"=="APP90"{
+display "it worked"
+}
+
 outreg2 using ./Output/LNLinear90.tex, tex label ///
 	ti(1990-2006 Log County Applicants vs Deaths and Unemployment) ///
 	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"The first three columns show applicants and the last three show contracts.", Filename:LNLinearW.tex) ///
+	"The first three columns show applicants and the last three show contracts.", Filename:LNLinear90.tex) ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 
 /*STATE AND UNEMP*/
@@ -73,7 +78,7 @@ outreg2 using ./Output/LNLinear90.tex, tex label ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
 	
-/*	
+
 *WARNING: THE 199 MONTHLY FIXED EFFECTS TAKE FOREVER TO ESTIMATE	
 /*MAIN POISSON TABLE*/
 disp "BASIC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
@@ -97,7 +102,7 @@ xtpoisson active monthcountydeath L1monthcountydeath outofcounty L1outofcounty s
 outreg2 using ./Output/redefPbasic90.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
 	keep(monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp) ///
 	addtext(County FE, YES, Month FE, YES, State Trends, YES)
-*/
+
 
 } /*END OF APP AND CON*/
 

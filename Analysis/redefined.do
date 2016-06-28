@@ -128,6 +128,7 @@ outreg2 using ./Output/LNLinearW.tex, tex label ct(`header') bdec(3) tdec(3) bra
 	se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 	
+
 /*STATE TREND*/
 *reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
 *	stateunemp statetrend1-statetrend51[aweight=avgcountypop], ///

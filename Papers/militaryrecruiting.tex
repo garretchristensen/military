@@ -530,12 +530,10 @@ than those in ancillary support operations. And it is possible that
 recruits from certain states are more likely than others to sign up
 for more dangerous occupations. To test this I make a comparison of the likelihood of death for a recruit from each of the states. %(In the appendix, I establish the perhaps unsurprising fact that recruits and deaths are not uniformly distributed across the population. Here I restrict my attention to the likelihood of death \textit{given} enlistment.) 
 
-A rough way to examine this issue is to compare the number of recruits from a state (or county) to the number of deaths from the same state (or county). Figure \ref{Flo:HISTOstatedeaths} shows histograms of the ratio of active duty deaths to total active duty applicants for each state over the whole period for which I have data. Figure \ref{Flo:HISTOcountydeaths} The state ratios are centered around 0.3\%, but are clearly not all identical. I have repeated this exercise including both active duty and reserve and guard deaths (since service and death in the reserve and guard duty
-is clearly correlated with where one lives, including them might lead
-to complications) for both applicants and contracts, using both unweighted
+A rough way to examine this issue is to compare the number of recruits from a state (or county) to the number of deaths from the same state (or county). Figure \ref{Flo:HISTOstatedeaths} shows histograms of the ratio of active duty deaths to total active duty applicants for each state over the whole period for which I have data, and  Figure~\ref{Flo:HISTOcountydeaths} shows the same by county. The state ratios are centered around 0.3\%, but are clearly not all identical. I have repeated this exercise including both active duty and reserve and guard deaths (since service and death in the reserve and guard duty is clearly correlated with where one lives, including them might lead to complications) for both applicants and contracts, using both unweighted
 and population-weighted means. The coefficients of variation for each
 of these eight methods of calculating the risk of death by state are
-relatively small, ranging from 0.143 to 0.319. Looking at county figures shows that the majority of counties have zero deaths. While some counties clearly exhibit higher rates, testing is required to determine whether this is significant. 
+relatively small, ranging from 0.143 to 0.319. Looking at county figures shows that the majority of counties have zero deaths. While some counties clearly exhibit higher rates, testing is required to determine whether the variation is significant. 
 
 %State death hazard graphs
 %built by Table1graph.do
@@ -559,14 +557,11 @@ that each county observation came from a binomial distribution with this
 hazard rate of p=.003. Figure \ref{Flo:Pat's Histo} displays
 histograms of the p-value for each state and county, one set using active-duty deaths
 and active duty applicants, the other using active-duty deaths and
-active-duty contracts. The histogram displays the p-values as calculated,
-but to interpret, one should use an adjustment for multiple testing such as Bonferroni or Sidak corrected p-values (i.e., divide the cutoff for significance by the number of tests, 51, thus replacing a cutoff of .05 with 0.05/51=0.0009). Only two
+active-duty contracts. If counties exhibit statistically indistinguishable rates of death, then p-values should be high. The histogram displays the p-values as calculated,
+but to interpret, one should use an adjustment for the high degree of multiple testing present such as Bonferroni (i.e., divide the cutoff for significance by the number of tests, 51, thus replacing a cutoff of .05 with 0.05/51=0.0009). Only two
 of the state observations (Florida and Massachusetts) reject the null
 hypothesis that their true probability is in fact .003 using applicant
-data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different (nine times for applicants and zero for contracts). So it is possible that recruits from certain states are more likely to
-enter dangerous military occupations, but according to my evidence,
-the idea that the risk of death is the same across all states can
-only be rejected infrequently. 
+data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts). So it is possible that recruits from certain states are more likely to enter dangerous military occupations, but according to my evidence, the idea that the risk of death is the same across all states can only be rejected infrequently. 
 
 \begin{figure}
 %built by Table1Graph.do AND table1bycounty.do
@@ -578,8 +573,7 @@ Same Binomial Distribution}
 \clearpage{}
 
 This is not necessarily a reason for concern regarding omitted variable bias,
-since fixed effects for each county will still be able to control for
-this underlying characteristic of the state and county to the extent it is constant over time, however, it does give a slightly different meaning to the estimates I develop in the next few pages. If deaths in Iraq and Afghanistan were truly uniformly
+since fixed effects for each county will still be able to control for this underlying characteristic of the state and county to the extent it is constant over time, however, it does give a slightly different meaning to the estimates I develop in the next few pages. If deaths in Iraq and Afghanistan were truly uniformly
 distributed amongst all the troops, regardless of where they came
 from, then the fact that a soldier from a given county, say Fairfax
 County, Virginia, had died would provide no more information regarding
@@ -631,8 +625,7 @@ appear to have a small positive effect, from 0.1\% to 0.2\%, which leads to some
 
 Unemployment at the state level has a negative effect: a one percentage point increase leads to a small but not always significant decrease in recruiting,
 while a one percentage point increase in county unemployment leads
-to a 1\% increase in recruiting.\footnote{It should not be surprising that specifications including both county and state unemployment show one positive and one negative coefficient: hold state unemployment constant and increasing county unemployment means the county in question is relatively unlucky within the state, so recruits in that county have fewer other options and are more likely to enlist. Conversely, hold county unemployment constant and increase state unemployment, and the county is relatively lucky employment-wise, leading to fewer recruits.}  A simple comparison of the coefficients on lagged county deaths and county unemployment indicates that one fewer county death would cause the same increase in recruiting as
-a 4 to 5 point increase in county unemployment. 
+to a 1\% increase in recruiting.\footnote{It should not be surprising that specifications including both county and state unemployment show one positive and one negative coefficient: hold state unemployment constant and increasing county unemployment means the county in question is relatively unlucky within the state, so recruits in that county have fewer other options and are more likely to enlist. Conversely, hold county unemployment constant and increase state unemployment, and the county is relatively lucky employment-wise, leading to fewer recruits.}  A simple comparison of the coefficients on lagged county deaths and county unemployment indicates that one fewer death of a soldier from the county would lead to the same increase in recruiting as a one percentage point increase in county unemployment.
 
 %Unemployment levels are also closely correlated with recruiting levels.
 %State unemployment has fairly volatile estimates depending on which
@@ -674,9 +667,9 @@ assessment of the risk of death (since those who enlist would serve in the same 
 deterrence effect, rational or not, would be what is of interest to
 policy makers. As a robustness check, however, I have run the analysis
 using only the active-duty deaths, and under this specification, in-county
-deaths are followed by a 1.0 to 1.1\% reduction in recruits in the
-next month. The coefficients for out-of-county deaths and unemployment
-remain very similar. These results are shown in Appendix Table~\ref{Flo:Rdeathslinear}. 
+deaths are followed by a similar or slightly larger reduction in recruits in the
+next month. The coefficients for out-of-county deaths and unemployment also
+remain similar. These results are shown in Appendix Table~\ref{Flo:Rdeathslinear}. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Additional Controls}
@@ -691,13 +684,13 @@ of effort) were also correlated with the number of deaths, my estimates
 would be biased. Given that recruiters serve for three years in one
 place, it is highly unlikely that the military is relocating them
 in a way that is correlated with monthly deaths. Without being relocated,
-however, recruiters may change their level of effort. FOIA requests for data on recruiter quotas unfortunately have not been granted, so I am only able to use the number of recruiters by state and quarter until halfway through 2004\footnote{I am grateful to John Warner for sharing this data.}, which I have included as an extra control variable for that portion of the sample. I also have detailed mortality data, through 2004. It is conceivable that deaths unrelated to
+however, recruiters may change their level of effort. FOIA requests for data on recruiter quotas unfortunately have not been granted, so I am only able to use the number of recruiters by state and quarter until halfway through 2004\footnote{I am grateful to John Warner for sharing this data.}, which I have included as an extra control variable for that portion of the sample. I also have detailed mortality data through 2004. It is conceivable that deaths unrelated to
 the military would play a role in determining recruiting (for example,
 young men in a crime-ridden community may be anxious to join the military
 as a means of escape) thus I include monthly male 18-24 year-old mortality figures
 as well. Table \ref{Flo:LNRec&Mort} shows these results. The
 analysis is done for both applicants and contracts, with the observations
-limited to those from October 2001 to June 2004. County and monthly
+limited to October 2001 to June 2004. County and monthly
 fixed effects are included. The estimates are similar in this restricted time period to those from the full sample, and the effect of a death does not change significantly when I add the extra controls. %The estimates for contracts are only
 %about half of what they are using the full data set, indicating that
 %the response to deaths is not constant over the duration of the entire sample.
@@ -718,7 +711,7 @@ Dept. of Commerce, Bureau of the Census {[}producer{]}, 1992. Ann
 Arbor, MI: Inter- university Consortium for Political and Social Research
 {[}distributor{]}, 1992. doi:10.3886/ICPSR09835 
 } Media markets are defined using the Nielsen Media Research's Designated
-Market Area (DMA). In the year 2000, Nielsen divided the country into 208 DMAs based on a preponderence of residents having access to the same broadcast television and radio stations.   (See \cite{DMAsource1} and \cite{DMAsource2} for more details.) The regressions show that deaths in nearby areas, whether defined using county borders or media market, have smaller effects on recruiting in a given county. While it seems that recruits do respond to information from outside the county, this is perhaps suggestive evidence that the county response to deaths is due to something more than information, since media markets are intended to share major news sources. 
+Market Area (DMA). In the year 2000, Nielsen divided the country into 208 DMAs based on a preponderence of residents having access to the same broadcast television and radio stations.   (See \cite{DMAsource1} and \cite{DMAsource2} for more details.) The regressions show that deaths in nearby areas, whether defined using county borders or media market, have smaller effects on recruiting in a given county. The effect size is roughly half as large as that of a death from the county. While it seems that recruits do respond to information from outside the county, this is perhaps suggestive evidence that the county response to deaths is due to something more than information, since media markets are intended to share major news sources. 
 
 %MEDIA MARKET AND CONTIGUOUS
 \begin{table}
@@ -738,14 +731,8 @@ local deaths and join the military. Table~\ref{Flo:Cumulative LagsLN}
 shows regressions with cumulative death and unemployment lags
 of two, four, six, and twelve months--that is, the sum of current
 deaths plus all the deaths that occurred in the previous number of
-months. The results indicate that deaths from previous months have,
-on a significantly smaller deterrent effect on recruiting
-than more recent deaths. Earlier regressions have shown a deterrent
-effect of nearly one percent for deaths in the previous month; these
-regressions show a much smaller average deterrent effect, decreasing
-to one-half a percent, down to one-third or even a statistically insignificant
-one-sixth of a percent deterrent effect for twelve months of lagged
-deaths. Poisson regressions produce very similar semi-elasticity
+months. The results indicate that deaths from previous months have a significantly smaller deterrent effect on recruiting than more recent deaths. Earlier regressions have shown a deterrent effect of over one percent for deaths in the previous month; these
+regressions show a relative decline in the effect size the longer a time period included. The effect size decreases to one third a percent for applicants for twelve months of lagged deaths. The decline in effect size does not appear to be as steady for contracts. Poisson regressions produce very similar semi-elasticity
 estimates.
 
 %Cumulative Lags
@@ -756,7 +743,7 @@ estimates.
 \scalebox{0.75}{\input{../Output/runninglagsLN}}
 \end{table}
 
-As a robustness check on my main specification, I have included one and two period leads of deaths. As expected, a death from the county one or two months into the future has no significant relationship with recruits. These regressions are shown in Appendix Table~\ref{Flo:forwardbasicLN}. 
+As a robustness check on my main specification, I have included multiple periods of leads of deaths. As expected, a death from the county one or two months into the future has no significant relationship with recruits. These regressions are shown in Appendix Table~\ref{Flo:forwardbasicLN}. 
 
 \subsection{Heterogeneity of the Deterrent Effect\label{sub:interactions}}
 
@@ -771,7 +758,7 @@ Table \ref{Flo:Linear Interactions} displays these regressions.
 They all include monthly and county fixed effects, out of county but
 in-state deaths, as well as unemployment, and I have added county
 characteristics interacted with lagged in-county deaths. All variables
-to be interacted have had the population weighted mean subtracted.%\footnote{ In a standard OLS regression this de-meaning would mean we could expect the main coefficient on lagged county deaths to remain essentially constant, but the weighting scheme used in Poisson regressions does not give the same sort of results. I have tested this and found that the main coefficient does stay very stable in least squares regressions regardless of what sort of weighted de-meaned interaction variables are included. I have also run these regressions using least squares and the results are qualitatively similar.}
+to be interacted have had the population weighted mean subtracted. %\footnote{ In a standard OLS regression this de-meaning would mean we could expect the main coefficient on lagged county deaths to remain essentially constant, but the weighting scheme used in Poisson regressions does not give the same sort of results. I have tested this and found that the main coefficient does stay very stable in least squares regressions regardless of what sort of weighted de-meaned interaction variables are included. I have also run these regressions using least squares and the results are qualitatively similar.}
 Note that the county characteristics, which are fixed over time and thus perfectly collinear with fixed effects, cannot also be included.
 
 %LINEAR INTERACTIONS
@@ -781,77 +768,47 @@ Note that the county characteristics, which are fixed over time and thus perfect
 \label{Flo:Linear Interactions}\input{../Output/LNinteractCOMBINE}
 \end{table}
 
-I have interacted lagged county deaths with inverse county population to estimate the effect in terms of deaths per population. Also included are interactions with the monthly county unemployment figure (the only county characteristic I have
+I have interacted lagged county deaths with inverse county population to estimate the effect in terms of deaths per population. Also included are interactions with the monthly county unemployment figure (the only county characteristic
 that changes over time and thus is not collinear with the fixed effects
 and can be included in the regression by itself), percent African-American
-population as measured in 2005, racial fractionalization using percent
-white, black, Native American, Asian, and Pacific Islander, a binary
-measure of rurality using the USDA's Economic Research Service classification,
-and the percent of the county that voted for George Bush in 2004.
-The regressions are run for applicants and contracts, the first column
-with percent black, and the second with racial fractionalization.
+population as measured in 2005, %racial fractionalization using percent white, black, Native American, Asian, and Pacific Islander, 
+a binary measure of rural status using the USDA's Economic Research Service classification, and the percent of the county that voted for George Bush in 2004.
+The regressions are run for applicants and contracts.%, the first column with percent black, and the second with racial fractionalization.
 I have also run regressions including interactions of all these same
 variables, but interacted with all four counts of deaths (in and out
 of county, lagged and current) the coefficients on the original interaction
 are very similar, and the coefficients for the interactions with out-of-county
 deaths and current in-county deaths all either go in the same direction
-as the ones shown in Table \ref{Flo:Poisson Interactions} or are
+as the ones shown in Table \ref{Flo:Linear Interactions} or are
 statistically not different than zero. 
 
-Deaths per Male 18-24 year-old County Population has a rather large
-and negative coefficient, which is actually quite reasonable. The coefficient implies that there is a level effect of deaths, and then an additional effect of deaths per
-capita, from -2086 to -2215 for applicants and a statistically insignificant
--1510 to -1704 for contracts. This means that an increase of one death
-for every one young male (obviously improbably high) would result
-in a decrease of recruits by 1500 to 2000 percent (also improbably
-high). Simpler to imagine is that for every additional 1500 to 2000
-young males in a county, the deterrent effect of deaths is one percent
-less negative. More-populated counties have a smaller percentage
-recruiting response to deaths than less-populated counties. With more
-people, perhaps other young men are less likely to hear the news of
-the death of a soldier, and if they hear it, perhaps they are less
-likely to have known the soldier who was killed and thus be relatively
-undeterred by his death. It is slightly puzzling, however, why this
-differential effect would be so strongly significant for applicants
-and not significant for contracts. 
+
+%Deaths per Male 18-24 year-old County Population has a rather large and negative coefficient, which is actually quite reasonable. The coefficient implies that there is a level effect of deaths, and then an additional effect of deaths per capita, from -2086 to -2215 for applicants and a statistically insignificant -1510 to -1704 for contracts. This means that an increase of one death for every one young male (obviously improbably high) would result in a decrease of recruits by 1500 to 2000 percent (also improbably high). Simpler to imagine is that for every additional 1500 to 2000 young males in a county, the deterrent effect of deaths is one percent less negative. More-populated counties have a smaller percentage recruiting response to deaths than less-populated counties. With more people, perhaps other young men are less likely to hear the news of the death of a soldier, and if they hear it, perhaps they are less likely to have known the soldier who was killed and thus be relatively undeterred by his death. It is slightly puzzling, however, why this differential effect would be so strongly significant for applicants and not significant for contracts. 
 
 Death {*} County Unemployment yields positive but insignificant estimates
-for applicants and significant estimates from 0.779 to 0.842 for contracts,
+for applicants and small but significant estimates for contracts,
 indicating that deaths in counties with higher unemployment are not
-as large a deterrent effect, and can even make the recruiting response
-to deaths positive. Under the first specification for contracts, a
-county with the weighted average level of county unemployment (5.5\%
-in the sample) would have a 0.5\% reduction in recruits for every
-death. A county with 6.5\% unemployment would actually see a 0.5+ (6.5-5.5)*0.8=1.3\%
-increase in recruiting with every death (not to mention the 1.6\%
-increase in recruiting thanks to the level effect of county unemployment) . 
+as large a deterrent effect, and could potentially even make the recruiting response
+to deaths positive. %Under the first specification for contracts, a county with the weighted average level of county unemployment (5.5\% in the sample) would have a 0.5\% reduction in recruits for every death. A county with 6.5\% unemployment would actually see a 0.5+ (6.5-5.5)*0.8=1.3\% increase in recruiting with every death (not to mention the 1.6\% increase in recruiting thanks to the level effect of county unemployment) . 
 
 The percentage of county population that is African-American increases
 the size of the effect of a death. A county with the weighted average
-proportion of the population (13\%) African-American would see a 0.5\%
-reduction in recruits for every death, a county one standard deviation
-(13\%) higher African-American population would see a -0.5+(13\%{*}-0.06)=1.28\%
-reduction in recruits for each death. The estimates are of the same
-order of magnitude for both applicants and contracts. I have also
-done the analysis using racial fractionalization, a more detailed description of the racial
-makeup of counties instead of simply percent African-American, but these estimates are not significant.
+proportion of the population (13\%) African-American would see a 0.7\%
+reduction in applicants for every death, a county with one standard deviation
+(13\%) higher African-American population would see a -0.7+(13\%{*}-0.065)=1.55\%
+reduction in recruits for each death. The estimates are slightly large for contracts than for applicants. %I have also done the analysis using racial fractionalization, a more detailed description of the racial makeup of counties instead of simply percent African-American, but these estimates are not significant.
 
 Rural is a binary measure of whether the county is rural using USDA's Rural-Urban continuum, which is partly a measure of population and partly distance from a metropolitan area. The estimate is insignificant, but the sign does seem to go in the same direction as population, however, indicating that rural counties
-(with lower populations not neighboring metropolitan areas) would have larger negative recruiting responses
-to deaths. Running the regressions without the rural interaction does
-not change the coefficient on the population interaction significantly.
+(with lower populations not neighboring metropolitan areas) would have larger negative recruiting responses to deaths. Deaths per Male 18-24 year-old County Population has a positive but only marginally significant coefficient. This indicates that perhaps the size of the county does not strongly affect how its population responds to a death. %Running the regressions without the rural interaction does not change the coefficient on the population interaction significantly.
 
 Finally, I have interacted the county percent of the vote that went
-to George Bush in 2004 with deaths. The coefficient estimates range
-from 0.08\% for applicants to 0.166\% for contracts. This indicates
-that a county with the weighted mean Bush voteshare would see a decrease
-in recruiting of 0.5 to 0.7\% for every death, but a county with one
-percentage point higher vote for Bush would see a 0.09\% smaller (closer
+to George Bush in 2004 with deaths. The coefficient estimates are 0.09\% for applicants to 0.15\% for contracts. This indicates that a county with the weighted mean Bush voteshare would see a decrease in applicants of 0.7\% for every death, but a county with one percentage point higher vote for Bush would see a 0.09\% smaller (closer
 to zero) decrease in recruiting. This indicates that a county with
 roughly 6 to 8 percentage point higher than the weighted average Bush
-vote would see increases in recruiting after deaths. The average Bush
+vote would see \textit{increases} in recruiting after deaths. The average Bush
 vote share is 50.6\%, and the standard deviation is nearly 14 percentage
-points. Well over half the counties had a Bush vote share over 57\%.
+points. Well over half the counties had a Bush vote share over 57\%, which indicates that the prospect of an increase in recruiting due to deaths is not at all unlikely.
+
 As shown in \cite{Ted-Miguel-Bush-Deaths}, at least at the state
 level, war deaths led to poorer Bush election performance in 2004.
 As a robustness check I have replaced the Bush '04 vote share with
@@ -860,8 +817,7 @@ and Afghanistan combat deaths. The estimates are nearly identical.
 
 These estimates all show that county characteristics are very important
 in determining the response of a county's potential recruits to the
-news of a death. More heavily populated counties appear to have a
-smaller proportional response, as do counties with higher unemployment.
+news of a death. High unemployment may dampen the deterrent effect of deaths slightly.
 Counties with higher fractions of African-American population have
 a larger response to deaths, as did counties that voted against George
 W. Bush (in either 2000 or 2004).
