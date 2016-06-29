@@ -76,10 +76,10 @@ gen RHQ75monthcounty=ARHQ75monthcounty+FRHQ75monthcounty+MRHQ75monthcounty+NRHQ7
 
 foreach TYPE in LQ HQ50 HQ50alt HQ75 {
  gen LN`TYPE'monthcounty=ln(R`TYPE'monthcounty+1)
- if "`TYPE'"=="LQ" local header2="LowQuality "
- if "`TYPE'"=="HQ50" local header2="HighQual "
- if "`TYPE'"=="HQ50alt" local header2="HighQual(Alt.) "
- if "`TYPE'"=="HQ75" local header2="VHighQual "
+ if "`TYPE'"=="LQ" local header2="LQ "
+ if "`TYPE'"=="HQ50" local header2="HQ50 "
+ if "`TYPE'"=="HQ50alt" local header2="HQ50-Alt. "
+ if "`TYPE'"=="HQ75" local header2="HQ75 "
  reghdfe LN`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
 	[aweight=avgcountypop], cluster(fips) absorb(fips month)
  outreg2 using ./Output/highqualitybytypeLN.txt, lab tex ct(`header2'`header1') bdec(3) tdec(3) bracket se append ///
@@ -185,24 +185,29 @@ outreg2 using ./Output/redefLNwarINT.txt, lab tex ct(`header1') bdec(3) tdec(3) 
 
 /*LAGGED*/
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty stateunemp ///
-	countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
+	countyunemp monthfe3-monthfe58 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
-outreg2 using ./Output/redefPwar.txt, ct(`header1') bdec(3) tdec(3) bracket se append ///
-	addstat("Likelihood", e(ll), "Test", r(p))
+outreg2 using ./Output/redefPwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
+	addstat("Likelihood", e(ll), "Test", r(p)) ///
+	addnote("Notes: Table shows Poisson regression estimates of national active duty recruits on deaths ", ///
+	"from different wars. Fixed effects are included separately by county and month as indiciated,", ///
+	"The first two columns show applicants and the last two show contracts.", Filename:redefPwar.tex) ///
+	addstat("Test In-County", `incounty', "Test Interaction", r(p)) ///
+	addtext(County FE, YES, Month FE, YES, State Trend FE, YES)
 
 /*IN AND OUT OF COUNTY*/
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty ///
-	stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
+	stateunemp countyunemp monthfe3-monthfe58 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
 local county=r(p)
 test L1IRAQoutofcounty=L1AFGHANoutofcounty
-outreg2 using ./Output/redefPwar.txt, ct(`header1') bdec(3) tdec(3) bracket se append ///
+outreg2 using ./Output/redefPwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
 	addstat("Likelihood", e(ll), "State", r(p), "County", `county')
 
 *POISSON INTERACTIONS, ONE AT A TIME
 foreach var in deathcountypop deathcountyunemp deathPctBlack05 deathPctBush04{
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty ///
-	`var'IRAQ `var'AFGHAN  stateunemp countyunemp monthfe3-monthfe33 statetrend1-statetrend51 , fe exposure(avgcountypop) vce(robust)
+	`var'IRAQ `var'AFGHAN  stateunemp countyunemp monthfe3-monthfe58 statetrend1-statetrend51 , fe exposure(avgcountypop) vce(robust)
 test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
 local incounty=r(p)
 test `var'IRAQ=`var'AFGHAN
