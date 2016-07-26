@@ -31,6 +31,7 @@ cd $dir
 
 /*RUN MAIN LINEAR REGRESSIONS*/
 *do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
+	*also includes active-only deaths, all-recruits
 *do ./Analysis/interactionscontrols.do /*LN regression recruit/mort controls and interactions*/
 *do ./Analysis/redefcontig.do /*LN&P regressions of neighboring/media market counties*/
 

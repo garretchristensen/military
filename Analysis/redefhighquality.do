@@ -192,8 +192,9 @@ outreg2 using ./Output/redefPwar.txt, lab tex ct(`header1') bdec(3) tdec(3) brac
 	addnote("Notes: Table shows Poisson regression estimates of national active duty recruits on deaths ", ///
 	"from different wars. Fixed effects are included separately by county and month as indiciated,", ///
 	"The first two columns show applicants and the last two show contracts.", Filename:redefPwar.tex) ///
-	addstat("Test In-County", `incounty', "Test Interaction", r(p)) ///
-	addtext(County FE, YES, Month FE, YES, State Trend FE, YES)
+	addtext(County FE, YES, Month FE, YES, State Trend FE, YES) ///
+	keep(monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1outofcounty stateunemp ///
+	countyunemp)
 
 /*IN AND OUT OF COUNTY*/
 xtpoisson active monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty ///
@@ -202,7 +203,9 @@ test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
 local county=r(p)
 test L1IRAQoutofcounty=L1AFGHANoutofcounty
 outreg2 using ./Output/redefPwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
-	addstat("Likelihood", e(ll), "State", r(p), "County", `county')
+	addstat("Likelihood", e(ll), "State", r(p), "County", `county') ///
+	keep(monthcountydeath L1IRAQmonthcountydeath L1AFGHANmonthcountydeath outofcounty L1IRAQoutofcounty L1AFGHANoutofcounty ///
+	stateunemp countyunemp)
 
 *POISSON INTERACTIONS, ONE AT A TIME
 foreach var in deathcountypop deathcountyunemp deathPctBlack05 deathPctBush04{

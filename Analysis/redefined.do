@@ -213,4 +213,47 @@ outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
+	
+************************************************************************
+/*ALL RECRUITS, EVEN THE JACKED RESERVES DATA*/
+************************************************************************
+gen LNmcr=ln(monthcountyrecruit+1)
+
+/*NO STATE*/
+reghdfe LNmcr monthcountydeath L1monthcountydeath [aweight=avgcountypop], ///
+	absorb(fips month) vce(cluster fips)
+outreg2 using ./Output/allrecLNLinearW.tex, tex label ///
+	ti(Log County ALL Applicants vs Deaths and Unemployment) ///
+	ct(Basic) bdec(3) tdec(3) bracket se append ///
+	addnote("Notes: Table shows linear regression estimates of log (national recruits +1) on military deaths.", ///
+	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
+	"The first three columns show applicants and the last three show contracts.", Filename:allrecLNLinearW.tex) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
+ 
+
+/*STATE AND UNEMP*/
+reghdfe LNmcr Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty countyunemp ///
+	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
+outreg2 using ./Output/allrecLNLinearW.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
+	se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
+	
+/*STATE TREND*/
+*reghdfe LNmcr Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty countyunemp ///
+*	stateunemp statetrend1-statetrend51[aweight=avgcountypop], ///
+*	vce (cluster fips) absorb(fips month)
+*outreg2 using ./Output/allrecLNLinearW.tex, tex label ct(State Trend) bdec(3) tdec(3) ///
+*	bracket se append keep(*month* *county* stateunemp) ///
+*	addtext(County FE, YES, Month FE, YES, State Trend, YES, Stateyear FE, NO)
+
+/*STATE YEAR INTERACTED FE*/
+reghdfe LNmcr Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty ///
+	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
+outreg2 using ./Output/allrecLNLinearW.tex, tex label ///
+	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
+	
+	
+	
+	
 } /*END HUGE LOOP OVER BOTH FILES*/

@@ -7,6 +7,30 @@ Analysis\old\*
 
 Papers/Literature/*
 Papers\Literature\*
+Papers/old/*
+Papers/Slides/*
+Papers/latex_templates/*
+
+Apps\*
+Apps\old\*
+Apps/*
+Apps/old/*
+By_Zip_and_Date/*
+Crosswalk/*
+Data/*
+Deaths/*
+FOIA/*
+ICPSR/*
+Logs/*
+Maps/*
+Media/*
+Mortality/*
+Newspaper/*
+Output/*
+Political/*
+Population/*
+Recruiters/*
+Unemployment/*
 
 #LaTeX garbage
 *.aux
@@ -16,6 +40,11 @@ Papers\Literature\*
 *.blg
 *.out
 *.synctex.gz
+*.nav
+*.snm
+*.toc
+*.log
+*.pdf
 
 
 #Stata data files
@@ -24,3 +53,5 @@ Papers\Literature\*
 #Excel
 *.xls
 *.xlsx
+
+*.zip
