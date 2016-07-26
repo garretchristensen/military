@@ -456,7 +456,7 @@ much of the contracts data for Reservists and Army and Air National
 Guard are missing (the data contain only 375 Army Reservist contracts,
 an implausibly low number over a 17-year period). To account for this,
 all of the analysis is run using only the applicants or contracts
-to the active duty components of the military. The main regression specification is repeated in the Appendix Table~\ref{Flo:allrecruits} using all recruits (active, reserve, and guard), which results in very similar estimates.} I am able to match roughly 96\% of the applicant observations by ZIP code to a US county.
+to the active duty components of the military. The main regression specification is repeated in the Appendix Table~\ref{Flo:allrecruits} using all recruits (active, reserve, and guard), which results in very similar, if not slightly larger, estimates.} I am able to match roughly 96\% of the applicant observations by ZIP code to a US county.
 
 %%What does this do? Classical measurement error? Or since the X variable is likely to be under-reported if anything, is that not necessarily attenuation bias?
 
@@ -1111,13 +1111,13 @@ Appendix Table \ref{Flo:Poisson Basic} shows the Poisson semi-elasticity estimat
 \end{table}
 
 %Square Root
-\pagebreak{}
-\clearpage{}
-\begin{table}
-\caption{}
-\label{Flo:sqrt}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/sqrt}
-\end{table}
+%\pagebreak{}
+%\clearpage{}
+%\begin{table}
+%\caption{}
+%\label{Flo:sqrt}
+%\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/sqrt}
+%\end{table}
 
 %Negative Binomial
 \pagebreak{}
@@ -1128,8 +1128,9 @@ Appendix Table \ref{Flo:Poisson Basic} shows the Poisson semi-elasticity estimat
 \includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/negbinom}
 \end{table}
 
-Additional specifications include modeling the left hand side variable as the square root of recruits, with results shown in Table~\ref{Flo:sqrt}, and a negative binomial conditional fixed effects regression, with results shown in Table~\ref{Flo:negbinom}. Again, results are very similar: by far the largest deterrant effect comes from in-county deaths. Problems exist with negative binomial fixed effects regression, as explained in \cite{negbinom}, so these results are presented only to exhaustively test other functional forms and show that results are robust. 
-
+Additional specifications include modeling %the left hand side variable as 
+with a negative binomial conditional fixed effects regression, with results shown in Table~\ref{Flo:negbinom}. Again, results are very similar: by far the largest deterrant effect comes from in-county deaths. Problems exist with negative binomial fixed effects regression, as explained in \cite{negbinom}, so these results are presented only to exhaustively test other functional forms and show that results are robust. 
+%the square root of recruits, with results shown in Table~\ref{Flo:sqrt}, and
 
 \paragraph{Tests of Additional Data}
 In additionally to exhaustively testing functional forms and getting similarly robust results, I also obtain extremely similar results when I test only subsets on the data. For instance 
@@ -1200,7 +1201,7 @@ I also use additional data on deaths acquired through a FOIA request. This data 
 %\input{../Output/redefPbasic90.tex}}
 %\end{table}
 
-Tests of the entire set of recruits (active duty, guard, and reserve troops, not just active duty recruits as are used in most specifications) reveal similarly robust results.
+Tests of the entire set of recruits (active duty, guard, and reserve troops, not just active duty recruits as are used in most specifications) reveal similarly robust results--the deterrent effect appears even larger under this specification.
 
 %made in redefined.do on 7/26/2016
 \begin{table}

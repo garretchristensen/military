@@ -17,6 +17,8 @@ cap rm ./Output/LNLinearWR.tex //log linear, active deaths only
 cap rm ./Output/LNLinearWR.txt
 cap rm ./Output/forwardbasicWLN.txt //log linear, 2 leads
 cap rm ./Output/forwardbasicWLN.tex
+cap rm ./Output/allrecLNLinearW.txt //log linear, ALL recruits
+cap rm ./Output/allrecLNLinearW.tex
 
 
 foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
