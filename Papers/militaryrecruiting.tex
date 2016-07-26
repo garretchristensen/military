@@ -1132,7 +1132,7 @@ Additional specifications include modeling the left hand side variable as the sq
 
 
 \paragraph{Tests of Additional Data}
-In additionally to exhaustively testing functional forms and getting similar results, I also obtain extremely similar results when I test only subsets on the data. For instance 
+In additionally to exhaustively testing functional forms and getting similarly robust results, I also obtain extremely similar results when I test only subsets on the data. For instance 
 in addition to testing every recruit, I also test the model by using only deaths from active duty soldiers, as opposed to deaths of all soldiers (active, reserve, and guard) as in all other specification. Results, shown in Appendix Table~\ref{Flo:Rdeathslinear} appear slightly \textit{stronger}, in that deterrent effects of in-county deaths are estimated to be slightly larger than one percent. Appendix Table~\ref{Flo:RdeathsP} shows Poisson regressions using only active duty deaths and again, the results are robust
 
 %The main Poisson regression specification from Table~\ref{Flo:Poisson Basic} is repeated in Appendix Table~\ref{Flo:allrecruits} using all recruits, including the reserve and guard contracts that appear to be underreported in the FOIA data. Results are very similar. 
@@ -1159,7 +1159,7 @@ in addition to testing every recruit, I also test the model by using only deaths
 \end{table}
 
 
-Appendix Tables~\ref{Flo:forwardbasicLN} and ~\ref{Flo:redefPF1} repeat the main specification but add lead periods of deaths as a falsification test of the model. As expected, deaths in the future have no relation to current recruiting.
+Appendix Tables~\ref{Flo:forwardbasicLN} and ~\ref{Flo:redefPF1} repeat the main specification but add lead periods of deaths as a falsification test of the model. As expected, deaths in the future have no relation to current recruiting. 
 
 
 \pagebreak{}
@@ -1200,8 +1200,18 @@ I also use additional data on deaths acquired through a FOIA request. This data 
 %\input{../Output/redefPbasic90.tex}}
 %\end{table}
 
+Tests of the entire set of recruits (active duty, guard, and reserve troops, not just active duty recruits as are used in most specifications) reveal similarly robust results.
 
-\pagebreak{}
+%made in redefined.do on 7/26/2016
+\begin{table}
+\caption{}
+\label{Flo:allrecruits}
+\scalebox{0.8}{
+\input{../Output/allrecLNLinearW}}
+\end{table}
+
+Tests of the heterogeneity of the effect by which the war in which the death occur also appear significantly stronger using a Poisson regression.
+
 \begin{table}
 \caption{Deaths by War, Poisson}
 \label{Flo:Deaths by WarP}

@@ -232,7 +232,7 @@ outreg2 using ./Output/allrecLNLinearW.tex, tex label ///
  
 
 /*STATE AND UNEMP*/
-reghdfe LNmcr Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty countyunemp ///
+reghdfe LNmcr monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
 	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
 outreg2 using ./Output/allrecLNLinearW.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
 	se append ///
@@ -247,7 +247,7 @@ outreg2 using ./Output/allrecLNLinearW.tex, tex label ct(State) bdec(3) tdec(3) 
 *	addtext(County FE, YES, Month FE, YES, State Trend, YES, Stateyear FE, NO)
 
 /*STATE YEAR INTERACTED FE*/
-reghdfe LNmcr Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty ///
+reghdfe LNmcr monthcountydeath L1monthcountydeath outofcounty L1outofcounty ///
 	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
 outreg2 using ./Output/allrecLNLinearW.tex, tex label ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
