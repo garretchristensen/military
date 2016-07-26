@@ -111,6 +111,12 @@ if "`file'"=="APP"{
 else{
 	local header="Contracts"
 }
+
+/*HORSE RACE JUST FOR KICKS*/
+reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty ///
+	outofstate L1outofstate countyunemp stateunemp nationalunemp ///
+	[aweight=avgcountypop], vce(cluster fips) absorb(fips)
+
 /*NO STATE*/
 reghdfe LNactive monthcountydeath L1monthcountydeath [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)

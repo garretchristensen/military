@@ -77,7 +77,7 @@ effect is similar for recruits in both of the stages of the recruiting
 process that I test. I also obtain very similar semi-elasticity estimates
 using either Poisson or negative binomial regression, and the estimates are very stable across different sets of fixed effects. %I find that the effect is very localized---deaths in neighboring counties and deaths in counties in the same Nielsen media market produce no deterrent effect. 
 
-However, there is considerable heterogeneity in the deterrent effect of local deaths. Deaths of soldiers in Iraq lead to a larger reduction in recruiting, while deaths of soldiers in Afghanistan actually lead to a small increase in recruiting. The deterrent effect is also significantly larger in counties with higher than average African-American populations and is significantly smaller (and sometimes even positive) in more populous counties, counties with higher unemployment, and counties that voted for George W. Bush in 2000 or 2004. I also find that the effect is different for different types of recruits. %It is larger for recruits to the Marine Corps and smaller for recruits to the Air Force. 
+However, there is considerable heterogeneity in the deterrent effect of local deaths. Deaths of soldiers in Iraq lead to a larger reduction in recruiting, while deaths of soldiers in Afghanistan may actually lead to a small increase in recruiting. The deterrent effect is also significantly larger in counties with higher than average African-American populations and is significantly smaller (and sometimes even positive) in counties with higher unemployment, and counties that voted for George W. Bush in 2000 or 2004. I also find that the effect is different for different types of recruits. %It is larger for recruits to the Marine Corps and smaller for recruits to the Air Force. 
 It is significantly higher for recruits of the highest quality as measured by Armed Forces Qualification Test (AFQT) score and educational attainment. This evidence suggests that outside employment options and political opinions matter greatly in determining potential applicants' reactions to an on-the-job death, and is similar to what is found in \cite{kahn1987occupational} concerning education and higher compensating differentials for risk.
 
 
@@ -411,9 +411,9 @@ distant deaths. %
 \footnote{I find that the recruiting response is always significantly different
 for local deaths (deaths in the same county) than for deaths from
 more distant locales (deaths from outside the county but in the same
-state, and deaths from outside the state). Coefficients on local deaths
-are typically on the order of five times larger for local deaths than
-for distant deaths. See \cite{ChettySalience} for actual estimation
+state, and deaths from outside the state). Coefficients on deaths from outside the state (national deaths) cannot be estimated due to the monthly fixed effects in most models, however in (possibly misspecified) models without the fixed effects, local deaths
+are multiple orders of magnitude larger for local deaths than
+for national deaths. See \cite{ChettySalience} for actual estimation
 of a structural parameter very similar to $\theta$, or the companion \cite{ChettyEarly},
 which develops a structural interpretation for $\theta$ using bounded
 rationality.%
@@ -483,7 +483,7 @@ which the base sits.
 Since the focus of this paper is recent combat deaths, the main 2001-2006 fatality data used in the majority of this paper does not include the fairly common deaths of military members unrelated to combat abroad, or unrelated to the military at all (heart attacks, car accidents).  After earlier drafts of this paper were completed, a FOIA request for detailed death data for all  deaths in the military (not just those in the wars) for the entire period for which I had recruiting data (1990-2006) was granted. I use these deaths as placebo tests of my analysis and find that, as expected, there is no significant recruiting effect of local non-combat deaths. This is discussed in the appendix and shown in Table~\ref{Flo:LNlinear90}.
 %and \ref{Flo:alldeaths90}.
 
-To summarize the data, Table \ref{Flo:Simple Deaths} shows total annual military deaths and the subsets of those recorded as hostile action from the FOIA data and those considered part of the Iraqi/Enduring Freedom operations as reported publicly by the DMDC (i.e. the data used for the majority of this paper). One can see that at most in any year, less than 50\% of the deaths of active duty US military members during the relevant time period (2001-2006) are classified as part of the Iraq/Afghanistan wars. Also, the Iraq/Afghanistan deaths outnumber the hostile deaths, so friendly fire or accidental deaths the battle area can be considered part of the war data. During the entire period for which I have data, 1999---two years prior to the beginning of my analysis---experienced the lowest number of deaths, with 796, of which zero were classified as hostile. 
+To summarize the data, Table \ref{Flo:Simple Deaths} shows total annual military deaths and the subsets of those recorded as hostile action from the FOIA data and those considered part of the Iraqi/Enduring Freedom operations as reported publicly by the DMDC (i.e. the data used for the majority of this paper). One can see that at most in any year, less than 50\% of the deaths of active duty US military members during the relevant time period (2001-2006) are classified as part of the Iraq/Afghanistan wars. Also, the Iraq/Afghanistan deaths outnumber the hostile deaths, so friendly fire or accidental deaths in the battle area can be considered part of the war data. During the entire period for which I have data, 1999---two years prior to the beginning of my analysis---experienced the lowest number of deaths, with 796, of which zero were classified as hostile. 
 
 %1--SUMMARY TABLE
 \begin{table}
