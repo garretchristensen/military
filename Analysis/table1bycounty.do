@@ -63,15 +63,13 @@ while `qval' > 0 {
 	* Record the rank of the largest p-value that meets above condition
 	quietly egen total_rejected = max(reject_rank)
 	* A p-value has been rejected at level q if its rank is less than or equal to the rank of the max p-value that meets the above condition
-	replace bh95_qval = `qval' if rank <= total_rejected & rank~=.
+	quietly replace bh95_qval = `qval' if rank <= total_rejected & rank~=.
 	* Reduce q by 0.001 and repeat loop
 	quietly drop fdr_temp reject_temp reject_rank total_rejected
 	local qval = `qval' - .001
 }
 	
 quietly sort original_sorting_order
-pause off
-set more on
 
 display "Code has completed."
 display "Benjamini Hochberg (1995) q-vals are in variable 'bh95_qval'"
@@ -81,6 +79,10 @@ summ bh95_qval, detail
 count if bh95_qval<.05
 **************************************************************
 * ADJUST THE P-VALUES USING ANDERSON'S CODE TO DO BKY(2006) FDR
+**************************************************************
+*drop the vars created by the BH method
+drop original_sorting_order rank
+
 quietly sum pval
 local totalpvals = r(N)
 
@@ -103,28 +105,28 @@ while `qval' > 0 {
 	* Generate the adjusted first stage q level we are testing: q' = q/1+q
 	local qval_adj = `qval'/(1+`qval')
 	* Generate value q'*r/M
-	gen fdr_temp1 = `qval_adj'*rank/`totalpvals'
+	quietly gen fdr_temp1 = `qval_adj'*rank/`totalpvals'
 	* Generate binary variable checking condition p(r) <= q'*r/M
-	gen reject_temp1 = (fdr_temp1>=pval) if pval~=.
+	quietly gen reject_temp1 = (fdr_temp1>=pval) if pval~=.
 	* Generate variable containing p-value ranks for all p-values that meet above condition
-	gen reject_rank1 = reject_temp1*rank
+	quietly gen reject_rank1 = reject_temp1*rank
 	* Record the rank of the largest p-value that meets above condition
-	egen total_rejected1 = max(reject_rank1)
+	quietly egen total_rejected1 = max(reject_rank1)
 
 	* Second Stage
 	* Generate the second stage q level that accounts for hypotheses rejected in first stage: q_2st = q'*(M/m0)
 	local qval_2st = `qval_adj'*(`totalpvals'/(`totalpvals'-total_rejected1[1]))
 	* Generate value q_2st*r/M
-	gen fdr_temp2 = `qval_2st'*rank/`totalpvals'
+	quietly gen fdr_temp2 = `qval_2st'*rank/`totalpvals'
 	* Generate binary variable checking condition p(r) <= q_2st*r/M
-	gen reject_temp2 = (fdr_temp2>=pval) if pval~=.
+	quietly gen reject_temp2 = (fdr_temp2>=pval) if pval~=.
 	* Generate variable containing p-value ranks for all p-values that meet above condition
-	gen reject_rank2 = reject_temp2*rank
+	quietly gen reject_rank2 = reject_temp2*rank
 	* Record the rank of the largest p-value that meets above condition
-	egen total_rejected2 = max(reject_rank2)
+	quietly egen total_rejected2 = max(reject_rank2)
 
 	* A p-value has been rejected at level q if its rank is less than or equal to the rank of the max p-value that meets the above condition
-	replace bky06_qval = `qval' if rank <= total_rejected2 & rank~=.
+	quietly replace bky06_qval = `qval' if rank <= total_rejected2 & rank~=.
 	* Reduce q by 0.001 and repeat loop
 	drop fdr_temp* reject_temp* reject_rank* total_rejected*
 	local qval = `qval' - .001
@@ -132,15 +134,12 @@ while `qval' > 0 {
 	
 
 quietly sort original_sorting_order
-pause off
-set more on
 
 display "Code has completed."
 display "Benjamini Krieger Yekutieli (2006) sharpened q-vals are in variable 'bky06_qval'"
 display	"Sorting order is the same as the original vector of p-values"
 summ bky06_qval, detail
 count if bky06_qval<.05
-stop
 *********************************************************/
 /** ALL COUNTIES ARE CLEARLY NOT THE SAME. JUST SHOW THE DISPERSION OF THE HAZARD RATE ISN'T CRAZY*/
 /* DO FOR ALL RECS & DEATHS AND ACTIVE ONLY*/
@@ -164,6 +163,12 @@ disp "Total Deaths/Active Apps "r(sd)/r(mean)
 label var hazard_taa "Total Deaths/Active Applicants"
 histogram hazard_taa, frequency //addl title("Hazard Rate by County")
 graph save ./Output/hist_county_taa.gph, replace
+
+
+**************************************************************
+*SAME AS ABOVE, NOW WITH CONTRACTS
+**************************************************************
+
 
 /*****************************************************/
 /* PAT'S THING. JUST TEST HOW WELL THEY FIT TO A BINOMIAL DISTRIBUTION*/
@@ -193,6 +198,114 @@ if r(N)!=0{
  throw a hissy fit
 }
 disp "this is how many counties couldn't come from the average dist"
+
+***********************************************************************
+*ADJUST THE P-VALUES USING ANDERSON'S CODE TO DO BENJAMINI HOCHBERG FDR
+gen pval=WorstP
+quietly sum pval
+local totalpvals = r(N)
+
+* Sort the p-values in ascending order and generate a variable that codes each p-value's rank
+quietly gen int original_sorting_order = _n
+quietly sort pval
+quietly gen int rank = _n if pval~=.
+
+* Set the initial counter to 1 
+local qval = 1
+
+* Generate the variable that will contain the BH (1995) q-values
+gen bh95_qval = 1 if pval~=.
+
+* Set up a loop that begins by checking which hypotheses are rejected at q = 1.000, 
+*then checks which hypotheses are rejected at q = 0.999, then checks which hypotheses 
+*are rejected at q = 0.998, etc.  The loop ends by checking which hypotheses are rejected at q = 0.001.
+while `qval' > 0 {
+	* Generate value qr/M
+	quietly gen fdr_temp = `qval'*rank/`totalpvals'
+	* Generate binary variable checking condition p(r) <= qr/M
+	quietly gen reject_temp = (fdr_temp>=pval) if fdr_temp~=.
+	* Generate variable containing p-value ranks for all p-values that meet above condition
+	quietly gen reject_rank = reject_temp*rank
+	* Record the rank of the largest p-value that meets above condition
+	quietly egen total_rejected = max(reject_rank)
+	* A p-value has been rejected at level q if its rank is less than or equal to the rank of the max p-value that meets the above condition
+	quietly replace bh95_qval = `qval' if rank <= total_rejected & rank~=.
+	* Reduce q by 0.001 and repeat loop
+	quietly drop fdr_temp reject_temp reject_rank total_rejected
+	local qval = `qval' - .001
+}
+	
+quietly sort original_sorting_order
+
+display "Code has completed."
+display "Benjamini Hochberg (1995) q-vals are in variable 'bh95_qval'"
+display	"Sorting order is the same as the original vector of p-values"
+
+summ bh95_qval, detail
+count if bh95_qval<.05
+**************************************************************
+* ADJUST THE P-VALUES USING ANDERSON'S CODE TO DO BKY(2006) FDR
+**************************************************************
+*drop the vars created by the BH method
+drop original_sorting_order rank
+
+quietly sum pval
+local totalpvals = r(N)
+
+* Sort the p-values in ascending order and generate a variable that codes each p-value's rank
+quietly gen int original_sorting_order = _n
+quietly sort pval
+quietly gen int rank = _n if pval~=.
+
+* Set the initial counter to 1 
+local qval = 1
+
+* Generate the variable that will contain the BKY (2006) sharpened q-values
+gen bky06_qval = 1 if pval~=.
+
+*Set up a loop that begins by checking which hypotheses are rejected at q = 1.000, 
+*then checks which hypotheses are rejected at q = 0.999, then checks which hypotheses are rejected at q = 0.998, etc.  
+*The loop ends by checking which hypotheses are rejected at q = 0.001.
+while `qval' > 0 {
+	* First Stage
+	* Generate the adjusted first stage q level we are testing: q' = q/1+q
+	local qval_adj = `qval'/(1+`qval')
+	* Generate value q'*r/M
+	quietly gen fdr_temp1 = `qval_adj'*rank/`totalpvals'
+	* Generate binary variable checking condition p(r) <= q'*r/M
+	quietly gen reject_temp1 = (fdr_temp1>=pval) if pval~=.
+	* Generate variable containing p-value ranks for all p-values that meet above condition
+	quietly gen reject_rank1 = reject_temp1*rank
+	* Record the rank of the largest p-value that meets above condition
+	quietly egen total_rejected1 = max(reject_rank1)
+
+	* Second Stage
+	* Generate the second stage q level that accounts for hypotheses rejected in first stage: q_2st = q'*(M/m0)
+	local qval_2st = `qval_adj'*(`totalpvals'/(`totalpvals'-total_rejected1[1]))
+	* Generate value q_2st*r/M
+	quietly gen fdr_temp2 = `qval_2st'*rank/`totalpvals'
+	* Generate binary variable checking condition p(r) <= q_2st*r/M
+	quietly gen reject_temp2 = (fdr_temp2>=pval) if pval~=.
+	* Generate variable containing p-value ranks for all p-values that meet above condition
+	quietly gen reject_rank2 = reject_temp2*rank
+	* Record the rank of the largest p-value that meets above condition
+	quietly egen total_rejected2 = max(reject_rank2)
+
+	* A p-value has been rejected at level q if its rank is less than or equal to the rank of the max p-value that meets the above condition
+	quietly replace bky06_qval = `qval' if rank <= total_rejected2 & rank~=.
+	* Reduce q by 0.001 and repeat loop
+	drop fdr_temp* reject_temp* reject_rank* total_rejected*
+	local qval = `qval' - .001
+}
+	
+
+quietly sort original_sorting_order
+
+display "Code has completed."
+display "Benjamini Krieger Yekutieli (2006) sharpened q-vals are in variable 'bky06_qval'"
+display	"Sorting order is the same as the original vector of p-values"
+summ bky06_qval, detail
+count if bky06_qval<.05
 
 ******************************************
 *COMBINE 2 STATE and 2 COUNTY GRAPHS INTO ONE
