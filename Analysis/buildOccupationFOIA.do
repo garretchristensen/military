@@ -41,3 +41,4 @@ label var grade "enlisted grade-rank"
 label var service "military service branch"
 
 save .\FOIA\MilitaryOccupations\Occupations.dta, replace
+

@@ -10,7 +10,7 @@
 //then a potential enlistee from Tennessee might be rational to care more that someone from Tennessee died
 //compared to when someone from California died.
 
-//One could test this with the Pearson Chi-Square Test
+//One can test this with the Pearson Chi-Square Test
 
 /***************************************************
 *PREP THE MASTER COUNTY LIST TO DROP MOS OBSERVATIONS FROM NON-EXISTENT COUNTIES
@@ -24,10 +24,9 @@ rename v5 fipsclasscode
 keep state county
 save .\FOIA\MilitaryOccupations\CensusCountyList.dta, replace
 
-*Load MOS Data
+*Re-Load MOS Data
 clear all
 use .\FOIA\MilitaryOccupations\Occupations.dta, replace
-
 *count
 *count if state=="ZZ"
 *count if county=="ZZZ"
@@ -62,6 +61,7 @@ MOS                                                                             
 
 *for starters just look at how many go into each branch in one month.
 keep if yearmonth==200403 //use the middle month in the data in the main paper
+*tested this with 200309 as well--you get similar results
 	//have 58 months, div 2=29. starts in 200110, +29=200403
 count
 
@@ -78,10 +78,13 @@ total(manpower) if service=="N"
 local nT=_b[manpower]
 			
 //Fractions is each service branch for the whole country
-display "ARMY:(`aT' /`tT')"
-display "AIR FORCE: (`fT' /`tT')"
-display "MARINES: (`mT' /`tT')"
-display "NAVY: (`nT' /`tT')"
+foreach x in a f m n{
+	local `x'r=``x'T'/`tT'
+}	
+display "ARMY:(`ar')"
+display "AIR FORCE: (`fr')"
+display "MARINES: (`mr')"
+display "NAVY: (`nr')"
 
 //count those in each service by state and county	
 egen totalmp=total(manpower), by(state county)
@@ -95,7 +98,10 @@ foreach sb in A F M N {
 
 duplicates drop state county, force
 drop manpower grade service MOS 
+save ./Data/tempMOSchi2.dta, replace
 
+
+use ./Data/tempMOSchi2.dta, clear
 //the expected # in each county for each branch
 
 gen ae=totalmp*(`aT' /`tT')
@@ -109,10 +115,125 @@ gen fd=((Fmp-fe)^2)/fe
 gen md=((Mmp-me)^2)/me
 gen nd=((Nmp-ne)^2)/ne
 gen chi2stat=ad+fd+md+nd //compares this to chi-2 w/ 3 dof.
+gen chi2p=chi2tail(3,chi2stat)
+summ chi2p, detail
+*HOW MANY COUNTIES HAVE DIFFERENT DISTRIBUTIONS?
+count if chi2p<.05
+count if chi2p<(.05/3125)
 
-stop
+***********************************************************************
+*ADJUST THE P-VALUES USING ANDERSON'S CODE TO DO BENJAMINI HOCHBERG FDR
+***********************************************************************
+gen pval=chi2p
+quietly sum pval
+local totalpvals = r(N)
+
+* Sort the p-values in ascending order and generate a variable that codes each p-value's rank
+quietly gen int original_sorting_order = _n
+quietly sort pval
+quietly gen int rank = _n if pval~=.
+
+* Set the initial counter to 1 
+local qval = 1
+
+* Generate the variable that will contain the BH (1995) q-values
+gen bh95_qval = 1 if pval~=.
+
+* Set up a loop that begins by checking which hypotheses are rejected at q = 1.000, 
+*then checks which hypotheses are rejected at q = 0.999, then checks which hypotheses 
+*are rejected at q = 0.998, etc.  The loop ends by checking which hypotheses are rejected at q = 0.001.
+while `qval' > 0 {
+	* Generate value qr/M
+	quietly gen fdr_temp = `qval'*rank/`totalpvals'
+	* Generate binary variable checking condition p(r) <= qr/M
+	quietly gen reject_temp = (fdr_temp>=pval) if fdr_temp~=.
+	* Generate variable containing p-value ranks for all p-values that meet above condition
+	quietly gen reject_rank = reject_temp*rank
+	* Record the rank of the largest p-value that meets above condition
+	quietly egen total_rejected = max(reject_rank)
+	* A p-value has been rejected at level q if its rank is less than or equal to the rank of the max p-value that meets the above condition
+	quietly replace bh95_qval = `qval' if rank <= total_rejected & rank~=.
+	* Reduce q by 0.001 and repeat loop
+	quietly drop fdr_temp reject_temp reject_rank total_rejected
+	local qval = `qval' - .001
+}
+	
+quietly sort original_sorting_order
+
+display "Code has completed."
+display "Benjamini Hochberg (1995) q-vals are in variable 'bh95_qval'"
+display	"Sorting order is the same as the original vector of p-values"
+
+summ bh95_qval, detail
+count if bh95_qval<.05
+**************************************************************
+* ADJUST THE P-VALUES USING ANDERSON'S CODE TO DO BKY(2006) FDR
+**************************************************************
+*drop the vars created by the BH method
+drop original_sorting_order rank
+
+quietly sum pval
+local totalpvals = r(N)
+
+* Sort the p-values in ascending order and generate a variable that codes each p-value's rank
+quietly gen int original_sorting_order = _n
+quietly sort pval
+quietly gen int rank = _n if pval~=.
+
+* Set the initial counter to 1 
+local qval = 1
+
+* Generate the variable that will contain the BKY (2006) sharpened q-values
+gen bky06_qval = 1 if pval~=.
+
+*Set up a loop that begins by checking which hypotheses are rejected at q = 1.000, 
+*then checks which hypotheses are rejected at q = 0.999, then checks which hypotheses are rejected at q = 0.998, etc.  
+*The loop ends by checking which hypotheses are rejected at q = 0.001.
+while `qval' > 0 {
+	* First Stage
+	* Generate the adjusted first stage q level we are testing: q' = q/1+q
+	local qval_adj = `qval'/(1+`qval')
+	* Generate value q'*r/M
+	quietly gen fdr_temp1 = `qval_adj'*rank/`totalpvals'
+	* Generate binary variable checking condition p(r) <= q'*r/M
+	quietly gen reject_temp1 = (fdr_temp1>=pval) if pval~=.
+	* Generate variable containing p-value ranks for all p-values that meet above condition
+	quietly gen reject_rank1 = reject_temp1*rank
+	* Record the rank of the largest p-value that meets above condition
+	quietly egen total_rejected1 = max(reject_rank1)
+
+	* Second Stage
+	* Generate the second stage q level that accounts for hypotheses rejected in first stage: q_2st = q'*(M/m0)
+	local qval_2st = `qval_adj'*(`totalpvals'/(`totalpvals'-total_rejected1[1]))
+	* Generate value q_2st*r/M
+	quietly gen fdr_temp2 = `qval_2st'*rank/`totalpvals'
+	* Generate binary variable checking condition p(r) <= q_2st*r/M
+	quietly gen reject_temp2 = (fdr_temp2>=pval) if pval~=.
+	* Generate variable containing p-value ranks for all p-values that meet above condition
+	quietly gen reject_rank2 = reject_temp2*rank
+	* Record the rank of the largest p-value that meets above condition
+	quietly egen total_rejected2 = max(reject_rank2)
+
+	* A p-value has been rejected at level q if its rank is less than or equal to the rank of the max p-value that meets the above condition
+	quietly replace bky06_qval = `qval' if rank <= total_rejected2 & rank~=.
+	* Reduce q by 0.001 and repeat loop
+	drop fdr_temp* reject_temp* reject_rank* total_rejected*
+	local qval = `qval' - .001
+}
+	
+
+quietly sort original_sorting_order
+
+display "Code has completed."
+display "Benjamini Krieger Yekutieli (2006) sharpened q-vals are in variable 'bky06_qval'"
+display	"Sorting order is the same as the original vector of p-values"
+summ bky06_qval, detail
+count if bky06_qval<.05
 
 
+
+exit
+/*OLD GARBAGE NOT TO  BE EXECUTED AFTER JULY 16 
 total(manpower) if MOS=="11B"
 local b11=_b[manpower]
 total(manpower)
@@ -181,3 +302,4 @@ br
 *(Across states? Or maybe also over time?)
 *Are the fractions of the top 10 Army MOS the same across states?
 * 11B, 91W, 92Y, 31B, 92A, 13B, 19K, 92Y, 92F, 21B
+*/
