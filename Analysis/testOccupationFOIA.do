@@ -12,7 +12,19 @@
 
 //One could test this with the Pearson Chi-Square Test
 
-*Load Data
+/***************************************************
+*PREP THE MASTER COUNTY LIST TO DROP MOS OBSERVATIONS FROM NON-EXISTENT COUNTIES
+*****************************************************/
+insheet using .\FOIA\MilitaryOccupations\raw\CensusCountyList.txt, clear
+rename v1 state
+rename v2 statenum
+rename v3 county
+rename v4 countyname
+rename v5 fipsclasscode
+keep state county
+save .\FOIA\MilitaryOccupations\CensusCountyList.dta, replace
+
+*Load MOS Data
 clear all
 use .\FOIA\MilitaryOccupations\Occupations.dta, replace
 
@@ -26,7 +38,11 @@ drop if state==""
 drop if state=="PR"|state=="AS"|state=="GU"|state=="FM"|state=="MH"|state=="MP"|state=="PW"|state=="VI" //Puerto Rico's not in all the data sets.
 drop if county==""
 drop if county=="ZZZ"
+drop if county=="RP8" //many county codes are nonsense
+destring county, replace
 
+//Keeps only the MOS observations that link to valid County IDs
+merge m:1 state county using .\FOIA\MilitaryOccupations\CensusCountyList.dta, nogen keep(match)
 
 /*CODEBOOK FOR MOS
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -69,7 +85,7 @@ display "NAVY: (`nT' /`tT')"
 
 //count those in each service by state and county	
 egen totalmp=total(manpower), by(state county)
-foreach sb in A N M F {
+foreach sb in A F M N {
 	egen `sb'x=total(manpower) if service=="`sb'", by(state county)
 	bysort state county: egen `sb'mp=max(`sb'x)
 	replace `sb'mp=0 if `sb'mp==.
