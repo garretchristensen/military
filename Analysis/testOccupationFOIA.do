@@ -10,16 +10,23 @@
 //then a potential enlistee from Tennessee might be rational to care more that someone from Tennessee died
 //compared to when someone from California died.
 
+//One could test this with the Pearson Chi-Square Test
+
 *Load Data
 clear all
 use .\FOIA\MilitaryOccupations\Occupations.dta, replace
 
-count
-count if state=="ZZ"
-count if county=="ZZZ"
-count if state=="ZZ"|county=="ZZZ"
+*count
+*count if state=="ZZ"
+*count if county=="ZZZ"
+*count if state=="ZZ"|county=="ZZZ"
 //No one with missing state has non-missing county
 drop if state=="ZZ"
+drop if state==""
+drop if state=="PR"|state=="AS"|state=="GU"|state=="FM"|state=="MH"|state=="MP"|state=="PW"|state=="VI" //Puerto Rico's not in all the data sets.
+drop if county==""
+drop if county=="ZZZ"
+
 
 /*CODEBOOK FOR MOS
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -37,7 +44,77 @@ MOS                                                                             
 */
 
 
-*for starters just look at how many go into 11B from each state.
+*for starters just look at how many go into each branch in one month.
+keep if yearmonth==200403 //use the middle month in the data in the main paper
+	//have 58 months, div 2=29. starts in 200110, +29=200403
+count
+
+//Total in each service branch for whole country			
+total(manpower)
+local tT=_b[manpower]
+total(manpower) if service=="A"
+local aT=_b[manpower]
+total(manpower) if service=="F"
+local fT=_b[manpower]
+total(manpower) if service=="M"
+local mT=_b[manpower]
+total(manpower) if service=="N"
+local nT=_b[manpower]
+			
+//Fractions is each service branch for the whole country
+display "ARMY:(`aT' /`tT')"
+display "AIR FORCE: (`fT' /`tT')"
+display "MARINES: (`mT' /`tT')"
+display "NAVY: (`nT' /`tT')"
+
+//count those in each service by state and county	
+egen totalmp=total(manpower), by(state county)
+foreach sb in A N M F {
+	egen `sb'x=total(manpower) if service=="`sb'", by(state county)
+	bysort state county: egen `sb'mp=max(`sb'x)
+	replace `sb'mp=0 if `sb'mp==.
+	drop `sb'x
+	label var `sb'mp "Manpower in service branch `sb' in given county"
+}
+
+duplicates drop state county, force
+drop manpower grade service MOS 
+
+//the expected # in each county for each branch
+
+gen ae=totalmp*(`aT' /`tT')
+gen fe=totalmp*(`fT' /`tT')
+gen me=totalmp*(`mT' /`tT')
+gen ne=totalmp*(`nT' /`tT')
+
+//square the difference and divide by the expected
+gen ad=((Amp-ae)^2)/ae
+gen fd=((Fmp-fe)^2)/fe
+gen md=((Mmp-me)^2)/me
+gen nd=((Nmp-ne)^2)/ne
+gen chi2stat=ad+fd+md+nd //compares this to chi-2 w/ 3 dof.
+
+stop
+
+
+total(manpower) if MOS=="11B"
+local b11=_b[manpower]
+total(manpower)
+local b11frac=`b11'/_b[manpower]
+disp "the fraction of 
+
+egen totbycounty=total(manpower), by(county)
+
+egen X=total(manpower) if MOS=="11B", by(county)
+bysort county: egen tot11Bbycounty=max(X)
+drop X
+label var tot11Bbycounty "total Army 11B by state"
+
+gen frac11B=tot11Bbystate/totbycounty
+label var frac11B "fraction Army 11B/total military by state"
+
+
+*************
 egen totbystate=total(manpower), by(state)
 label var totbystate "total military by state"
 
