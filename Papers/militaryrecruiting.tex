@@ -561,7 +561,7 @@ active-duty contracts. If counties exhibit statistically indistinguishable rates
 but to interpret, one should use an adjustment for the high degree of multiple testing present such as Bonferroni (i.e., divide the cutoff for significance by the number of tests, 51, thus replacing a cutoff of .05 with 0.05/51=0.0009). Only two
 of the state observations (Florida and Massachusetts) reject the null
 hypothesis that their true probability is in fact .003 using applicant
-data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts). So it is possible that recruits from certain states are more likely to enter dangerous military occupations, but according to my evidence, the idea that the risk of death is the same across all states can only be rejected infrequently. 
+data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts)\footnote{The Bonferroni correction is often considered to be quite conservative. Even using much more modern methods to adjust the False Discovery Rate (FDR), I obtain similar results. Both the Benjamini Hochberg q-values and Benjamini Krieger Yekutieli sharpened q-values indicate that 16 out of the more than 3,100 counties have significantly different death rates for applicants, and zero for contracts. See \cite{BenHoch1995, BKY2006, Anderson2008} for details on estimating FDR.} So it is possible that recruits from certain states are more likely to enter dangerous military occupations, but according to my evidence, the idea that the risk of death is the same across all states can only be rejected infrequently. 
 
 \begin{figure}
 %built by Table1Graph.do AND table1bycounty.do
@@ -572,8 +572,8 @@ Same Binomial Distribution}
 \end{figure}
 \clearpage{}
 
-This is not necessarily a reason for concern regarding omitted variable bias,
-since fixed effects for each county will still be able to control for this underlying characteristic of the state and county to the extent it is constant over time, however, it does give a slightly different meaning to the estimates I develop in the next few pages. If deaths in Iraq and Afghanistan were truly uniformly
+This is not necessarily a reason for concern regarding omitted variable bias and my estimates of the deterrent effect of deaths,
+since fixed effects for each county will still be able to control for this underlying characteristic of the state and county to the extent it is constant over time. However, it does give a slightly different meaning to the estimates I develop in the next few pages. If deaths in Iraq and Afghanistan were truly uniformly
 distributed amongst all the troops, regardless of where they came
 from, then the fact that a soldier from a given county, say Fairfax
 County, Virginia, had died would provide no more information regarding
