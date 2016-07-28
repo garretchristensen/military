@@ -30,19 +30,20 @@ cd $dir
 *do ./Analysis/deathsvrecruits.do
 
 /*RUN MAIN LINEAR REGRESSIONS*/
-*do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
+do ./Analysis/redefined.do /*linear and log-linear regressions, weighted*/
 	*also includes active-only deaths, all-recruits
+	*and leads-should-be-zero regs
 *do ./Analysis/interactionscontrols.do /*LN regression recruit/mort controls and interactions*/
 *do ./Analysis/redefcontig.do /*LN&P regressions of neighboring/media market counties*/
 
 /*OTHER*/
 *do ./Analysis/redefrunninglags.do //LN&P regs for longer-term lags
-do ./Analysis/redefhighquality.do //LN&P regs of LQ/HQ recruits, plus deaths of many ifferent types, and interactions with diff war deaths
+*do ./Analysis/redefhighquality.do //LN&P regs of LQ/HQ recruits, plus deaths of many ifferent types, and interactions with diff war deaths
 
-do ./Analysis/PandLN90.do /*Main LN&P regs with 90-2006 deaths*/
+*do ./Analysis/PandLN90.do /*Main LN&P regs with 90-2006 deaths*/
 *do ./Analysis/redefbyservice2013.12.11.do /*reshape the data month-county-service branch, run linear and possion regs*/
 
 /*OTHER FUNCTIONAL FORMS*/
-*do ./Analysis/redefinedpoisson.do /*Main poission regs, R & Total deaths, future leads, with recruit/mort controls, and interactions*/
+do ./Analysis/redefinedpoisson.do /*Main poission regs, R & Total deaths, future leads, with recruit/mort controls, and interactions*/
 *do ./Analysis/squareroot2015.2.17.do /*square root of recruits*/
 *do ./Analaysis/nebinom2015.2.17.do /*negative binomial*/

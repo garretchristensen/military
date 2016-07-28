@@ -525,7 +525,7 @@ at the state and county level as reported by the Bureau of Labor Statistics, and
 A characteristic that affects the interpretation
 of my results is the specific military occupational specialty (MOS) for which the
 residents of certain counties or states are likely to sign up, and the corresponding likelihood of death faced by those in certain MOS. It is possible that those in the infantry are more likely to be killed than those in ancillary support operations. And it is possible that recruits from certain states are more likely than others to sign up
-for more dangerous occupations. I find that although counties do tend to send their recruits to different service branches, the rate of death faced by a recruit is statistically the same for all but a very small number of counties.  %(In the appendix, I establish the perhaps unsurprising fact that recruits and deaths are not uniformly distributed across the population. Here I restrict my attention to the likelihood of death \textit{given} enlistment.) 
+for more dangerous occupations. However, I find that although counties do tend to send their recruits to different service branches, the rate of death faced by a recruit is statistically the same for all but a very small number of counties.  %(In the appendix, I establish the perhaps unsurprising fact that recruits and deaths are not uniformly distributed across the population. Here I restrict my attention to the likelihood of death \textit{given} enlistment.) 
 
 The first step in this analysis is conducted with a dataset separate from the deaths and recruits data, obtained after multiple FOIA requests, showing the total enlisted employment for each of the thousands of MOS by county and month. Using the midpoint month from my analysis (March 2004), I compare each county's distribution of employment across the four service branches to the national average distribution (35\% Army, 26\% Navy, 16\% Marines, 23\% Air Force using the observations in the dataset that I am able to match to a county) using Pearson's Chi-squared test. The answer is clear that counties do not all send the same fraction of recruits to the four service branches, and thus to MOS. Without any correction for the multiplicity of hypothesis tests, as many as 1,225 of the 3,125 counties have ratios of employment that are different than that of the national average at the 95\% confidence level. Using the Bonferroni, Benjamini Hochberg, and Benjamini Krieger Yekutieli corrections indicate that 304, 901, and 977 of the 3,125 have statistically different employment distributions at the 95\% confidence level, respectively. Results are very similar using other months of the data.
 
@@ -556,10 +556,10 @@ hazard rate of p=.003. Figure \ref{Flo:Pat's Histo} displays
 histograms of the p-value for each state and county, one set using active-duty deaths
 and active duty applicants, the other using active-duty deaths and
 active-duty contracts. If counties exhibit statistically indistinguishable rates of death, then p-values should be high. The histogram displays the p-values as calculated,
-but to interpret, one should use an adjustment for the high degree of multiple testing present such as Bonferroni (i.e., divide the cutoff for significance by the number of tests, 51, thus replacing a cutoff of .05 with 0.05/51=0.0009). Only two
+but to interpret, one should, as above, use an adjustment for the high degree of multiple testing present such as Bonferroni (i.e., divide the cutoff for significance by the number of tests, 51, thus replacing a cutoff of .05 with 0.05/51=0.0009). Only two
 of the state observations (Florida and Massachusetts) reject the null
 hypothesis that their true probability is in fact .003 using applicant
-data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts)\footnote{The Bonferroni correction is often considered to be quite conservative. Even using much more modern methods to adjust the False Discovery Rate (FDR), I obtain similar results. Both the Benjamini Hochberg q-values and Benjamini Krieger Yekutieli sharpened q-values indicate that 16 out of the more than 3,100 counties have significantly different death rates for applicants, and zero for contracts. See \cite{BenHoch1995, BKY2006, Anderson2008} for details on estimating FDR.} So it is possible that recruits from certain states are more likely to enter dangerous military occupations, but according to my evidence, the idea that the risk of death is the same across all states can only be rejected infrequently. 
+data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts)\footnote{The Bonferroni correction is often considered to be quite conservative. Even using much more modern methods to adjust the False Discovery Rate (FDR), I obtain similar results. Both the Benjamini Hochberg q-values and Benjamini Krieger Yekutieli sharpened q-values indicate that 16 out of the more than 3,100 counties have significantly different death rates for applicants, and zero for contracts. See \cite{BenHoch1995, BKY2006, Anderson2008} for details on estimating FDR.} So although it is the case that recruits from certain counties are more likely to enter dangerous military occupations, according to the data, the idea that the risk of death is the same across all states can only be rejected infrequently. 
 
 \begin{figure}
 %built by Table1Graph.do AND table1bycounty.do
@@ -741,7 +741,7 @@ estimates.
 \scalebox{0.75}{\input{../Output/runninglagsLN}}
 \end{table}
 
-As a robustness check on my main specification, I have included multiple periods of leads of deaths. As expected, a death from the county one or two months into the future has no significant relationship with recruits. These regressions are shown in Appendix Table~\ref{Flo:forwardbasicLN}. 
+As a robustness check on my main specification, I have also run regressions including deaths one month into the future. In the main log-linear specification, deaths from the same county one month into the future appear to have significant relationships with recruits. However, the Poisson models, as well as the log-linear model using only active duty deaths, show clearly that deaths in the future do not correlate signficantly with current recruiting levels.  These regressions are shown in Appendix Table~\ref{Flo:forwardbasicLN} and Table~\ref{Flo:forwardPbasic}. 
 
 \subsection{Heterogeneity of the Deterrent Effect\label{sub:interactions}}
 
@@ -1161,22 +1161,24 @@ in addition to testing every recruit, I also test the model by using only deaths
 Appendix Tables~\ref{Flo:forwardbasicLN} and ~\ref{Flo:redefPF1} repeat the main specification but add lead periods of deaths as a falsification test of the model. As expected, deaths in the future have no relation to current recruiting. 
 
 
-\pagebreak{}
 \clearpage{}
 \begin{table}
 %built by redefined.do
-\caption{Leads Have No Effect: Linear}
+\caption{Testing Effect of Leads: Linear}
 \label{Flo:forwardbasicLN}
 \scalebox{0.8}{
 \input{../Output/forwardbasicWLN}}
 \end{table}
 
 %Future Deaths Have No Effect
+%built by redefinedpoisson.do
 \pagebreak{}
 \clearpage{}
 \begin{table}
-\caption{Leads Have No Effect: Poisson}
-\label{Flo:redefPF1}\input{../Output/forwardPbasic}
+\caption{Testing Effect of Leads: Poisson}
+\label{Flo:forwardPbasic}
+\scalebox{0.9}{
+\input{../Output/forwardPbasic}}
 \end{table}
 
 

@@ -17,6 +17,8 @@ cap rm ./Output/LNLinearWR.tex //log linear, active deaths only
 cap rm ./Output/LNLinearWR.txt
 cap rm ./Output/forwardbasicWLN.txt //log linear, 2 leads
 cap rm ./Output/forwardbasicWLN.tex
+cap rm ./Output/forwardbasicWLNR.txt //log linear, 2 leads, active deaths only
+cap rm ./Output/forwardbasicWLNR.tex
 cap rm ./Output/allrecLNLinearW.txt //log linear, ALL recruits
 cap rm ./Output/allrecLNLinearW.tex
 
@@ -88,12 +90,19 @@ outreg2 using ./Output/LinearW.tex, tex ti(County Applicants vs Deaths and Unemp
 
 
 /* If I resize deaths here I need to resize all of them*/
-replace monthcountydeath=monthcountydeath/100
-replace L1monthcountydeath=L1monthcountydeath/100
+foreach lag in F6 F5 F4 F3 F2 F1 "" L1 L2{
+	replace `lag'monthcountydeath=`lag'monthcountydeath/100
+}
+replace F2outofcounty=F2outofcounty/100
+replace F1outofcounty=F1outofcounty/100
 replace outofcounty=outofcounty/100
 replace L1outofcounty=L1outofcounty/100
+label var F2monthcountydeath "2-Lead In-County Deaths/100"
+label var F1monthcountydeath "Lead In-County Deaths/100"
 label var monthcountydeath "Current In-County Deaths/100"
 label var L1monthcountydeath "Lag In-County Deaths/100"
+label var F2outofcounty "2-Lead Out-of-County Deaths/100"
+label var F1outofcounty "Lead Out-of-County Deaths/100"
 label var outofcounty "Current Out-of-County Deaths/100"
 label var L1outofcounty "Lag Out-of-County Deaths/100"
 summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
@@ -154,29 +163,44 @@ outreg2 using ./Output/LNLinearW.tex, tex label ///
 
 /*WEIGHTED FUTURE LEADS--WITH LN(Active)*/
 disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
-reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
-	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips)
-outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`file'countyonly) bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
-addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on active duty deaths", ///
+reghdfe LNactive F1monthcountydeath monthcountydeath L1monthcountydeath ///
+	[aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips)
+outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
+	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths", ///
 	"As well as future 'lead' periods. Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"as well as a state-specific linear trend. The first four columns show applicants and the last four show contracts.", ///
+	"The first columns show applicants and the last show contracts.", ///
 	Filename:forwardbasicWLN.txt) ///
-	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 
-reghdfe LNactive F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath L2monthcountydeath ///
-	F2outofcounty F1outofcounty outofcounty L1outofcounty L2outofcounty ///
+reghdfe LNactive F1monthcountydeath monthcountydeath L1monthcountydeath ///
+	 F1outofcounty outofcounty L1outofcounty ///
+	 stateunemp countyunemp [aweight=avgcountypop], absorb(fips month)  vce(cluster fips)
+outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
+	
+reghdfe LNactive F1monthcountydeath monthcountydeath L1monthcountydeath ///
+	 F1outofcounty outofcounty L1outofcounty ///
 	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear)  vce(cluster fips)
-outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`file'countyandstate) bdec(3) tdec(3) bracket se append ///
+outreg2 using ./Output/forwardbasicWLN.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
-
+*More periods
+reghdfe LNactive F6monthcountydeath F5monthcountydeath F4monthcountydeath F3monthcountydeath F2monthcountydeath F1monthcountydeath monthcountydeath L1monthcountydeath ///
+	 F1outofcounty outofcounty L1outofcounty ///
+	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear)  vce(cluster fips)
+	
+	
 ************************************************************************
 /*ACTIVE DEATHS ONLY*/
 ************************************************************************
+replace F1Rmonthcountydeath=F1Rmonthcountydeath/100
+label var F1Rmonthcountydeath "Lead In-County Active Duty Deaths/100"
 replace Rmonthcountydeath=Rmonthcountydeath/100
 label var Rmonthcountydeath "In-County Active Duty Deaths/100"
 replace L1Rmonthcountydeath=L1Rmonthcountydeath/100
 label var L1Rmonthcountydeath "Lag In-County Active Duty Deaths/100"
+replace F1Routofcounty=F1Routofcounty/100
+label var F1Routofcounty "Lead Out-of-County Active Duty Deaths"
 replace Routofcounty=Routofcounty/100
 label var Routofcounty "Out-of-County Active Duty Deaths"
 replace L1Routofcounty=L1Routofcounty/100
@@ -221,6 +245,28 @@ outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
+/*WEIGHTED FUTURE LEADS--WITH LN(Active) ONLY R DEATHS*/
+disp "PLACEBO TEST-FUTURE LAGS--LOOKS LIKE I WIN"
+reghdfe LNactive F1Rmonthcountydeath Rmonthcountydeath L1Rmonthcountydeath ///
+	[aweight=avgcountypop], absorb(fips month stateyear) vce(cluster fips)
+outreg2 using ./Output/forwardbasicWLNR.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
+	addnote("Notes: Table shows linear regression of log (national active duty recruits +1) on active duty deaths", ///
+	"As well as future 'lead' periods. Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
+	"The first columns show applicants and the last show contracts.", ///
+	Filename:forwardbasicWLNR.txt) ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
+
+reghdfe LNactive F1Rmonthcountydeath Rmonthcountydeath L1Rmonthcountydeath ///
+	 F1Routofcounty Routofcounty L1Routofcounty ///
+	 stateunemp countyunemp [aweight=avgcountypop], absorb(fips month)  vce(cluster fips)
+outreg2 using ./Output/forwardbasicWLNR.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
+	
+reghdfe LNactive F1Rmonthcountydeath Rmonthcountydeath L1Rmonthcountydeath ///
+	 F1Routofcounty Routofcounty L1Routofcounty ///
+	stateunemp countyunemp [aweight=avgcountypop], absorb(fips month stateyear)  vce(cluster fips)
+outreg2 using ./Output/forwardbasicWLNR.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
+	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 	
 ************************************************************************
 /*ALL RECRUITS, EVEN THE JACKED RESERVES DATA*/
