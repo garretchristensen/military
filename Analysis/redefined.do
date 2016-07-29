@@ -216,7 +216,7 @@ reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath [aweight=avgcountypop], /
 	absorb(fips month) vce(cluster fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ///
 	ti(Log County Applicants vs Active Duty Deaths and Unemployment) ///
-	ct(Basic) bdec(3) tdec(3) bracket se append ///
+	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on \textit{only} active duty deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
 	"The first three columns show applicants and the last three show contracts.", Filename:LNLinearWR.tex) ///
@@ -226,7 +226,7 @@ outreg2 using ./Output/LNLinearWR.tex, tex label ///
 /*STATE AND UNEMP*/
 reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty countyunemp ///
 	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
-outreg2 using ./Output/LNLinearWR.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
+outreg2 using ./Output/LNLinearWR.tex, tex label ct(`header') bdec(3) tdec(3) bracket ///
 	se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 	
@@ -242,7 +242,7 @@ outreg2 using ./Output/LNLinearWR.tex, tex label ct(State) bdec(3) tdec(3) brack
 reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath Routofcounty L1Routofcounty ///
 	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ///
-	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
+	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 
 /*WEIGHTED FUTURE LEADS--WITH LN(Active) ONLY R DEATHS*/
@@ -278,7 +278,7 @@ reghdfe LNmcr monthcountydeath L1monthcountydeath [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)
 outreg2 using ./Output/allrecLNLinearW.tex, tex label ///
 	ti(Log County ALL Applicants vs Deaths and Unemployment) ///
-	ct(Basic) bdec(3) tdec(3) bracket se append ///
+	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national recruits +1) on military deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
 	"The first three columns show applicants and the last three show contracts.", Filename:allrecLNLinearW.tex) ///
@@ -288,7 +288,7 @@ outreg2 using ./Output/allrecLNLinearW.tex, tex label ///
 /*STATE AND UNEMP*/
 reghdfe LNmcr monthcountydeath L1monthcountydeath outofcounty L1outofcounty countyunemp ///
 	stateunemp [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
-outreg2 using ./Output/allrecLNLinearW.tex, tex label ct(State) bdec(3) tdec(3) bracket ///
+outreg2 using ./Output/allrecLNLinearW.tex, tex label ct(`header') bdec(3) tdec(3) bracket ///
 	se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 	
@@ -304,7 +304,7 @@ outreg2 using ./Output/allrecLNLinearW.tex, tex label ct(State) bdec(3) tdec(3) 
 reghdfe LNmcr monthcountydeath L1monthcountydeath outofcounty L1outofcounty ///
 	stateunemp countyunemp [aweight=avgcountypop],  absorb(fips month stateyear) vce(cluster fips)
 outreg2 using ./Output/allrecLNLinearW.tex, tex label ///
-	ct(w/Stateyear) bdec(3) tdec(3) bracket se append ///
+	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 	
 	
