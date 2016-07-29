@@ -14,6 +14,13 @@ cap rm ./Ouput/deathsvrecruitsP.tex
 
 foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
 
+if "`file'"=="APP"{
+	local header="Applicants"
+}
+else{
+	local header="Contracts"
+}
+
 use ./Apps/`file'_bydate2000.dta, clear
 sort date
 merge 1:1 date using ./Deaths/deathsbydate
@@ -28,9 +35,12 @@ bysort month: egen monthdeathtotal=total(totaldeaths)
 bysort month: egen monthapptotal=total(totapp)
 bysort month: egen monthARtotal=total(AR)
 
-label var monthdeathtotal "Current Deaths"
+label var monthdeathtotal "Current National Deaths/100"
 label var monthapptotal "Total Applicants"
 label var monthARtotal "Total Active Duty Applicants"
+/*FIX UNITS SO ESTIMATES AREN'T ALL ZEROES*/
+replace monthdeathtotal=monthdeathtotal/100
+
 count
 duplicates drop month, force
 count
@@ -51,13 +61,10 @@ tsset fancymonth
 gen t=fancymonth-501
 label var t "Linear Time Trend"
 sort fancymonth
-replace monthdeathtotal=.0000001 if month=="200207" /*NO DEATHS THIS MONTH--CHEAP FIX*/
+*do Log (n+1) instead replace monthdeathtotal=.0000001 if month=="200207" /*NO DEATHS THIS MONTH--CHEAP FIX*/
 gen lag1monthdeath=monthdeathtotal[_n-1]
-label var lag1monthdeath "Lag Deaths"
+label var lag1monthdeath "Lag National Deaths/100"
 
-/*FIX UNITS SO ESTIMATES AREN'T ALL ZEROES*/
-replace monthdeathtotal=monthdeathtotal/100
-replace lag1monthdeath=lag1monthdeath/100
 /*
 reg monthapptotal monthdeathtotal
 estat bgodfrey, lags (1 2 3 4)
@@ -76,11 +83,11 @@ newey monthapptotal lag1monthdeath t, lag(4)
  *outreg2 using ./Output/deathsvrecruits.txt, ct(LagonlyNewey4t) bdec(3) tdec(3) bracket se  append
 */
 /*SIMPLE DEATH/APP REGRESSION WITH LOGS*/
-gen logmonthapptotal=log(monthapptotal)
+gen logmonthapptotal=ln(monthapptotal)
 label var logmonthapptotal "Log Applicants"
-gen logmonthdeathtotal=log(monthdeathtotal)
+gen logmonthdeathtotal=log(monthdeathtotal+1)
 label var logmonthdeathtotal "Log Monthly Deaths"
-gen loglag1monthdeath=log(lag1monthdeath)
+gen loglag1monthdeath=log(lag1monthdeath+1)
 label var loglag1monthdeath "Log Lag Monthly Deaths"
 /*
 reg logmonthapptotal logmonthdeathtotal
@@ -106,13 +113,13 @@ reg logmonthapptotal monthdeathtotal
 *estat dwatson
 *estat durbinalt
  outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label ti(Log Total Apps vs. Total Deaths: Semi-Elasticity) ///
- addnote("Notes: Table shows linear regression estimates of log national monthly on recruits on deaths.", ///
+ addnote("Notes: Table shows linear regression estimates of log(monthly national recruits) on deaths.", ///
  "The first three columns show applicants and the last three show contracts.", Filename:deathsvrecruitsSEMI.tex) ///
- cti(`file') cttop(Applicants,"","",Contracts,"","") bdec(3) tdec(3) bracket se append nocons addtext (Linear Trend, NO)
+ cti(`header') bdec(3) tdec(3) bracket se append nocons addtext (Linear Trend, NO)
 reg logmonthapptotal monthdeathtotal lag1monthdeath
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label bdec(3) tdec(3) cti(`file') bracket se append nocons addtext (Linear Trend, NO)
+ outreg2 using ./Output/deathsvrecruitsSEMI.txt, tex label bdec(3) tdec(3) cti(`header') bracket se append nocons addtext (Linear Trend, NO)
 reg logmonthapptotal monthdeathtotal lag1monthdeath t
- outreg2 using ./Output/deathsvrecruitsSEMI.txt, drop(t) tex label bdec(3) tdec(3) bracket se cti(`file') append addtext (Linear Trend, YES) nocons cttop(Applicants,"","",Contracts,"","")
+ outreg2 using ./Output/deathsvrecruitsSEMI.txt, drop(t) tex label bdec(3) tdec(3) bracket se cti(`header') append addtext (Linear Trend, YES) nocons cttop(Applicants,"","",Contracts,"","")
 
  
  *newey logmonthapptotal monthdeathtotal, lag(4)
@@ -129,13 +136,13 @@ reg logmonthapptotal monthdeathtotal lag1monthdeath t
 /*SEMI-ELASTICITIES USING POISSON*/
 poisson monthapptotal monthdeathtotal
  outreg2 using ./Output/deathsvrecruitsP.txt, tex ti(Poisson Regression: Total Applicants vs. Total Deaths) ///
- addnote("Notes: Table shows Poisson regression estimates of total national monthly deaths on recruits.", ///
+ addnote("Notes: Table shows Poisson regression estimates of national monthly recruits on deaths.", ///
  "The first three columns show applicants and the last three show contracts.", Filename:deathsvrecruitsP.tex) ///
- ct(`file') bdec(3) tdec(3) bracket addstat(Likelihood, e(ll)) se append nocons label addtext (Linear Trend, NO)
+ ct(`header') bdec(3) tdec(3) bracket addstat(Likelihood, e(ll)) se append nocons label addtext (Linear Trend, NO)
 poisson monthapptotal monthdeathtotal lag1monthdeath
- outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(`file') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) nocons label addtext (Linear Trend, NO)
+ outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) nocons label addtext (Linear Trend, NO)
 poisson monthapptotal monthdeathtotal lag1monthdeath t
- outreg2 using ./Output/deathsvrecruitsP.txt, drop(t) tex ct(`file') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) nocons  label addtext (Linear Trend, YES)
+ outreg2 using ./Output/deathsvrecruitsP.txt, drop(t) tex ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) nocons  label addtext (Linear Trend, YES)
 *poisson monthapptotal lag1monthdeath
 * outreg2 using ./Output/deathsvrecruitsP.txt, tex ct(LogLagonly) bdec(3) tdec(3) bracket se  append addstat(Likelihood, e(ll)) nocons
 *poisson monthapptotal lag1monthdeath t
