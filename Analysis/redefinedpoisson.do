@@ -84,14 +84,14 @@ xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcoun
 	countyunemp monthfe3-monthfe58, fe exposure(avgcountypop) vce(robust)
 outreg2 using ./Output/redefPbasic`type'.txt, ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
 	keep(`type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp) ///
-	addtext(County FE, YES, Month FE, YES, State Trends, NO)
+	addtext(County FE, YES, Month FE, YES, State Trends, NO) lab tex
 
 /*STATE TRENDS*/
 xtpoisson active `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
 	countyunemp monthfe3-monthfe58 statetrend1-statetrend51, fe exposure(avgcountypop) vce(robust)
 outreg2 using ./Output/redefPbasic`type'.txt, ct(`header') bdec(3) tdec(3) bracket se append addstat(Likelihood, e(ll)) ///
 	keep(`type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp countyunemp) ///
-	addtext(County FE, YES, Month FE, YES, State Trends, YES)
+	addtext(County FE, YES, Month FE, YES, State Trends, YES) lab tex
 
 ****************
 	
