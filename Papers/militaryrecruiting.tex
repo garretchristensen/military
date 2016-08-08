@@ -60,8 +60,7 @@ One possibility is that when someone dies in an occupation the brothers and frie
 A few examples illustrate the point.  It is the explicit policy of the New York City Fire Department to give a 10-point bonus on the employment exam to any applicant who is the child of a firefighter who was killed on 9/11.\footnote {See \url{http://www.nyc.gov/html/fdny/html/community/ff_faq_080106.shtm\#legacy}} The legacy points led to a minor uproar when they were initially refused to 13 applicants whose parent had died due to 9/11-related illnesses, but not actually on 9/11.\footnote{See \url{http://www.nydailynews.com/new-york/gov-cuomo-13-fdny-sons-brave-future-article-1.1585065}} Dan Barta joined the Binghamton, NY police force after his father was killed in the line of duty, saying ``it has been my dream since that day [the day my father was killed] to be a Binghamton Police Officer.'' 
 \footnote{See \url{http://www.wbng.com/home/Serving-the-community-A-family-legacy-230269421.html}} The ``sandhogs'' who do the dangerous work of boring the tunnels under New York City often follow in (fallen) friends or family members' footsteps.\footnote{See \url{http://www.villagevoice.com/2012-04-11/news/sandhogs-tunneling-second-avenue-subway/full/} or \url{http://www.nydailynews.com/archives/news/brave-sandhogs-pause-reflect-article-1.569895}} 
 
-This possible incentive effect is clearly not unique to a single instance, and not unique to the military, though at least one example from the military received media attention: 61-year-old orthopedic surgeon Bill Krissoff acquired an age waiver and enlisted in the Navy Medical Corps after his son Nathan was killed in the Marines in Iraq.
-\footnote{See \url{http://www.npr.org/templates/story/story.php?storyId=17013597}}
+This possible incentive effect is clearly not unique to a single instance, and not unique to the military, though at least one example from the military received media attention: 61-year-old orthopedic surgeon Bill Krissoff acquired an age waiver and enlisted in the Navy Medical Corps after his son Nathan was killed in the Marines in Iraq.\footnote{See \url{http://www.npr.org/templates/story/story.php?storyId=17013597}}
 Since some of the Marine Corps' support operations are provided by the Navy, serving in the Navy Medical Corps enabled Krissoff to give medical care to those with whom his son had fought and died.  This paper is an empirical test of the size of the deterrent or incentive effect in the military, and an analysis of when the effect may be larger or smaller. 
 
 
@@ -449,7 +448,7 @@ I have recruiting data for fiscal years 1990-2006. (The military operates
 on an October 1-September 30 fiscal year.) The applicants data set
 contains 6.4 million active duty observations, the contracts data
 set has 3.6 million active duty observations, and the accessions data
-set has 3.0 million active duty observations. \footnote{There are nearly 50\%
+set has 3.0 million active duty observations.\footnote{There are nearly 50\%
 more recruits when one includes reserve and guard recruits (I
 observe roughly 9 million total applicants), however it appears that
 much of the contracts data for Reservists and Army and Air National
@@ -460,7 +459,7 @@ an implausibly low number over a 17-year period. Note that all active duty (both
 
 The main casualty data come from a public list compiled by the Statistical
 Information Analysis Division at the Defense Manpower Data Center
-and freely obtained from their website. \footnote{This data was obtained from  \url{http://siadapp.dmdc.osd.mil/personnel/CASUALTY/castop.htm} in 2010, but that site no longer operates. Similar data was available in 2014 from \url{https://www.dmdc.osd.mil/dcas/pages/casualties.xhtml}.}
+and freely obtained from their website.\footnote{This data was obtained from  \url{http://siadapp.dmdc.osd.mil/personnel/CASUALTY/castop.htm} in 2010, but that site no longer operates. Similar data was available in 2014 from \url{https://www.dmdc.osd.mil/dcas/pages/casualties.xhtml}.}
 Starting October 7, 2001, every fatality in Operation Iraqi Freedom
 and Operation Enduring Freedom is listed, and includes
 the service branch, component (active/reserve/guard), name, rank,
@@ -556,7 +555,7 @@ active-duty contracts. If counties exhibit statistically indistinguishable rates
 but to interpret, one should, as above, use an adjustment for the high degree of multiple testing present such as Bonferroni (i.e., for states divide the cutoff for significance by the number of tests, 51, thus replacing a cutoff of .05 with 0.05/51=0.0009). Only two
 of the state observations (Florida and Massachusetts) reject the null
 hypothesis that their true probability is in fact .003 using applicant
-data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,100 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts)\footnote{The Bonferroni correction is often considered to be quite conservative. Even using much more modern methods to adjust the False Discovery Rate (FDR), I obtain similar results. Both the Benjamini Hochberg q-values and Benjamini Krieger Yekutieli sharpened q-values indicate that 16 out of the more than 3,100 counties have significantly different death rates for applicants, and zero for contracts. See \cite{BenHoch1995, BKY2006, Anderson2008} for details on estimating FDR.} So while it is the case that recruits from certain counties are more likely to enter dangerous military occupations, according to the data, the idea that the risk of death is the same across all states can only be rejected very infrequently. 
+data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,125 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts).\footnote{The Bonferroni correction is often considered to be quite conservative. Even using much more modern methods to adjust the False Discovery Rate (FDR), I obtain similar results. Both the Benjamini Hochberg q-values and Benjamini Krieger Yekutieli sharpened q-values indicate that 16 out of the more than 3,100 counties have significantly different death rates for applicants, and zero for contracts. See \cite{BenHoch1995, BKY2006, Anderson2008} for details on estimating FDR.} So while it is the case that recruits from certain counties are more likely to enter dangerous military occupations, according to the data, the idea that the risk of death is the same across all states can only be rejected very infrequently. 
 
 \begin{figure}
 %built by Table1Graph.do AND table1bycounty.do
@@ -588,7 +587,7 @@ rate of death of its soldiers, and the behavioral explanation is still reasonabl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{County-Level Analysis\label{sub:County OLS}}
 
-The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model \footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata 12 \citep{reghdfe}. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitatively very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a negative binomial specification. Again, the results are very similar.} The regression generally follows the model:
+The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model.\footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata 12 \citep{reghdfe}. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitatively very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a negative binomial specification. Again, the results are very similar.} The regression generally follows the model:
 $$Recruits_{it}=\beta_{0}Deaths_{i,t}+\beta_{1}Deaths_{i,t-1}+\beta_{2}Unemployment_{it}\\
 +x'_{it}\eta+\alpha_{i}+\gamma_{t}+u_{it}$$
 where Deaths implies deaths from the given county, Unemployment county unemployment, and $x$ includes in-state (but out of county) deaths as well as
@@ -614,8 +613,7 @@ Fixed effects for each county and for each month are included in all specificati
 Observations are weighted by county population, and standard errors
 are clustered by county. The results indicate that one additional
 in-county death is followed in the next month by a 1.1\%
-decrease in applicants and a similar reduction in contracts.
-\footnote{Note that all death figures have been divided by 100 to make more
+decrease in applicants and a similar reduction in contracts.\footnote{Note that all death figures have been divided by 100 to make more
 useful digits of the coefficients visible, and thus all coefficients
 for deaths should be interpreted as percents and not fractions (i.e.
 0.4 is 0.4 percent, not 40 percent).} Deaths from in-state but out-of-county
