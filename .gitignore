@@ -26,6 +26,9 @@ Maps/*
 Media/*
 Mortality/*
 Newspaper/*
+#Add only the new .tex version of tables
+Output/*.txt
+Output/*.gph
 Output/old/*
 Output/PDF/*
 Political/*

@@ -1,0 +1,23 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc}
+\multicolumn{7}{c}{Poisson Regression: Total Applicants vs. Total Deaths} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  \\
+Current National Deaths/100 & -0.209*** & -0.086*** & -0.110*** & -0.261*** & -0.147*** & -0.132*** \\
+ & [0.002] & [0.002] & [0.003] & [0.003] & [0.004] & [0.004] \\
+Lag National Deaths/100 &  & -0.166*** & -0.196*** &  & -0.161*** & -0.142*** \\
+ &  & [0.002] & [0.003] &  & [0.004] & [0.004] \\
+ &  &  &  &  &  &  \\
+Observations & 58 & 57 & 57 & 58 & 57 & 57 \\
+Linear Trend & NO & NO & YES & NO & NO & YES \\
+ Likelihood & -15147 & -12409 & -12202 & -8909 & -8001 & -7967 \\ \hline
+\multicolumn{7}{c}{ Standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows Poisson regression estimates of national monthly recruits on deaths.} \\
+\multicolumn{7}{c}{ The first three columns show applicants and the last three show contracts.} \\
+\multicolumn{7}{c}{ Filename:deathsvrecruitsP.tex} \\
+\end{tabular}
+\end{document}

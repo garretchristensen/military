@@ -1,0 +1,39 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccc} \hline
+ & (1) & (2) & (3) & (4) \\
+VARIABLES & Applicants & Applicants & Contracts & Contracts \\ \hline
+ &  &  &  &  \\
+Active duty deaths this month-county & -0.001 & 0.000 & -0.003 & -0.002 \\
+ & [0.004] & [0.004] & [0.004] & [0.004] \\
+1 monthly lags of Rmonthcountydeath & -0.014*** & -0.014*** & -0.008* & -0.008* \\
+ & [0.004] & [0.004] & [0.004] & [0.005] \\
+R out of county but in-state deaths this month & 0.002** & 0.003*** & 0.003*** & 0.004*** \\
+ & [0.001] & [0.001] & [0.001] & [0.001] \\
+1 monthly lags of Routofcounty & 0.002** & 0.003*** & 0.000 & 0.001 \\
+ & [0.001] & [0.001] & [0.001] & [0.001] \\
+State Unemployment & -0.010 & -0.009 & -0.009 & -0.008 \\
+ & [0.009] & [0.009] & [0.009] & [0.009] \\
+County Unemployment & 0.019*** & 0.019*** & 0.017*** & 0.017*** \\
+ & [0.002] & [0.002] & [0.002] & [0.002] \\
+Military Recruiter by State &  & 0.025** &  & 0.022** \\
+ &  & [0.010] &  & [0.011] \\
+Lag County Mortality Rate &  & 0.001** &  & 0.000 \\
+ &  & [0.000] &  & [0.000] \\
+Lag Out-of-County Mortality Rate &  & -0.000 &  & -0.000 \\
+ &  & [0.000] &  & [0.000] \\
+ &  &  &  &  \\
+Observations & 97,794 & 97,794 & 97,794 & 97,794 \\
+R-squared & 0.968 & 0.968 & 0.962 & 0.962 \\
+County FE & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES \\
+ Stateyear FE & NO & NO & NO & NO \\ \hline
+\multicolumn{5}{c}{ Robust standard errors in brackets} \\
+\multicolumn{5}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{5}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.} \\
+\multicolumn{5}{c}{ Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{5}{c}{ The first four columns show applicants and the last three show contracts.} \\
+\multicolumn{5}{c}{ Filename:LNcontrolWR.tex} \\
+\end{tabular}
+\end{document}

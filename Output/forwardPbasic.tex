@@ -1,0 +1,39 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc} \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  \\
+Lead In-County Deaths/100 & -0.047 & -0.172 & -0.084 & -0.042 & -0.170 & -0.121 \\
+ & [0.268] & [0.289] & [0.267] & [0.313] & [0.317] & [0.262] \\
+Current In-County Deaths/100 & -0.120 & -0.287 & -0.195 & -0.034 & -0.209 & -0.156 \\
+ & [0.402] & [0.417] & [0.328] & [0.425] & [0.431] & [0.335] \\
+Lag In-County Deaths/100 & -0.680*** & -0.846*** & -0.761*** & -0.583** & -0.758*** & -0.721** \\
+ & [0.175] & [0.190] & [0.258] & [0.238] & [0.250] & [0.283] \\
+Lead Out-of-County Deaths/100 &  & 0.126** & 0.097 &  & 0.120* & 0.042 \\
+ &  & [0.059] & [0.067] &  & [0.064] & [0.065] \\
+Current Out-of-County Deaths/100 &  & 0.188*** & 0.188*** &  & 0.202*** & 0.143** \\
+ &  & [0.060] & [0.060] &  & [0.067] & [0.069] \\
+Lag Out-of-County Deaths/100 &  & 0.180*** & 0.164*** &  & 0.191** & 0.113* \\
+ &  & [0.063] & [0.058] &  & [0.075] & [0.064] \\
+State Unemployment & -0.006 & -0.004 & -0.030*** & -0.012* & -0.011* & -0.030*** \\
+ & [0.006] & [0.006] & [0.006] & [0.007] & [0.006] & [0.006] \\
+County Unemployment & 0.016*** & 0.016*** & 0.018*** & 0.016*** & 0.016*** & 0.018*** \\
+ & [0.005] & [0.005] & [0.004] & [0.005] & [0.005] & [0.004] \\
+ &  &  &  &  &  &  \\
+Observations & 174,986 & 174,986 & 174,986 & 174,986 & 174,986 & 174,986 \\
+Number of fips & 3,126 & 3,126 & 3,126 & 3,126 & 3,126 & 3,126 \\
+County FE & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES \\
+Stateyear FE & NO & NO & YES & NO & NO & YES \\
+ Likelihood & -325865 & -325835 & -325360 & -272927 & -272907 & -272543 \\ \hline
+\multicolumn{7}{c}{ Robust standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows Poisson regression of national active duty recruits on deaths} \\
+\multicolumn{7}{c}{ As well as future 'lead' periods. Fixed effects are included separately by county and month} \\
+\multicolumn{7}{c}{ and for each state-year, as indiciated, as well as a state-specific linear trend.} \\
+\multicolumn{7}{c}{ The first four columns show applicants and the last four show contracts.} \\
+\multicolumn{7}{c}{ Filename:forwardPbasic.txt} \\
+\end{tabular}
+\end{document}

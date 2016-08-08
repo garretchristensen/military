@@ -1,0 +1,38 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccccccc}
+\multicolumn{11}{c}{Poisson Regression of Media and Contiguous Deaths} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) & (9) & (10) \\
+VARIABLES & APPjustneighbor & APPneighbor & APPjustmedia & APPmedia & APPall & CONjustneighbor & CONneighbor & CONjustmedia & CONmedia & CONall \\ \hline
+ &  &  &  &  &  &  &  &  &  &  \\
+Current In-County Deaths/100 &  & -0.007 &  & 0.014 & -0.030 &  & 0.103 &  & 0.103 & 0.061 \\
+ &  & [0.442] &  & [0.422] & [0.440] &  & [0.435] &  & [0.416] & [0.433] \\
+Lag In-County Deaths/100 &  & -0.575*** &  & -0.667*** & -0.612*** &  & -0.420 &  & -0.539** & -0.483* \\
+ &  & [0.183] &  & [0.178] & [0.182] &  & [0.262] &  & [0.246] & [0.260] \\
+Death in Neighbor County & -0.118 & -0.090 &  &  & 0.068 & -0.260 & -0.250 &  &  & 0.042 \\
+ & [0.166] & [0.184] &  &  & [0.186] & [0.207] & [0.220] &  &  & [0.239] \\
+Lag Death in Neighbor County & -0.469* & -0.416 &  &  & -0.137 & -0.548* & -0.512* &  &  & -0.066 \\
+ & [0.257] & [0.258] &  &  & [0.270] & [0.287] & [0.284] &  &  & [0.274] \\
+State Unemployment & -0.008 & -0.008 & -0.004 & -0.004 & -0.008 & -0.015*** & -0.015*** & -0.011* & -0.012* & -0.015*** \\
+ & [0.005] & [0.005] & [0.006] & [0.006] & [0.005] & [0.006] & [0.006] & [0.007] & [0.007] & [0.006] \\
+County Unemployment & 0.016*** & 0.016*** & 0.016*** & 0.016*** & 0.016*** & 0.016*** & 0.016*** & 0.016*** & 0.016*** & 0.016*** \\
+ & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] \\
+Death in Media Market &  &  & -0.172 & -0.159 & -0.242 &  &  & -0.380 & -0.373 & -0.442* \\
+ &  &  & [0.190] & [0.192] & [0.207] &  &  & [0.237] & [0.237] & [0.268] \\
+Lag Death in Media Market &  &  & -0.486** & -0.457** & -0.423* &  &  & -0.681** & -0.659** & -0.668** \\
+ &  &  & [0.224] & [0.222] & [0.233] &  &  & [0.265] & [0.261] & [0.261] \\
+ &  &  &  &  &  &  &  &  &  &  \\
+Observations & 178,055 & 178,055 & 178,169 & 178,169 & 178,055 & 177,998 & 177,998 & 178,112 & 178,112 & 177,998 \\
+Number of fips & 3,125 & 3,125 & 3,127 & 3,127 & 3,125 & 3,124 & 3,124 & 3,126 & 3,126 & 3,124 \\
+County FE & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES \\
+ State Trend & NO & NO & NO & NO & NO & NO & NO & NO & NO & NO \\ \hline
+\multicolumn{11}{c}{ Robust standard errors in brackets} \\
+\multicolumn{11}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{11}{c}{ Notes: Table shows Poisson regression estimates of national active duty recruits on deaths.} \\
+\multicolumn{11}{c}{ Fixed effects are included separately by county and month as indiciated,} \\
+\multicolumn{11}{c}{ The first five columns show applicants and the last five show contracts.} \\
+\multicolumn{11}{c}{ Filename:redefcontigP.tex} \\
+\end{tabular}
+\end{document}

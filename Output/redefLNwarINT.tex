@@ -1,0 +1,53 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccccc} \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) \\
+VARIABLES & Applicants & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  &  &  \\
+In-County Deaths/100 & -0.627 & -0.625 & -0.625 & -0.630 & -1.420** & -1.416** & -1.426** & -1.428** \\
+ & [0.568] & [0.567] & [0.568] & [0.568] & [0.575] & [0.575] & [0.576] & [0.576] \\
+Iraq Lag In-County Deaths/100 & -2.119*** & -2.161*** & -2.145*** & -2.339*** & -2.297*** & -2.301*** & -2.356*** & -2.460*** \\
+ & [0.633] & [0.635] & [0.626] & [0.636] & [0.632] & [0.640] & [0.639] & [0.635] \\
+Afghanistan Lag In-County Deaths/100 & 1.472 & 1.367 & 1.419 & 1.481 & -0.753 & -0.590 & -0.820 & -0.706 \\
+ & [1.845] & [1.883] & [1.824] & [1.756] & [1.947] & [1.965] & [1.940] & [1.872] \\
+Out-of-County Deaths/100 & -0.088 & -0.089 & -0.089 & -0.082 & 0.048 & 0.048 & 0.048 & 0.045 \\
+ & [0.074] & [0.074] & [0.074] & [0.074] & [0.069] & [0.069] & [0.069] & [0.069] \\
+Lag Out-of-County Deaths/100 & -0.044 & -0.045 & -0.045 & -0.046 & -0.028 & -0.029 & -0.029 & -0.036 \\
+ & [0.072] & [0.072] & [0.072] & [0.072] & [0.073] & [0.073] & [0.073] & [0.073] \\
+deathcountypopIRAQ & 213.938 &  &  &  & 330.732 &  &  &  \\
+ & [245.555] &  &  &  & [235.172] &  &  &  \\
+deathcountypopAFGHAN & 185.798 &  &  &  & -511.998** &  &  &  \\
+ & [207.321] &  &  &  & [239.110] &  &  &  \\
+State Unemployment & -0.028*** & -0.028*** & -0.028*** & -0.028*** & -0.021*** & -0.021*** & -0.021*** & -0.021*** \\
+ & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] \\
+County Unemployment & 0.008*** & 0.008*** & 0.008*** & 0.008*** & 0.009*** & 0.009*** & 0.009*** & 0.008*** \\
+ & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] \\
+deathcountyunempIRAQ &  & -0.197 &  &  &  & 0.315 &  &  \\
+ &  & [0.388] &  &  &  & [0.449] &  &  \\
+deathcountyunempAFGHAN &  & -0.609 &  &  &  & 0.409 &  &  \\
+ &  & [1.442] &  &  &  & [1.416] &  &  \\
+deathPctBlack05IRAQ &  &  & -0.001 &  &  &  & -0.017 &  \\
+ &  &  & [0.049] &  &  &  & [0.063] &  \\
+deathPctBlack05AFGHAN &  &  & -0.015 &  &  &  & -0.240* &  \\
+ &  &  & [0.125] &  &  &  & [0.135] &  \\
+deathPctBush04IRAQ &  &  &  & 0.105** &  &  &  & 0.084* \\
+ &  &  &  & [0.048] &  &  &  & [0.051] \\
+deathPctBush04AFGHAN &  &  &  & -0.056 &  &  &  & 0.012 \\
+ &  &  &  & [0.131] &  &  &  & [0.150] \\
+ &  &  &  &  &  &  &  &  \\
+Observations & 178,739 & 178,910 & 178,910 & 177,371 & 178,739 & 178,910 & 178,910 & 177,371 \\
+R-squared & 0.859 & 0.859 & 0.859 & 0.859 & 0.836 & 0.836 & 0.836 & 0.835 \\
+County FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Stateyear FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Test In-County & 0.0636 & 0.0732 & 0.0631 & 0.0393 & 0.443 & 0.400 & 0.447 & 0.369 \\
+ Test Interaction & 0.921 & 0.774 & 0.917 & 0.238 & 0.00955 & 0.948 & 0.142 & 0.647 \\ \hline
+\multicolumn{9}{c}{ Robust standard errors in brackets} \\
+\multicolumn{9}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{9}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths} \\
+\multicolumn{9}{c}{ from different wars, interacted. Fixed effects are included separately by county and month as indiciated,} \\
+\multicolumn{9}{c}{ The first four columns show applicants and the last four show contracts.} \\
+\multicolumn{9}{c}{ Filename:redefLNwar.tex} \\
+\end{tabular}
+\end{document}

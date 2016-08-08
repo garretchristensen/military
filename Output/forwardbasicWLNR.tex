@@ -1,0 +1,37 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc} \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  \\
+Lead In-County Active Duty Deaths/100 & -0.404 & -0.238 & -0.437 & -1.184*** & -1.026*** & -1.262*** \\
+ & [0.296] & [0.300] & [0.306] & [0.302] & [0.280] & [0.307] \\
+In-County Active Duty Deaths/100 & -0.447 & -0.393 & -0.538* & -0.387 & -0.316 & -0.486 \\
+ & [0.312] & [0.393] & [0.315] & [0.339] & [0.416] & [0.355] \\
+Lag In-County Active Duty Deaths/100 & -1.451*** & -1.305*** & -1.530*** & -1.673*** & -1.457*** & -1.688*** \\
+ & [0.314] & [0.340] & [0.320] & [0.461] & [0.458] & [0.483] \\
+Lead Out-of-County Active Duty Deaths &  & 0.070 & 0.032 &  & 0.044 & 0.045 \\
+ &  & [0.069] & [0.060] &  & [0.072] & [0.069] \\
+Out-of-County Active Duty Deaths &  & 0.150** & 0.138** &  & 0.196*** & 0.174** \\
+ &  & [0.068] & [0.064] &  & [0.071] & [0.074] \\
+Lag Out-of-County Active Duty Deaths &  & 0.141* & 0.067 &  & 0.029 & -0.052 \\
+ &  & [0.076] & [0.063] &  & [0.098] & [0.074] \\
+State Unemployment &  & 0.004 & -0.035*** &  & 0.000 & -0.030*** \\
+ &  & [0.007] & [0.008] &  & [0.007] & [0.011] \\
+County Unemployment &  & 0.013** & 0.011** &  & 0.015** & 0.013** \\
+ &  & [0.006] & [0.005] &  & [0.006] & [0.005] \\
+ &  &  &  &  &  &  \\
+Observations & 175,672 & 175,602 & 175,602 & 175,672 & 175,602 & 175,602 \\
+R-squared & 0.965 & 0.965 & 0.965 & 0.958 & 0.957 & 0.958 \\
+County FE & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES \\
+ Stateyear FE & NO & NO & YES & NO & NO & YES \\ \hline
+\multicolumn{7}{c}{ Robust standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows linear regression of log (national active duty recruits +1) on active duty deaths} \\
+\multicolumn{7}{c}{ As well as future 'lead' periods. Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{7}{c}{ The first columns show applicants and the last show contracts.} \\
+\multicolumn{7}{c}{ Filename:forwardbasicWLNR.txt} \\
+\end{tabular}
+\end{document}

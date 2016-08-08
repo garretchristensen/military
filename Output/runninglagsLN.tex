@@ -1,0 +1,53 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccccc} \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) \\
+VARIABLES & Applicants & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  &  &  \\
+Cum. 2 Lags Out-of-County Deaths & 0.087** &  &  &  & 0.052 &  &  &  \\
+ & [0.042] &  &  &  & [0.049] &  &  &  \\
+Cum. 2 Lags In-County Deaths & -0.775*** &  &  &  & -0.685*** &  &  &  \\
+ & [0.186] &  &  &  & [0.218] &  &  &  \\
+Cum. 2 Lags State Unemployment & 0.323 &  &  &  & 0.178 &  &  &  \\
+ & [0.226] &  &  &  & [0.256] &  &  &  \\
+Cum. 2 Lags County Unemployment & 0.321* &  &  &  & 0.431** &  &  &  \\
+ & [0.194] &  &  &  & [0.215] &  &  &  \\
+Cum. 4 Lags  Out-of-County Deaths &  & 0.061 &  &  &  & 0.046 &  &  \\
+ &  & [0.037] &  &  &  & [0.044] &  &  \\
+Cum. 4 Lags  In-County Deaths &  & -0.627*** &  &  &  & -0.629*** &  &  \\
+ &  & [0.148] &  &  &  & [0.193] &  &  \\
+Cum. 4 Lags  State Unemployment &  & 0.465** &  &  &  & 0.229 &  &  \\
+ &  & [0.187] &  &  &  & [0.211] &  &  \\
+Cum. 4 Lags  County Unemployment &  & 0.060 &  &  &  & 0.234 &  &  \\
+ &  & [0.170] &  &  &  & [0.192] &  &  \\
+Cum. 6 Lags  Out-of-County Deaths &  &  & 0.063** &  &  &  & 0.062* &  \\
+ &  &  & [0.031] &  &  &  & [0.036] &  \\
+Cum. 6 Lags  In-County Deaths &  &  & -0.539*** &  &  &  & -0.667*** &  \\
+ &  &  & [0.111] &  &  &  & [0.140] &  \\
+Cum. 6 Lags  State Unemployment &  &  & 0.467*** &  &  &  & 0.218 &  \\
+ &  &  & [0.137] &  &  &  & [0.157] &  \\
+Cum. 6 Lags  County Unemployment &  &  & -0.032 &  &  &  & 0.116 &  \\
+ &  &  & [0.133] &  &  &  & [0.153] &  \\
+Cum. 12 Lags Out-of-County Deaths &  &  &  & 0.041* &  &  &  & 0.060** \\
+ &  &  &  & [0.024] &  &  &  & [0.026] \\
+Cum. 12 Lags In-County Deaths &  &  &  & -0.354*** &  &  &  & -0.589*** \\
+ &  &  &  & [0.096] &  &  &  & [0.107] \\
+Cum. 12 Lags State Unemployment &  &  &  & 0.090 &  &  &  & -0.035 \\
+ &  &  &  & [0.093] &  &  &  & [0.108] \\
+Cum. 12 Lags County Unemployment &  &  &  & 0.167* &  &  &  & 0.227* \\
+ &  &  &  & [0.098] &  &  &  & [0.118] \\
+ &  &  &  &  &  &  &  &  \\
+Observations & 175,595 & 169,321 & 163,047 & 144,225 & 175,595 & 169,321 & 163,047 & 144,225 \\
+R-squared & 0.965 & 0.965 & 0.965 & 0.964 & 0.957 & 0.957 & 0.957 & 0.957 \\
+County FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+ Stateyear FE & NO & NO & NO & NO & NO & NO & NO & NO \\ \hline
+\multicolumn{9}{c}{ Robust standard errors in brackets} \\
+\multicolumn{9}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{9}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative} \\
+\multicolumn{9}{c}{ lagged deaths. Fixed effects are included separately by county and month as indiciated,} \\
+\multicolumn{9}{c}{ The first five columns show applicants and the last five show contracts.} \\
+\multicolumn{9}{c}{ Filename:runninglagsLN.tex} \\
+\end{tabular}
+\end{document}

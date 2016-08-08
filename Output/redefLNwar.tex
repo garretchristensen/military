@@ -1,0 +1,41 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccc} \hline
+ & (1) & (2) & (3) & (4) \\
+VARIABLES & Applicants & Applicants & Contracts & Contracts \\ \hline
+ &  &  &  &  \\
+In-County Deaths/100 & -0.625 & -0.626 & -1.416** & -1.418** \\
+ & [0.568] & [0.568] & [0.575] & [0.575] \\
+Iraq Lag In-County Deaths/100 & -2.143*** & -2.147*** & -2.331*** & -2.343*** \\
+ & [0.635] & [0.635] & [0.633] & [0.633] \\
+Afghanistan Lag In-County Deaths/100 & 1.433 & 1.440 & -0.639 & -0.627 \\
+ & [1.853] & [1.853] & [1.959] & [1.959] \\
+Out-of-County Deaths/100 & -0.089 & -0.087 & 0.048 & 0.050 \\
+ & [0.074] & [0.074] & [0.069] & [0.069] \\
+Iraq Lag Out-of-County Deaths/100 &  & -0.041 &  & 0.009 \\
+ &  & [0.073] &  & [0.073] \\
+Afghanistan Lag Out-of-County Deaths/100 &  & -0.251 &  & -0.291 \\
+ &  & [0.279] &  & [0.277] \\
+State Unemployment & -0.028*** & -0.028*** & -0.021*** & -0.021*** \\
+ & [0.005] & [0.005] & [0.005] & [0.005] \\
+County Unemployment & 0.008*** & 0.008*** & 0.009*** & 0.009*** \\
+ & [0.002] & [0.002] & [0.002] & [0.002] \\
+Lag Out-of-County Deaths/100 & -0.045 &  & -0.029 &  \\
+ & [0.072] &  & [0.073] &  \\
+ &  &  &  &  \\
+Observations & 178,910 & 178,910 & 178,910 & 178,910 \\
+R-squared & 0.859 & 0.859 & 0.836 & 0.836 \\
+County FE & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES \\
+Stateyear FE & YES & YES & YES & YES \\
+Test In-County & 0.0658 & 0.0650 & 0.404 & 0.398 \\
+ Test Out-of-County &  & 0.451 &  & 0.286 \\ \hline
+\multicolumn{5}{c}{ Robust standard errors in brackets} \\
+\multicolumn{5}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{5}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative} \\
+\multicolumn{5}{c}{ lagged deaths by war. Fixed effects are included separately by county and month as indiciated,} \\
+\multicolumn{5}{c}{ The first four columns show applicants and the last four show contracts.} \\
+\multicolumn{5}{c}{ Filename:redefLNwar.tex} \\
+\end{tabular}
+\end{document}

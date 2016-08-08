@@ -1,0 +1,43 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcc} \hline
+ & (1) & (2) \\
+VARIABLES & Applicants & Contracts \\ \hline
+ &  &  \\
+Current In-County Deaths/100 & -0.501 & -0.534 \\
+ & [0.381] & [0.357] \\
+Lag In-County Deaths/100 & -0.686 & -0.207 \\
+ & [0.480] & [0.491] \\
+Current Out-of-County Deaths/100 & 0.165*** & 0.160** \\
+ & [0.061] & [0.067] \\
+Lag Out-of-County Deaths/100 & 0.083 & -0.016 \\
+ & [0.069] & [0.087] \\
+Lag County Death*County Unemployment & 0.007 & 0.012*** \\
+ & [0.004] & [0.004] \\
+Lag County Death/County Population & 2.698 & 3.211* \\
+ & [1.984] & [1.826] \\
+Lag County Death*\%Black Population & -0.065** & -0.117*** \\
+ & [0.033] & [0.041] \\
+Lag County Death*\%George Bush Vote & 0.092*** & 0.154*** \\
+ & [0.030] & [0.027] \\
+Lag County Death*Rural & -0.029 & -0.019 \\
+ & [0.034] & [0.033] \\
+State Unemployment & 0.005 & -0.000 \\
+ & [0.007] & [0.007] \\
+County Unemployment & 0.012** & 0.014** \\
+ & [0.006] & [0.006] \\
+ &  &  \\
+Observations & 177,371 & 177,371 \\
+R-squared & 0.965 & 0.957 \\
+County FE & YES & YES \\
+Month FE & YES & YES \\
+ Stateyear FE & NO & NO \\ \hline
+\multicolumn{3}{c}{ Robust standard errors in brackets} \\
+\multicolumn{3}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{3}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.} \\
+\multicolumn{3}{c}{ Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{3}{c}{ The first three columns show applicants and the last three show contracts.} \\
+\multicolumn{3}{c}{ Filename:LNinteractCOMBINE.tex} \\
+\end{tabular}
+\end{document}

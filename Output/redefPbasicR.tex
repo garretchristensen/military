@@ -1,0 +1,34 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc} \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  \\
+Active duty deaths this month-county & 0.002 & 0.000 & 0.002 & 0.002 & -0.001 & 0.000 \\
+ & [0.004] & [0.005] & [0.004] & [0.005] & [0.005] & [0.004] \\
+1 monthly lags of Rmonthcountydeath & -0.010*** & -0.012*** & -0.011*** & -0.009*** & -0.012*** & -0.011*** \\
+ & [0.003] & [0.003] & [0.003] & [0.003] & [0.003] & [0.004] \\
+R out of county but in-state deaths this month &  & 0.002*** & 0.002*** &  & 0.003*** & 0.002** \\
+ &  & [0.001] & [0.001] &  & [0.001] & [0.001] \\
+1 monthly lags of Routofcounty &  & 0.002*** & 0.002*** &  & 0.002** & 0.001 \\
+ &  & [0.001] & [0.001] &  & [0.001] & [0.001] \\
+State Unemployment &  & -0.002 & -0.025*** &  & -0.009 & -0.026*** \\
+ &  & [0.006] & [0.006] &  & [0.006] & [0.006] \\
+County Unemployment &  & 0.016*** & 0.016*** &  & 0.016*** & 0.016*** \\
+ &  & [0.005] & [0.004] &  & [0.005] & [0.004] \\
+ &  &  &  &  &  &  \\
+Observations & 178,239 & 178,169 & 178,169 & 178,182 & 178,112 & 178,112 \\
+Number of fips & 3,127 & 3,127 & 3,127 & 3,126 & 3,126 & 3,126 \\
+County FE & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES \\
+State Trends & NO & NO & YES & NO & NO & YES \\
+ Likelihood & -332832 & -331963 & -331201 & -278655 & -278171 & -277676 \\ \hline
+\multicolumn{7}{c}{ Robust standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows Poisson regression of national active duty recruits on deaths.} \\
+\multicolumn{7}{c}{ Fixed effects are included separately by county and month, and linear state trends, as indiciated,} \\
+\multicolumn{7}{c}{ The first four columns show applicants and the last three show contracts.} \\
+\multicolumn{7}{c}{ Filename:redefPbasicR.tex} \\
+\end{tabular}
+\end{document}

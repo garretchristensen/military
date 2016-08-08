@@ -1,0 +1,34 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc}
+\multicolumn{7}{c}{Log County Applicants vs Active Duty Deaths and Unemployment} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Basic & State & w/Stateyear & Basic & State & w/Stateyear \\ \hline
+ &  &  &  &  &  &  \\
+In-County Active Duty Deaths/100 & -0.169 & -0.274 & -0.456 & -0.236 & -0.337 & -0.518 \\
+ & [0.419] & [0.420] & [0.339] & [0.468] & [0.455] & [0.385] \\
+Lag In-County Active Duty Deaths/100 & -1.294*** & -1.356*** & -1.525*** & -1.489*** & -1.512*** & -1.679*** \\
+ & [0.314] & [0.326] & [0.307] & [0.382] & [0.417] & [0.462] \\
+Out-of-County Active Duty Deaths &  & 0.153** & 0.125** &  & 0.180** & 0.169** \\
+ &  & [0.074] & [0.064] &  & [0.075] & [0.077] \\
+Lag Out-of-County Active Duty Deaths &  & 0.133* & 0.064 &  & 0.034 & -0.037 \\
+ &  & [0.078] & [0.064] &  & [0.101] & [0.070] \\
+County Unemployment &  & 0.013** & 0.011** &  & 0.015** & 0.013** \\
+ &  & [0.005] & [0.005] &  & [0.006] & [0.005] \\
+State Unemployment &  & 0.005 & -0.035*** &  & 0.001 & -0.030*** \\
+ &  & [0.007] & [0.008] &  & [0.007] & [0.011] \\
+ &  &  &  &  &  &  \\
+Observations & 178,809 & 178,739 & 178,739 & 178,809 & 178,739 & 178,739 \\
+R-squared & 0.964 & 0.965 & 0.965 & 0.956 & 0.957 & 0.958 \\
+County FE & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES \\
+ Stateyear FE & NO & NO & YES & NO & NO & YES \\ \hline
+\multicolumn{7}{c}{ Robust standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on \textit{only} active duty deaths.} \\
+\multicolumn{7}{c}{ Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{7}{c}{ The first three columns show applicants and the last three show contracts.} \\
+\multicolumn{7}{c}{ Filename:LNLinearWR.tex} \\
+\end{tabular}
+\end{document}

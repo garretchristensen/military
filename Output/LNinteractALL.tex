@@ -1,0 +1,47 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccccccccc}
+\multicolumn{13}{c}{OLS Weighted Interactions} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) & (9) & (10) & (11) & (12) \\
+ & Applicants &  &  &  &  &  & Contracts &  &  &  &  &  \\
+VARIABLES & pop & Applicants & Applicants & Applicants & Applicants & Applicants & pop & Contracts & Contracts & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  &  &  &  &  &  &  \\
+Current In-County Deaths/100 & -0.446 & -0.454 & -0.472 & -0.456 & -0.446 & -0.459 & -0.443 & -0.455 & -0.489 & -0.457 & -0.443 & -0.462 \\
+ & [0.378] & [0.393] & [0.365] & [0.367] & [0.378] & [0.364] & [0.354] & [0.372] & [0.337] & [0.343] & [0.355] & [0.338] \\
+Lag In-County Deaths/100 & -1.108*** & -1.128*** & -1.191*** & -0.501 & -1.198*** & -0.413 & -1.185*** & -1.218*** & -1.334*** & -0.327 & -1.067*** & 0.030 \\
+ & [0.195] & [0.200] & [0.181] & [0.337] & [0.356] & [0.378] & [0.238] & [0.258] & [0.296] & [0.418] & [0.365] & [0.461] \\
+Current Out-of-County Deaths/100 & 0.164*** & 0.162*** & 0.166*** & 0.169*** & 0.164*** & 0.169*** & 0.163** & 0.159** & 0.167** & 0.170** & 0.163** & 0.167** \\
+ & [0.062] & [0.062] & [0.061] & [0.061] & [0.062] & [0.061] & [0.067] & [0.067] & [0.067] & [0.067] & [0.067] & [0.066] \\
+Lag Out-of-County Deaths/100 & 0.099 & 0.095 & 0.093 & 0.102 & 0.099 & 0.097 & 0.017 & 0.012 & 0.007 & 0.022 & 0.017 & 0.007 \\
+ & [0.068] & [0.069] & [0.068] & [0.068] & [0.068] & [0.067] & [0.084] & [0.086] & [0.085] & [0.084] & [0.084] & [0.083] \\
+Lag County Death/County Population & 2.611 &  &  &  &  &  & 2.984* &  &  &  &  &  \\
+ & [2.042] &  &  &  &  &  & [1.793] &  &  &  &  &  \\
+State Unemployment & 0.005 & 0.005 & 0.005 & 0.005 & 0.005 & 0.005 & 0.000 & -0.000 & 0.000 & 0.000 & 0.000 & 0.001 \\
+ & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] & [0.007] \\
+County Unemployment & 0.013** & 0.013** & 0.013** & 0.013** & 0.013** & 0.012** & 0.015** & 0.015** & 0.015** & 0.015** & 0.015** & 0.014** \\
+ & [0.005] & [0.006] & [0.005] & [0.005] & [0.005] & [0.006] & [0.006] & [0.006] & [0.006] & [0.006] & [0.006] & [0.006] \\
+Lag County Death*County Unemployment &  & 0.003 &  &  &  &  &  & 0.004 &  &  &  &  \\
+ &  & [0.004] &  &  &  &  &  & [0.004] &  &  &  &  \\
+Lag County Death*\%Black Population &  &  & -0.081*** &  &  &  &  &  & -0.144*** &  &  &  \\
+ &  &  & [0.029] &  &  &  &  &  & [0.040] &  &  &  \\
+Lag County Death*Race Fractionalization &  &  &  & -0.066** &  &  &  &  &  & -0.094*** &  &  \\
+ &  &  &  & [0.028] &  &  &  &  &  & [0.034] &  &  \\
+Lag County Death*Rural &  &  &  &  & -0.010 &  &  &  &  &  & 0.013 &  \\
+ &  &  &  &  & [0.033] &  &  &  &  &  & [0.031] &  \\
+Lag County Death*\%George Bush Vote &  &  &  &  &  & 0.079*** &  &  &  &  &  & 0.137*** \\
+ &  &  &  &  &  & [0.026] &  &  &  &  &  & [0.033] \\
+ &  &  &  &  &  &  &  &  &  &  &  &  \\
+Observations & 178,739 & 178,739 & 178,739 & 178,739 & 178,739 & 177,371 & 178,739 & 178,739 & 178,739 & 178,739 & 178,739 & 177,371 \\
+R-squared & 0.965 & 0.965 & 0.965 & 0.965 & 0.965 & 0.965 & 0.957 & 0.957 & 0.957 & 0.957 & 0.957 & 0.957 \\
+County FE & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES \\
+ Stateyear FE & NO & NO & NO & NO & NO & NO & NO & NO & NO & NO & NO & NO \\ \hline
+\multicolumn{13}{c}{ Robust standard errors in brackets} \\
+\multicolumn{13}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{13}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.} \\
+\multicolumn{13}{c}{ Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{13}{c}{ The first three columns show applicants and the last three show contracts.} \\
+\multicolumn{13}{c}{ Filename:LNinteractALL.tex} \\
+\end{tabular}
+\end{document}

@@ -1,0 +1,42 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccccccc}
+\multicolumn{11}{c}{Media and Contiguous Deaths} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) & (9) & (10) \\
+VARIABLES & Applicants & Applicants & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  &  &  &  &  \\
+Current In-County Deaths/100 &  & -0.541* &  & -0.533* & -0.540* &  & -0.514** &  & -0.509** & -0.528** \\
+ &  & [0.291] &  & [0.282] & [0.284] &  & [0.237] &  & [0.232] & [0.234] \\
+Lag In-County Deaths/100 &  & -1.005*** &  & -1.123*** & -1.134*** &  & -1.015*** &  & -1.183*** & -1.183*** \\
+ &  & [0.250] &  & [0.258] & [0.256] &  & [0.280] &  & [0.314] & [0.313] \\
+Death in Neighbor County & -0.222 & -0.141 &  &  &  & -0.431** & -0.353 &  &  &  \\
+ & [0.144] & [0.163] &  &  &  & [0.200] & [0.222] &  &  &  \\
+Lag Death in Neighbor County & -0.587*** & -0.505** &  &  &  & -0.720*** & -0.636*** &  &  &  \\
+ & [0.212] & [0.212] &  &  &  & [0.227] & [0.223] &  &  &  \\
+State Unemployment & -0.036*** & -0.037*** & 0.004 & -0.036*** & -0.035*** & -0.032*** & -0.033*** & -0.001 & -0.032*** & -0.031*** \\
+ & [0.008] & [0.008] & [0.011] & [0.008] & [0.008] & [0.011] & [0.011] & [0.011] & [0.011] & [0.011] \\
+County Unemployment & 0.011** & 0.011** & 0.012** & 0.011** & 0.011** & 0.013** & 0.013** & 0.014** & 0.013** & 0.013** \\
+ & [0.005] & [0.005] & [0.006] & [0.005] & [0.005] & [0.005] & [0.005] & [0.006] & [0.005] & [0.005] \\
+Death in Media Market &  &  & -0.399 & -0.078 & -0.171 &  &  & -0.800** & -0.355* & -0.485** \\
+ &  &  & [0.267] & [0.159] & [0.172] &  &  & [0.364] & [0.193] & [0.201] \\
+Lag Death in Media Market &  &  & -0.802*** & -0.457** & -0.537*** &  &  & -1.150*** & -0.692*** & -0.728*** \\
+ &  &  & [0.298] & [0.193] & [0.205] &  &  & [0.352] & [0.220] & [0.236] \\
+Current Out-of-County Deaths/100 &  &  &  &  & 0.145** &  &  &  &  & 0.193** \\
+ &  &  &  &  & [0.063] &  &  &  &  & [0.075] \\
+Lag Out-of-County Deaths/100 &  &  &  &  & 0.128** &  &  &  &  & 0.069 \\
+ &  &  &  &  & [0.065] &  &  &  &  & [0.080] \\
+ &  &  &  &  &  &  &  &  &  &  \\
+Observations & 178,568 & 178,568 & 178,739 & 178,739 & 178,739 & 178,568 & 178,568 & 178,739 & 178,739 & 178,739 \\
+R-squared & 0.965 & 0.965 & 0.965 & 0.965 & 0.965 & 0.958 & 0.958 & 0.957 & 0.958 & 0.958 \\
+County FE & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES & YES & YES & YES & YES \\
+ Stateyear FE & NO & NO & NO & NO & NO & NO & NO & NO & NO & NO \\ \hline
+\multicolumn{11}{c}{ Robust standard errors in brackets} \\
+\multicolumn{11}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{11}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.} \\
+\multicolumn{11}{c}{ Fixed effects are included separately by county and month as indiciated,} \\
+\multicolumn{11}{c}{ The first five columns show applicants and the last five show contracts.} \\
+\multicolumn{11}{c}{ Filename:redefcontigLN.tex} \\
+\end{tabular}
+\end{document}

@@ -1,0 +1,34 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc}
+\multicolumn{7}{c}{Log County Applicants vs Deaths and Unemployment} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  \\
+Current In-County Deaths/100 & -0.352 & -0.446 & -0.569** & -0.368 & -0.443 & -0.588** \\
+ & [0.381] & [0.378] & [0.279] & [0.365] & [0.355] & [0.233] \\
+Lag In-County Deaths/100 & -1.031*** & -1.106*** & -1.188*** & -1.147*** & -1.184*** & -1.270*** \\
+ & [0.184] & [0.195] & [0.239] & [0.233] & [0.238] & [0.284] \\
+Current Out-of-County Deaths/100 &  & 0.164*** & 0.124** &  & 0.163** & 0.127* \\
+ &  & [0.062] & [0.057] &  & [0.067] & [0.070] \\
+Lag Out-of-County Deaths/100 &  & 0.099 & 0.049 &  & 0.017 & -0.036 \\
+ &  & [0.068] & [0.058] &  & [0.084] & [0.068] \\
+County Unemployment &  & 0.013** & 0.011** &  & 0.015** & 0.013** \\
+ &  & [0.005] & [0.005] &  & [0.006] & [0.005] \\
+State Unemployment &  & 0.005 & -0.035*** &  & 0.000 & -0.031*** \\
+ &  & [0.007] & [0.008] &  & [0.007] & [0.011] \\
+ &  &  &  &  &  &  \\
+Observations & 178,809 & 178,739 & 178,739 & 178,809 & 178,739 & 178,739 \\
+R-squared & 0.964 & 0.965 & 0.965 & 0.956 & 0.957 & 0.958 \\
+County FE & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES \\
+ Stateyear FE & NO & NO & YES & NO & NO & YES \\ \hline
+\multicolumn{7}{c}{ Robust standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.} \\
+\multicolumn{7}{c}{ Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{7}{c}{ The first three columns show applicants and the last three show contracts.} \\
+\multicolumn{7}{c}{ Filename:LNLinearW.tex} \\
+\end{tabular}
+\end{document}

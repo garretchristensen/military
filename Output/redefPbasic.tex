@@ -1,0 +1,34 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc} \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  \\
+Current In-County Deaths/100 & -0.045 & -0.180 & -0.089 & 0.027 & -0.146 & -0.086 \\
+ & [0.436] & [0.433] & [0.320] & [0.448] & [0.431] & [0.310] \\
+Lag In-County Deaths/100 & -0.756*** & -0.898*** & -0.793*** & -0.646** & -0.836*** & -0.774*** \\
+ & [0.184] & [0.195] & [0.244] & [0.279] & [0.273] & [0.259] \\
+Current Out-of-County Deaths/100 &  & 0.218*** & 0.183*** &  & 0.230*** & 0.139** \\
+ &  & [0.064] & [0.062] &  & [0.070] & [0.071] \\
+Lag Out-of-County Deaths/100 &  & 0.179*** & 0.155*** &  & 0.202*** & 0.103 \\
+ &  & [0.066] & [0.058] &  & [0.078] & [0.064] \\
+State Unemployment &  & -0.003 & -0.025*** &  & -0.010 & -0.025*** \\
+ &  & [0.006] & [0.006] &  & [0.007] & [0.006] \\
+County Unemployment &  & 0.016*** & 0.016*** &  & 0.016*** & 0.016*** \\
+ &  & [0.005] & [0.004] &  & [0.005] & [0.004] \\
+ &  &  &  &  &  &  \\
+Observations & 178,239 & 178,169 & 178,169 & 178,182 & 178,112 & 178,112 \\
+Number of fips & 3,127 & 3,127 & 3,127 & 3,126 & 3,126 & 3,126 \\
+County FE & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES \\
+State Trends & NO & NO & YES & NO & NO & YES \\
+ Likelihood & -332831 & -331962 & -331200 & -278656 & -278173 & -277676 \\ \hline
+\multicolumn{7}{c}{ Robust standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows Poisson regression of national active duty recruits on deaths.} \\
+\multicolumn{7}{c}{ Fixed effects are included separately by county and month, and linear state trends, as indiciated,} \\
+\multicolumn{7}{c}{ The first four columns show applicants and the last three show contracts.} \\
+\multicolumn{7}{c}{ Filename:redefPbasic.tex} \\
+\end{tabular}
+\end{document}

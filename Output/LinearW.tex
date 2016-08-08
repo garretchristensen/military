@@ -1,0 +1,28 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc}
+\multicolumn{7}{c}{County Applicants vs Deaths and Unemployment} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Basic & w/State & w/Stateyear & Basic & w/State & w/Stateyear \\ \hline
+ &  &  &  &  &  &  \\
+monthcountydeath & -14.551*** & -13.845*** & -12.215*** & -9.298*** & -8.867*** & -7.866*** \\
+ & [4.668] & [4.475] & [3.215] & [3.278] & [3.146] & [2.344] \\
+L1monthcountydeath & -17.691*** & -16.601*** & -15.056*** & -10.591*** & -9.947*** & -8.980*** \\
+ & [4.156] & [3.691] & [2.815] & [2.904] & [2.608] & [2.016] \\
+outofcounty &  & -0.231** & 0.813* &  & -0.175** & 0.416 \\
+ &  & [0.104] & [0.475] &  & [0.069] & [0.314] \\
+L1outofcounty &  & -1.139** & -0.061 &  & -0.667* & -0.067 \\
+ &  & [0.557] & [0.122] &  & [0.352] & [0.086] \\
+countyunemp &  & 2.550*** & 2.506*** &  & 1.928*** & 1.899*** \\
+ &  & [0.882] & [0.797] &  & [0.602] & [0.562] \\
+stateunemp &  & 5.665** & -1.648 &  & 2.871** & -1.278 \\
+ &  & [2.248] & [1.183] &  & [1.384] & [0.858] \\
+ &  &  &  &  &  &  \\
+Observations & 178,809 & 178,739 & 178,739 & 178,809 & 178,739 & 178,739 \\
+ R-squared & 0.968 & 0.968 & 0.972 & 0.963 & 0.964 & 0.967 \\ \hline
+\multicolumn{7}{c}{ Robust standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ LinearW.tex} \\
+\end{tabular}
+\end{document}
