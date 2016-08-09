@@ -43,12 +43,15 @@ else{
 /*REPLACE DEATHS BY /100 SO THAT ESTIMATES ARE EASY TO READ/INTERPRET*/
 replace F2monthcountydeath=F2monthcountydeath/100
 replace F1monthcountydeath=F1monthcountydeath/100
-replace monthcountydeath=monthcountydeath/100
-replace L1monthcountydeath=L1monthcountydeath/100
+foreach type in "" R{
+	replace `type'monthcountydeath=`type'monthcountydeath/100
+	replace L1`type'monthcountydeath=L1`type'monthcountydeath/100
+	replace `type'outofcounty=`type'outofcounty/100
+	replace L1`type'outofcounty=L1`type'outofcounty/100
+}
 replace F2outofcounty=F2outofcounty/100
 replace F1outofcounty=F1outofcounty/100
-replace outofcounty=outofcounty/100
-replace L1outofcounty=L1outofcounty/100
+*Label Vars
 label var F2monthcountydeath "2-Lead In-County Deaths/100"
 label var F1monthcountydeath "Lead In-County Deaths/100"
 label var monthcountydeath "Current In-County Deaths/100"
@@ -57,6 +60,11 @@ label var F2outofcounty "2-Lead Out-of-County Deaths/100"
 label var F1outofcounty "Lead Out-of-County Deaths/100"
 label var outofcounty "Current Out-of-County Deaths/100"
 label var L1outofcounty "Lag Out-of-County Deaths/100"
+label var Rmonthcountydeath "Active Duty In-County Deaths/100"
+label var L1Rmonthcountydeath "Lag Active Duty In-County Deaths/100"
+label var Routofcounty "Active Duty Out-of-County Deaths/100"
+label var L1Routofcounty "Lag Active Duty Out-of-County Deaths/100"
+
 summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
 if r(max)<.01|r(max)>1 {
 	display "you divided deaths by 100 too little/much"
