@@ -364,6 +364,7 @@ But by allowing patriotism to be a function of perceived risk, and
 by allowing for the possibility that $\frac{dp}{d\hat{r}}>0$, it
 thus becomes a possibility that $\frac{\partial\tau^{M}}{\partial\hat{r}}>0$ ,
 that the military becomes more attractive as it becomes more dangerous.
+
 As with the anecdotal example of Bill Krisoff mentioned earlier, additional
 deaths, which are signals of potential for future danger, may increase
 an individual's sense of duty, revenge, patriotism, or honor and make
@@ -372,8 +373,7 @@ that recruiting stations were overwhelmed with potential recruits
 after 9/11, but it is a goal of this paper to empirically determine
 whether increased risk actually led to more or fewer recruits.%
 \footnote{Compare \url{http://www.nytimes.com/2001/11/12/us/nation-challenged-recruit-self-described-slacker-decides-he-s-ready-be-soldier.html},
-which describes an individual motivated to enlist to \url{http://www.nytimes.com/2001/09/16/us/after-attacks-military-despite-national-rush-emotion-recruiting-centers-aren-t.html},
-in which recruiters claim not to have seen a significant increase
+which describes an individual motivated to enlist to \url{http://www.nytimes.com/2001/09/16/us/after-attacks-military-despite-national-rush-emotion-recruiting-centers-aren-t.html}, in which recruiters claim not to have seen a significant increase
 in qualified recruits.%
 } To estimate $\frac{\partial\tau^{M}}{\partial\hat{r}}$, I assume the other terms
 in (\ref{eq:main eqn})---the preference for civilian employment,
@@ -395,10 +395,10 @@ locales. Or even if equally well informed, distant deaths may somehow
 seem less emotionally salient than deaths of soldiers from the local
 area. Thus I write $\hat{r}$$=r(d^{local}+(1-\theta)d^{distant})$,
 where $\theta\in(0,1)$ is the degree of inattention paid to distant
-deaths, a function of salience and competing stimuli. If in actuality
-deaths from distant locales contain no more information than local deaths
-on the true risk of death to a new enlistee, a standard model of full information would assume
-$\theta=0$. A major purpose of this paper is to see if, for whatever
+deaths, a function of salience and competing stimuli. 
+
+If in actuality deaths from distant locales contain no more information than local deaths
+on the true risk of death to a new enlistee, a standard model of full information would assume $\theta=0$. A major purpose of this paper is to see if, for whatever
 reason, $\theta>0$ in the observed data, and individuals are responding
 differently to local deaths than they are to distant deaths. The empirical
 results in section \ref{sec:Analysis} consistently show that potential
@@ -419,18 +419,15 @@ rationality.%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Data\label{sec:Data}}
 
-
-The data used in this paper is a rich new set with valuable information.
 The military has typically not released or maintained publicly available
 datasets of the deaths of its soldiers in the last two decades, which
 were numerous even in times of peace. The onset of the wars in Iraq
-and Afghanistan changed this, making data on a large number of
+and Afghanistan changed this, as the military made data on a large number of
 deaths available to the public. The recruiting data used in the literature has also typically been analyzed at the quarterly or yearly level, often at the state level, while my data contains the exact dates of applications and the ZIP code for each
 applicant, which I have aggregated to the monthly-county level. 
 
-The recruiting data used in this paper was obtained through Freedom
-of Information Act requests to the office of the Secretary of Defense
-and handled by the Defense Manpower Data Center. It consists of three
+I obtained the recruiting data used in this paper through Freedom
+of Information Act requests to the office of the Secretary of Defense, which were handled by the Defense Manpower Data Center. It consists of three
 distinct sets of individuals: {}``applicants,'' {}``contracts,''
 and {}``accessions'' (explained above) and contains the date on
 which these individuals were recorded as starting one of the three
@@ -465,14 +462,7 @@ of record city, home of record county, home of record state, home
 of record country, unit, incident geographic code, casualty geographic
 code, casualty county, city of loss, and race/ethnicity of the deceased.
 
-An important point to note here is that the data include {}``home
-of record'' which is where the soldier lived on the day they joined
-the service, and generally does not change over the course of military service, no matter how long. This is important with regards to my claim of plausible
-random assignment of death with respect to county after controlling
-for military population levels---the data is not biased by service-men
-and women with very dangerous military professions buying homes near
-their duty-base and changing their legal residence to the county in
-which the base sits. 
+The data includes {}``home of record'' which is where the soldier lived on the day they joined the service, and generally does not change over the course of military service, no matter how long. This is important with regards to my claim of plausible random assignment of death with respect to county after controlling for military population levels---the data is not biased by service-men and women with very dangerous military professions buying homes near their duty-base and changing their legal residence to the county in which the base sits. 
 
 Since the focus of this paper is recent combat deaths, the main 2001-2006 fatality data used in the majority of this paper does not include the fairly common deaths of military members unrelated to combat abroad, or unrelated to the military at all (heart attacks, car accidents).  After earlier drafts of this paper were completed, a FOIA request for detailed death data for all  deaths in the military (not just those in the wars) for the entire period for which I had recruiting data (1990-2006) was granted. I use these deaths as placebo tests of my analysis and find that, as expected, there is no significant recruiting effect of local non-combat deaths. This is discussed in the appendix and shown in Table~\ref{Flo:LNlinear90}.
 %and \ref{Flo:alldeaths90}.
@@ -516,13 +506,11 @@ at the state and county level as reported by the Bureau of Labor Statistics, and
 \section{Analysis\label{sec:Analysis}}
 
 \subsection{Location of Origin and Rates of Death\label{sec:deathrate}}
-A characteristic that affects the interpretation
-of my results is the specific military occupational specialty (MOS) for which the
-residents of certain counties or states are likely to sign up, and the corresponding likelihood of death faced by those in certain MOS. One could imagine that those in the infantry are more likely to be killed than those in ancillary support operations, and one could imagine that recruits from certain states are more likely than others to sign up for more dangerous occupations. However, I find that although counties do tend to send their recruits to different service branches, the rate of death faced by a recruit is statistically the same for all but a very small number of counties.  %(In the appendix, I establish the perhaps unsurprising fact that recruits and deaths are not uniformly distributed across the population. Here I restrict my attention to the likelihood of death \textit{given} enlistment.) 
+The specific military occupational specialty (MOS) for which the residents of certain counties or states are likely to sign up, and the corresponding likelihood of death faced by those in certain MOS affects the interpretation of my results. One could imagine that those in the infantry are more likely to be killed than those in ancillary support operations, and one could imagine that recruits from certain states are more likely than others to sign up for more dangerous occupations. However, I find that although counties do tend to send their recruits to different service branches, the rate of death faced by a recruit is statistically the same for all but a very small number of counties.  %(In the appendix, I establish the perhaps unsurprising fact that recruits and deaths are not uniformly distributed across the population. Here I restrict my attention to the likelihood of death \textit{given} enlistment.) 
 
-The first step in this analysis is conducted with a dataset separate from the deaths and recruits data, obtained after multiple FOIA requests, showing the total enlisted employment for each of the thousands of MOS by county and month. Using the midpoint month from my analysis (March 2004), I compare each county's distribution of employment across the four service branches to the national average distribution  using Pearson's Chi-squared test. Using the observation in the dataset that I am able to match to a county, employment is split 35\% Army, 26\% Navy, 16\% Marines, and 23\% Air Force. The answer is clear that counties do not all send the same fraction of recruits to the four service branches, and thus to MOS. Without any correction for the multiplicity of hypothesis tests, as many as 1,225 of the 3,125 counties have ratios of employment that are different than that of the national average at the 95\% confidence level. Using the Bonferroni, Benjamini Hochberg, and Benjamini Krieger Yekutieli corrections indicate that 304, 901, and 977 of the 3,125 have statistically different employment distributions at the 95\% confidence level, respectively \cite{BenHoch1995, BKY2006}. Results are very similar using other months of the data.
+The first step in this analysis is conducted with a dataset separate from the deaths and recruits data, obtained after multiple FOIA requests, showing the total enlisted employment for each of the thousands of MOS by county and month. Using the midpoint month from my analysis (March 2004), I compare each county's distribution of employment across the four service branches to the national average distribution  using Pearson's Chi-squared test. Using the observation in the dataset that I am able to match to a county, employment is split 35\% Army, 26\% Navy, 16\% Marines, and 23\% Air Force. The answer is clear: counties do not all send the same fraction of recruits to the four service branches, so the same applies to MOS. Without any correction for the multiplicity of hypothesis tests, as many as 1,225 of the 3,125 counties have ratios of employment that are different than that of the national average at the 95\% confidence level. Using the Bonferroni, Benjamini Hochberg, and Benjamini Krieger Yekutieli corrections indicate that 304, 901, and 977 of the 3,125 have statistically different employment distributions at the 95\% confidence level, respectively \cite{BenHoch1995, BKY2006}. Results are very similar using other months of the data.
 
-The second step is more consequential, however. Just because counties send different fractions of their enlistees to different service branches and MOS does not mean that an enlistee from a certain county was more likely to die in Iraq or Afghanistan. To examine this issue I compare the number of recruits from a state (or county) to the number of deaths from the same state (or county). Figure \ref{Flo:HISTOstatedeaths} shows histograms of the ratio of active duty deaths to total active duty applicants for each state over the whole period for which I have data, and  Figure~\ref{Flo:HISTOcountydeaths} shows the same by county. The state ratios are centered around 0.3\%, but are clearly not all identical. I have repeated this exercise including both active duty and reserve and guard deaths (since service and death in the reserve and guard duty is clearly correlated with where one lives, including them might lead to complications) for both applicants and contracts, using both unweighted and population-weighted means. The coefficients of variation for each
+The second step is more consequential. Just because counties send different fractions of their enlistees to different service branches and MOS does not mean that an enlistee from a certain county was more likely to die in Iraq or Afghanistan. To examine this issue, I compare the number of recruits from a state (or county) to the number of deaths from the same state (or county). Figure \ref{Flo:HISTOstatedeaths} shows histograms of the ratio of active duty deaths to total active duty applicants for each state over the whole period for which I have data, and  Figure~\ref{Flo:HISTOcountydeaths} shows the same by county. The state ratios are centered around 0.3\%, but are clearly not all identical. I have repeated this exercise including both active duty and reserve and guard deaths (since service and death in the reserve and guard duty is clearly correlated with where one lives, including them might lead to complications) for both applicants and contracts, using both unweighted and population-weighted means. The coefficients of variation for each
 of these eight methods of calculating the risk of death by state are
 relatively small, ranging from 0.143 to 0.319. Looking at county figures shows that the majority of counties have zero deaths. While some counties clearly exhibit higher rates, testing is required to determine whether the variation is significant. 
 
@@ -545,14 +533,18 @@ relatively small, ranging from 0.143 to 0.319. Looking at county figures shows t
 To do this, I look at each individual county, and check the likelihood that it came from a binomial distribution with the hazard rate equal to that of the overall national hazard rate. (The number of active-duty deaths divided by the total number
 of active duty applicants was .003.) I then tested the likelihood
 that each county observation came from a binomial distribution with this
-hazard rate of p=.003. Figure \ref{Flo:Pat's Histo} displays
+hazard rate of p=.003. 
+
+Figure \ref{Flo:Pat's Histo} displays
 histograms of the p-value for each state and county, one set using active-duty deaths
 and active duty applicants, the other using active-duty deaths and
 active-duty contracts. If counties exhibit statistically indistinguishable rates of death, then p-values should be high. The histogram displays the p-values as calculated,
 but to interpret, one should, as above, use an adjustment for the high degree of multiple testing present such as Bonferroni (i.e., for states divide the cutoff for significance by the number of tests, 51, thus replacing a cutoff of .05 with 0.05/51=0.0009). Only two
 of the state observations (Florida and Massachusetts) reject the null
 hypothesis that their true probability is in fact .003 using applicant
-data, and only one, Massachusetts, rejects using contracts data. Repeating this analysis with the 3,125 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts).\footnote{The Bonferroni correction is often considered to be quite conservative. Even using much more modern methods to adjust the False Discovery Rate (FDR), I obtain similar results. Both the Benjamini Hochberg q-values and Benjamini Krieger Yekutieli sharpened q-values indicate that 16 out of the more than 3,100 counties have significantly different death rates for applicants, and zero for contracts. See \cite{BenHoch1995, BKY2006, Anderson2008} for details on estimating FDR.} So while it is the case that recruits from certain counties are more likely to enter dangerous military occupations, according to the data, the idea that the risk of death is the same across all states can only be rejected very infrequently. 
+data, and only one, Massachusetts, rejects using contracts data. 
+
+Repeating this analysis with the 3,125 counties shows that rates of death given enlistment by county are also very rarely significantly different (eight times for applicants and zero for contracts).\footnote{The Bonferroni correction is often considered to be quite conservative. Even using much more modern methods to adjust the False Discovery Rate (FDR), I obtain similar results. Both the Benjamini Hochberg q-values and Benjamini Krieger Yekutieli sharpened q-values indicate that 16 out of the more than 3,100 counties have significantly different death rates for applicants, and zero for contracts. See \cite{BenHoch1995, BKY2006, Anderson2008} for details on estimating FDR.} So while it is the case that recruits from certain counties are more likely to enter dangerous military occupations, according to the data, the idea that the risk of death is the same across all states can only be rejected very infrequently. 
 
 \begin{figure}
 %built by Table1Graph.do AND table1bycounty.do
@@ -563,7 +555,7 @@ Same Binomial Distribution}
 \end{figure}
 \clearpage{}
 
-This is not necessarily a reason for concern regarding omitted variable bias and my estimates of the deterrent effect of deaths,
+This is not necessarily a cause for concern regarding omitted variable bias and my estimates of the deterrent effect of deaths,
 since fixed effects for each county will still be able to control for this underlying characteristic of the state and county to the extent it is constant over time. However, it does give a slightly different meaning to the estimates I develop in the next few pages. If deaths in Iraq and Afghanistan were truly uniformly
 distributed amongst all the troops, regardless of county of origin, then the fact that a soldier from a given county, say Fairfax
 County, Virginia, had died would provide no more information regarding
@@ -613,7 +605,9 @@ in-county death is followed in the next month by a 1.1\%
 decrease in applicants and a similar reduction in contracts.\footnote{Note that all death figures have been divided by 100 to make more
 useful digits of the coefficients visible, and thus all coefficients
 for deaths should be interpreted as percents and not fractions (i.e.
-0.4 is 0.4 percent, not 40 percent).} Deaths from in-state but out-of-county
+0.4 is 0.4 percent, not 40 percent).} 
+
+Deaths from in-state but out-of-county
 appear to have a small positive effect, from 0.1\% to 0.2\%, which leads to some concern about the possible behavioral interpretation of my results---perhaps recruiters avoid an area after a death and instead spend their time recruiting from neighboring areas. This alternative mechanism, however, is complicated by estimates below showing that deaths in contiguous counties do not lead to an increase in recruiting. 
 
 Unemployment at the state level has a negative effect: a one percentage point increase leads to a small but not always significant decrease in recruiting,
@@ -634,14 +628,11 @@ to a 1\% increase in recruiting.\footnote{It should not be surprising that speci
 %normally distributed noise to the county unemployment estimates; none
 %of the other estimates changed significantly.
 
-The idea that potential recruits are responding to county and state
-unemployment above and beyond the national unemployment level is in
-accordance with rational utility-maximizing individuals, assuming
-that moving across county or state lines (or finding employment across
-county or state lines) is costly, as county and state unemployment
+Assuming that moving across county or state lines (or finding employment across
+county or state lines) is costly, the idea that potential recruits are responding to county and state unemployment above and beyond the national unemployment level is in
+accordance with rational utility maximizing individuals, as county and state unemployment
 levels directly affect one's likelihood of employment, and thus income
-and utility. As shown in section~\ref{sec:deathrate}, deaths of active duty soldiers from one's own county
-or state are unrelated to one's own likelihood of dying in the service,
+and utility. As shown in section~\ref{sec:deathrate}, deaths of active duty soldiers from one's own county or state are unrelated to one's own likelihood of dying in the service,
 since the Army operates at a national level and recruits are put into
 military careers irrespective of their state or county of origin (at
 least to the extent discussed above). Clearly this is not quite the
@@ -651,10 +642,7 @@ a year of training, but their recruiting numbers are not included
 in this analysis.
 
 
-This analysis has been done using all of active duty, reserve, and
-guard duty deaths. I do this because the main emphasis of my analysis
-is to determine the magnitude of the observed reaction to deaths.
-It may be true that the response to deaths of local soldiers from
+I performed this analysis using all of active duty, reserve, and guard duty deaths, because the main emphasis of my analysis is to determine the magnitude of the observed reaction to deaths. It may be true that the response to deaths of local soldiers from
 reserve and guards units is a rational response based on an updated
 assessment of the risk of death (since those who enlist would serve in the same location-based reserve or guard unit) but still, the magnitude of the observed
 deterrence effect, rational or not, would be what is of interest to
