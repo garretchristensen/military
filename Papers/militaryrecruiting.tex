@@ -42,7 +42,7 @@ suggestions. Data and replication files are available at \url{https://github.com
 %\end{center}
 %PLEASE VISIT WEBSITE FOR LATEST VERSION: \url{http://www.ocf.berkeley.edu/~garret}
 
-Using data of all applicants to the enlisted US military during the wars in Iraq and Afghanistan, I find that the recruiting response to deaths of US soldiers is more complicated than full-information utility-maximization models predict. Deaths had a small but significant deterrent effect on recruiting in the soldiers' home counties. The deterrent is larger for deaths from the same county than for deaths from neighboring counties or for out of county but in state deaths. %This is not driven by media coverage; I find that recruits are over-emphasizing very local information in enlistment decisions. 
+I find that full information utility maximization models are insufficient to explain the recruiting response to deaths of US soldiers in recent years. Using data of all applicants to the enlisted US military during the wars in Iraq and Afghanistan, deaths had a small but significant deterrent effect on recruiting in the soldiers' home counties. The deterrent is larger for deaths from the same county than for deaths from neighboring counties or for out of county but in state deaths. %This is not driven by media coverage; I find that recruits are over-emphasizing very local information in enlistment decisions. 
 The effect exhibits significant heterogeneity: deaths in Iraq decrease recruiting, while deaths in Afghanistan may increase recruiting, and the deterrent is more negative in less populous and more racially diverse counties; it is smaller or even positive in counties that voted for George W. Bush.
 
 \end{abstract}
@@ -51,23 +51,22 @@ The effect exhibits significant heterogeneity: deaths in Iraq decrease recruitin
 
 
 \section{Introduction\label{sec:Introduction}}
-Standard full-information utility-maximization models predict that, all else equal, an increase in the risk of death in a profession would decrease an individual's desire to seek employment in that profession. I present evidence that this may not be the best model to explain behavior, using what is generally the most dangerous job held by the largest number of people: enlistment in the United States military. I show that enlistees are responding differently to deaths from their county than to deaths from further away, a finding that cannot be explained by easier access to news of local events. I also show that job-related deaths can sometimes lead to increases in employment in an industry.
+In a standard full information utility maximization model, one would predict that, all else equal, an increase in a profession's risk of death would decrease the desirability of employment in that profession. I present evidence that this may not be the best model to explain behavior, based on what is generally the most dangerous job held by the largest number of people: the United States military. I show that enlistees are responding differently to deaths from their county than to deaths from further away, a finding that cannot be explained by easier access to news of local events. In contrast to standard predictions, I also show that job-related deaths can sometimes lead to increases in employment in an industry.
 
-The purpose of this paper is to empirically test whether deaths of employees in a given occupation affect selection into that same occupation by other potential employees in the way that simple models predict. Economic models since Adam Smith have used compensating differentials to explain wages in occupations entailing varying levels of risk or unpleasantness \citep{AdamSmith}. Empirical studies have frequently estimated  the value of a life using risk of death in different occupations.\footnote{See for example \cite{thaler1976value}. \cite{RosenOccChoiceHandbook} summarizes the extensive use of compensating differentials as a theory that explains supply of workers to jobs of different types in numerous occupations, including dangerous ones such as the military.} Researchers have estimated how compensating differentials vary based on individual characteristics (e.g. age, gender, or being a single parent), but all these models either assume that safety is a normal good or estimate it as such.\footnote{See \cite{DeLeireLevy2004}, \cite{BiddleZarkin} and \cite{garen1988compensating}. \cite{thaler1976value} build a model involving insurance that indicates that job safety is not necessarily normal with respect to property income, since property income is not at risk in the labor market and reduces the need for insurance, acting as a substitution effect.} To examine this question empirically I use new data from US soldiers in the wars in Iraq and Afghanistan and analyze how deaths affected the enlistment decisions of young Americans, but the results should generalize to many other occupations.
+The purpose of this paper is to empirically test whether deaths of employees in a given occupation affect selection into that same occupation by other potential employees in the way that simple models predict. Since the time of Adam Smith, economists have used models with compensating differentials to explain wages in occupations entailing varying levels of risk or unpleasantness \citep{AdamSmith}. Empirical studies have frequently estimated  the value of a life using risk of death in different occupations.\footnote{See for example \cite{thaler1976value}. \cite{RosenOccChoiceHandbook} summarizes the extensive use of compensating differentials as a theory that explains supply of workers to jobs of different types in numerous occupations, including dangerous ones such as the military.} Researchers have estimated how compensating differentials vary based on individual characteristics (e.g. age, gender, or being a single parent), but all these models either assume that safety is a normal good or estimate it as such.\footnote{See \cite{DeLeireLevy2004}, \cite{BiddleZarkin} and \cite{garen1988compensating}. \cite{thaler1976value} build a model involving insurance that indicates that job safety is not necessarily normal with respect to property income, since property income is not at risk in the labor market and reduces the need for insurance, acting as a substitution effect.} To examine this question empirically, I use new data from US soldiers in the wars in Iraq and Afghanistan and analyze how deaths affected the enlistment decisions of young Americans, but the results should generalize to many other occupations.
 
-One possibility is that when someone dies in an occupation the brothers and friends of the deceased, and the population in general, would come to disapprove of the occupation (perhaps due to an increased assessment of their own risk) and become less likely to join. Since military pay is set at the same base rate across the country, I essentially hold compensation constant and look at the labor supply response to changes in perception of risk in my analysis. A standard model of compensating differentials would imply that if the wage were constant but assessment of risk increased, fewer would apply. However, if one was personally convinced of the virtue or necessity of the occupation in which the death occurred, then a sense of duty, patriotism, or pride might lead one to become more likely to join the occupation after an employee from the local area has been killed.  
+One possibility is that when someone dies in an occupation, the siblings and friends of the deceased, and the population in general, would come to disapprove of the occupation (perhaps due to an increased assessment of their own risk) and become less likely to join. Since military pay is set at the same base rate across the country, I essentially hold compensation constant and look at the labor supply response to changes in perception of risk in my analysis. A standard model of compensating differentials would imply that if the wage were constant but assessment of risk increased, fewer would apply. However, if one was personally convinced of the virtue or necessity of the occupation in which the death occurred, then a sense of duty, patriotism, or pride might lead one to become more likely to join the occupation after an employee from the local area has been killed.  
 
-A few examples illustrate the point.  It is the explicit policy of the New York City Fire Department to give a 10-point bonus on the employment exam to any applicant who is the child of a firefighter who was killed on 9/11.\footnote {See \url{http://www.nyc.gov/html/fdny/html/community/ff_faq_080106.shtm\#legacy}} The legacy points led to a minor uproar when they were initially refused to 13 applicants whose parent had died due to 9/11-related illnesses, but not actually on 9/11.\footnote{See \url{http://www.nydailynews.com/new-york/gov-cuomo-13-fdny-sons-brave-future-article-1.1585065}} Dan Barta joined the Binghamton, NY police force after his father was killed in the line of duty, saying ``it has been my dream since that day [the day my father was killed] to be a Binghamton Police Officer.'' 
-\footnote{See \url{http://www.wbng.com/home/Serving-the-community-A-family-legacy-230269421.html}} The ``sandhogs'' who do the dangerous work of boring the tunnels under New York City often follow in (fallen) friends or family members' footsteps.\footnote{See \url{http://www.villagevoice.com/2012-04-11/news/sandhogs-tunneling-second-avenue-subway/full/} or \url{http://www.nydailynews.com/archives/news/brave-sandhogs-pause-reflect-article-1.569895}} 
+Here are a few examples to illustrate the point.  The New York City Fire Department implements a recruitment policy of giving a  10-point bonus on the employment exam to any applicant who is the child of a firefighter who was killed on 9/11.\footnote {See \url{http://www.nyc.gov/html/fdny/html/community/ff_faq_080106.shtm\#legacy}} The legacy points led to a minor uproar when they were initially refused to 13 applicants whose parent had died due to 9/11-related illnesses, but not at the World Trade Center on September 11, 2001.\footnote{See \url{http://www.nydailynews.com/new-york/gov-cuomo-13-fdny-sons-brave-future-article-1.1585065}} Dan Barta joined the Binghamton, NY police force after his father was killed in the line of duty, saying ``it has been my dream since that day [the day my father was killed] to be a Binghamton Police Officer.'' 
+\footnote{See \url{http://www.wbng.com/home/Serving-the-community-A-family-legacy-230269421.html}} Similarly, the ``sandhogs'' who do the dangerous work of boring the tunnels under New York City often follow in (fallen) friends or family members' footsteps.\footnote{See \url{http://www.villagevoice.com/2012-04-11/news/sandhogs-tunneling-second-avenue-subway/full/} or \url{http://www.nydailynews.com/archives/news/brave-sandhogs-pause-reflect-article-1.569895}} 
 
 This possible incentive effect is clearly not unique to a single instance, and not unique to the military, though at least one example from the military received media attention: 61-year-old orthopedic surgeon Bill Krissoff acquired an age waiver and enlisted in the Navy Medical Corps after his son Nathan was killed in the Marines in Iraq.\footnote{See \url{http://www.npr.org/templates/story/story.php?storyId=17013597}}
-Since some of the Marine Corps' support operations are provided by the Navy, serving in the Navy Medical Corps enabled Krissoff to give medical care to those with whom his son had fought and died.  This paper is an empirical test of the size of the deterrent or incentive effect in the military, and an analysis of when the effect may be larger or smaller. 
+Since some of the Marine Corps' support operations are provided by the Navy, serving in the Navy Medical Corps enabled Krissoff to give medical care to those with whom his son had fought and died. 
 
-
-My analysis draws on a valuable new dataset obtained through Freedom of Information Act requests consisting of the complete set of active duty enlisted applicants to the military from 2001 to 2006, matched with detailed data on every death of a US soldier that occurred in Operation Iraqi Freedom and Operation
+Is there a model that can test whether these examples are evidence of a more general phenomenon? This paper is an empirical test of the size of the deterrent or incentive effect of deaths in the military on recruiting, and an analysis of when the effect may be larger or smaller. My analysis draws on a valuable new dataset obtained through Freedom of Information Act requests, comprising the complete set of active duty enlisted applicants to the military from 2001 to 2006, matched with detailed data on every death of a US soldier that occurred in Operation Iraqi Freedom and Operation
 Enduring Freedom (i.e., the war in Afghanistan) during the same period. I have made these datasets publicly available on the Internet using Harvard's Dataverse.\footnote{Please see \url{https://dataverse.harvard.edu/dataverse/garretchristensen} for data. All analysis files necessary to replicate this paper are also available online at \url{https://github.com/garretchristensen/military}.}
 
-With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting while flexibly controlling for the underlying characteristics of counties as well as nation-wide changes over time using county and monthly fixed effects and state time trends. After controlling for these underlying characteristics, the hometown of the casualty is arguably exogenous, and I use this source of variation to analyze the causal effects of local deaths on local military recruiting. 
+With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting. I flexibly control for the underlying characteristics of counties as well as nation-wide changes over time using county and monthly fixed effects and state time trends. After controlling for these underlying characteristics, the hometown of the casualty is arguably exogenous. I use this source of variation to analyze the causal effects of local deaths on local military recruiting. 
 
 Using natural log-based estimates of semi-elasticities, I
 find that when a soldier died in Iraq or Afghanistan, that soldier's
@@ -76,7 +75,9 @@ effect is similar for recruits in both of the stages of the recruiting
 process that I test. I also obtain very similar semi-elasticity estimates
 using either Poisson or negative binomial regression, and the estimates are very stable across different sets of fixed effects. %I find that the effect is very localized---deaths in neighboring counties and deaths in counties in the same Nielsen media market produce no deterrent effect. 
 
-However, there is considerable heterogeneity in the deterrent effect of local deaths. Deaths of soldiers in Iraq lead to a larger reduction in recruiting, while deaths of soldiers in Afghanistan may actually lead to a small increase in recruiting. The deterrent effect is also significantly larger in counties with higher than average African-American populations and is significantly smaller (and sometimes even positive) in counties with higher unemployment, and counties that voted for George W. Bush in 2000 or 2004. I also find that the effect is different for different types of recruits. %It is larger for recruits to the Marine Corps and smaller for recruits to the Air Force. 
+However, there is considerable heterogeneity in the deterrent effect of local deaths. Deaths of soldiers in Iraq lead to a larger reduction in recruiting, while deaths of soldiers in Afghanistan may actually lead to a small increase in recruiting. There are also differences across ethnic demographic, economic, and political lines. The deterrent effect is significantly larger in counties with higher than average African-American populations and is significantly smaller (and sometimes even positive) in counties with higher unemployment, and counties that voted for George W. Bush in 2000 or 2004. 
+
+I also find that the effect is different for different types of recruits. %It is larger for recruits to the Marine Corps and smaller for recruits to the Air Force. 
 It is significantly higher for recruits of the highest quality as measured by Armed Forces Qualification Test (AFQT) score and educational attainment. This evidence suggests that outside employment options and political opinions matter greatly in determining potential applicants' reactions to an on-the-job death, and is similar to what is found in \cite{kahn1987occupational} concerning education and higher compensating differentials for risk.
 
 
@@ -121,7 +122,7 @@ have the same effect as a state death. The data shows that this is
 clearly not the case. Thus individuals must either be updating their
 priors with incomplete information and misperceiving the actual risk
 or basing the non-pecuniary benefits they receive from military service
-on the proximity of deaths, and not just the number. Unfortunately I am unable to distinguish between a purely information-based explanation and a more behavioral explanation based on saliency, though information on media markets provides suggestive evidence in favor of a behavioral explanation.
+on the proximity of deaths, and not just the number. 
 
 In addition to being of interest to labor economists who want to understand information processing in employment decisions, these findings may also be of interest to the military and policy makers who determine its funding. By analyzing the characteristics
 of a county, the military could produce a detailed estimate of the
@@ -142,7 +143,7 @@ data used for my analysis, section \ref{sec:Analysis} presents the analysis, and
 \section{Background\label{sec:Literature-Review}}
 The military plays a very large role in the United States economy.
 In 2010, President Obama signed a bill authorizing \$680 billion in
-military spending, making up nearly 20\% of total federal expenditures.\footnote{\url{http://www.nytimes.com/2009/10/29/business/29defense.html}} Of this, \$130 billion was for the wars in Iraq and Afghanistan, which have so far claimed the lives of over 8,000 US and coalition
+military spending, making up nearly 20\% of total federal expenditures.\footnote{\url{http://www.nytimes.com/2009/10/29/business/29defense.html}} \$130 billion of that was for the wars in Iraq and Afghanistan, which have so far claimed the lives of over 8,000 US and coalition
 soldiers.\footnote{\url{http://www.gpoaccess.gov/usbudget/fy10/pdf/fy10-newera.pdf}}
 \footnote{\url{http://www.cnn.com/SPECIALS/war.casualties/index.html}
 } Another \$177.5 billion of this was to be spent on direct compensation
@@ -150,10 +151,8 @@ to military personnel and family.\footnote{\url{http://www.defenselink.mil/news/
 1.4 million active duty men and women in uniform, and another 1.4
 million National Guard and Reserve troops. 
 
-Recruiting this many troops costs a great deal. Most of the soldiers
-in the military serve for only a few years, so the military needs
-to recruit approximately 200,000 new troops every year. A 2003 GAO
-report lists the Defense Department annual recruiting budget as \$4
+Most of the soldiers in the military serve for only a few years, so the military needs
+to recruit approximately 200,000 new troops every year. Recruiting this many troops costs a great deal. A 2003 GAO report lists the Defense Department annual recruiting budget as \$4
 billion, roughly \$20,000 per recruit with over \$1900 per recruit
 spent on advertising alone.%
 \footnote{\url{http://www.gao.gov/new.items/d031005.pdf}
@@ -164,17 +163,15 @@ and the Navy 4,897.\footnote{\url{http://www.2k.army.mil/faqs.htm}, \url{http://
 } 
 
 
-All recruiting of enlisted members of the military is handled by military
-recruiters. Being a recruiter is similar to other military occupational
+Military recruiters handle all recruiting of enlisted members of the military. Being a recruiter is similar to other military occupational
 specialties---recruiters are mostly enlisted men and women who are
-assigned to a specific location for a three year stint, without absolute
+assigned to a specific location for a three year stint, with limited
 control over where they are assigned. Recruiters work out of offices
 spread all over the country, often in shopping malls or heavily trafficked
 areas. Whenever anyone enlists in the military, it is through such
 a recruiting office.
 
-Potential recruits in the first stage of the process are referred
-to as {}``applicants.'' When a potential recruit first calls on
+The military refers to potential recruits in the first stage of the enlistment process as {}``applicants.'' When a potential recruit first calls on
 the telephone or walks in the door and expresses interest in joining
 the service, the recruiter will make sure the candidate meets certain
 medical and legal requirements, for instance, he or she can have no
@@ -212,8 +209,8 @@ Although a good deal of research has been conducted on the labor supply
 elasticity of the all-volunteer US military, little, if any, has analyzed
 the effect of war-time deaths on the labor supply. Most of the existing
 research has focused on the supply elasticity with respect to salaries or unemployment, starting with 1960's estimates of labor supply in the absence of a draft, such as
-\cite{Altman-Fechter-AER-1967} and \cite{Altman-JHR-1969}. \cite{Dale-Gilroy-AER-Note-1985} showed that higher unemployment typically led to higher recruiting levels and established the importance of using applicants and contracts in analysis instead of accessions (the final stage in the recruiting process, defined as shipping off
-to boot camp, which is much more seasonal); I follow this convention. %a slightly %earlier stage in the recruiting process
+\cite{Altman-Fechter-AER-1967} and \cite{Altman-JHR-1969}. \cite{Dale-Gilroy-AER-Note-1985} showed that higher unemployment typically led to higher recruiting levels and established the importance of using applicants and contracts in analysis instead of accessions, as the final stage in the recruiting process, defined as shipping off
+to boot camp, is much more seasonal. I follow this convention and use applicants and contracts. %a slightly %earlier stage in the recruiting process
 %referred to as {}``contracts'' is a much better dependent variable
 %to use, because recruits can sign a binding contract to join the military
 %up to a year in advance through the Delayed Entry Program. When they
@@ -273,21 +270,21 @@ Attempts have been made to account for both the supply and demand side of recrui
 %\cite{Heaton-Asch} or by instrumenting for the military wage using
 %the legislative formula for annual increases, as in \cite{Gelber}.
 
-Some limited research has been done analyzing the effect of US casualties
+There has been some limited research analyzing the effect of US casualties
 in Iraq and Afghanistan at the national level (see\cite{BigRandDocument}, \cite{Simon-Warner-DEATHS!}).
 %estimates that casualties in Iraq were responsible for anywhere from
 %a 6 to 60 percent decline in Army recruiting depending on methodology,
 %and \cite{Simon-Warner-DEATHS!} find that an additional 400 casualties
 %per year in Iraq is associated with a decrease of high quality Army
 %recruits of 6 percent. 
-Yet no previous work has used the spatial variation in US military combat deaths in Iraq and Afghanistan (or those from any other war, for that matter) to examine the effect
+However, no previous work has used the spatial variation in US military combat deaths in Iraq and Afghanistan (or those from any other war, for that matter) to examine the effect
 on recruiting, though researchers have used spatial variation
-in deaths for other purposes. \cite{Ted-Miguel-Bush-Deaths}
+in deaths for other purposes. For example, \cite{Ted-Miguel-Bush-Deaths}
 used the plausibly exogenous variation in the geography of US deaths in Iraq at the state level to examine the effect on changes in voteshare for George W. Bush between
 the presidential elections of 2000 and 2004. They find strong negative
 localized effects of deaths--without the deaths, Bush might have won
 an additional two percent of the national vote. Earlier work by \cite{SSGartner-WarCasualtiesPublicOpinion}
-and \cite{SSGartnerAllPoliticsLocal} use the geographic variation
+and \cite{SSGartnerAllPoliticsLocal} used the geographic variation
 in casualties from the Vietnam War to show that local casualties have
 a very strong relation to public approval of the President and his
 handling of the war. %They find that this effect is strongest during
@@ -904,11 +901,10 @@ I have also tested specifications that separately interact Iraq and Afghanistan 
 \section{Conclusion}\label{sec:Conclusion}
 
 
-A perfectly rational fully-informed individual conforming to a standard economic model would become less likely to start employment in a profession when they learned that the profession in question was more dangerous. This paper presents evidence that young men and women enlisting in the military are not behaving in this mannner. Individuals respond more to a local death than to a death from farther away, and the difference cannot be explained by media markets. In addition, the evidence suggests that opinions about the war matter affect these decisions as well, since counties with more Democratic voters have a more negative response to deaths, and the nation as a whole has a more negative response to deaths in Iraq compared to deaths in Afghanistan. 
+A perfectly rational fully-informed individual conforming to a standard economic model would become less likely to start employment in a profession when they learned that the profession in question was more dangerous. This paper presents evidence that young men and women enlisting in the military are not behaving in this mannner. Individuals respond more to a local death than to a death from farther away, and the difference cannot be explained by media markets. In addition, the evidence suggests that opinions about the war matter affect these decisions as well, since counties with more Democratic voters have a more negative response to deaths, and the nation as a whole has a more negative response to deaths in Iraq compared to deaths in Afghanistan. Unfortunately, I am unable to distinguish between a purely information-based explanation and a more behavioral explanation based on saliency, though information on media markets provides suggestive evidence in favor of a behavioral explanation.
 
-  As far as policy is concerned, I have shown in this paper that military deaths make the difficult and expensive task of recruiting significantly
-more complicated. At the national level (as shown in the appendix), a one percent increase in
-the death rate is associated with a 1.5 to 2.5 percent decrease in
+As far as policy is concerned, I have shown in this paper that military deaths make the difficult and expensive task of recruiting significantly
+more complicated. At the national level (as shown in the appendix), a one percent increase in the death rate is associated with a 1.5 to 2.5 percent decrease in
 national recruiting in the following month. This should not necessarily
 be given a causal interpretation, due to the potential for omitted
 variable bias. However, I make the case that panel data regression
