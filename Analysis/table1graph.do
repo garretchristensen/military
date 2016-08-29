@@ -78,7 +78,7 @@ replace WorstP=r(p) in `X'
 }
 summ WorstP
 label var WorstP "State P-Value"
-histogram WorstP, addl width(.01) frequency ti(Active-Duty Deaths and Applicants)
+histogram WorstP, addl width(.01) frequency ti(Active-Duty Deaths and Applicants) ylabel(0(1)6)
 graph save ./Output/hist_state_binomial.gph, replace
 
 /*ACTIVE DEATHS ACTIVE CONS*/
@@ -106,7 +106,7 @@ disp "Active Deaths/Active Apps " r(sd)/r(mean)
 summ hazard_aaa [aweight=percentpop]
 disp "Active Deaths/Active Apps WEIGHTED " r(sd)/r(mean)
 label var hazard_aaa "Active Deaths/Active Applicants"
-histogram hazard_aaa, addl frequency //title("Hazard Rate by State")
+histogram hazard_aaa, addl frequency   //title("Hazard Rate by State") xscale(range(0 0.015))
 graph save ./Output/hist_state_aaa.gph, replace
 /*TOTAL ACTIVE APPS*/
 gen hazard_taa=deaths/stateactiveapps
@@ -115,7 +115,7 @@ disp "Total Deaths/Active Apps "r(sd)/r(mean)
 summ hazard_taa [aweight=percentpop]
 disp "Total Deaths/Active Apps WEIGHTED "r(sd)/r(mean)
 label var hazard_taa "Total Deaths/Active Applicants"
-histogram hazard_taa, addl frequency //title("Hazard Rate by State")
+histogram hazard_taa, addl frequency  bin(20) //title("Hazard Rate by State") xscale(range(0 0.015))
 graph save ./Output/hist_state_taa.gph, replace
 /*ACTIVE ACTIVE CON*/
 gen hazard_aac=activedeaths/stateactivecons
@@ -124,7 +124,7 @@ disp "Active Deaths/Active Cons "r(sd)/r(mean)
 summ hazard_aac [aweight=percentpop]
 disp "Active Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_aac "Active Deaths/Active Contracts"
-histogram hazard_aac, addl frequency //title("Hazard Rate by State")
+histogram hazard_aac, addl frequency  //title("Hazard Rate by State") xscale(range(0 0.015)) 
 graph save ./Output/hist_state_aac.gph, replace
 /*TOTAL ACTIVE CON*/
 gen hazard_tac=deaths/stateactivecons
@@ -133,13 +133,16 @@ disp "Total Deaths/Active Cons "r(sd)/r(mean)
 summ hazard_tac [aweight=percentpop]
 disp "Total Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_tac "Total Deaths/Active Contracts"
-histogram hazard_tac, addl frequency //title("Hazard Rate by State")
+histogram hazard_tac, addl frequency  bin(20) //title("Hazard Rate by State") xscale(range(0 0.015))
 graph save ./Output/hist_state_tac.gph, replace
 
 ***COMBINE ALL 4 GRAPHS***
 graph combine ./Output/hist_state_aaa.gph ./Output/hist_state_taa.gph ./Output/hist_state_aac.gph ///
-	./Output/hist_state_tac.gph, title("Death Hazard Rate by State") saving(./Output/hist_state_combined.gph, replace) 
+	./Output/hist_state_tac.gph, title("Death Hazard Rate by State") saving(./Output/hist_state_combined.gph, replace) ///
+	 xcommon ycommon
 graph export ./Output/hist_state_combined.png, replace
+
+
 
 /* (2) SIMPLE GRAPH OF DEATHS AGAINST RECRUITS OVER TIME*/
 use ./Apps/APP_bydate2000.dta, clear
@@ -174,5 +177,5 @@ label var fancymonth "Year and Month"
 label var monthdeathtotal "US Deaths in Iraq/Afghanistan"
 label var monthapptotal "Miltary Applicants"
 graph twoway (line monthdeathtotal fancymonth, ///
-	yaxis(1) lpattern(dash) xlabel(,format(%tmCY)) )(line monthapptotal fancymonth, yaxis(2))
+	yaxis(1) lpattern(dash) xlabel(,format(%tmCY)) ylabel(,format(%8.0fc)) )(line monthapptotal fancymonth, yaxis(2) ylabel(,format(%8.0fc)))
 graph export ./Output/graph_deathsvsrecruits_basic.png, replace

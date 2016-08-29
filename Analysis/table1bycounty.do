@@ -190,7 +190,7 @@ quietly replace WorstP=r(p) in `X'
 }
 summ WorstP
 label var WorstP "County P-Value"
-histogram WorstP if WorstP!=1, width(.01) frequency ti(Active-Duty Deaths and Contracts) //addl
+histogram WorstP if WorstP!=1, width(.01) frequency ti(Active-Duty Deaths and Contracts) ylabel(0(20)100) //addl
 graph save ./Output/hist_binomialcon.gph, replace
 
 count if WorstP<(.05/3129) //was 0 last time I checked
@@ -313,7 +313,9 @@ graph combine ./Output/hist_state_binomial.gph ./Output/hist_state_binomialcon.g
 	./Output/hist_binomial.gph ./Output/hist_binomialcon.gph, ///
 	saving(./Output/hist_binomial_combined.gph, replace) title("State and County Binomial Tests of Death Hazard Rates") ///
 	note("Graph displays the p-values that the observed state and county death rate could come from the overall" ///
-	"average national death rate. The majority (70+%) of county p-values are ~=1 and are excluded from the graph.")
+	"average national death rate. The majority (70+%) of county p-values are ~=1 and are excluded from" ///
+	"the graph.") ///
+	xcommon
 graph export ./Output/hist_binomial_combined.png, replace
 
 *********************************************************/
@@ -327,7 +329,7 @@ disp "Active Deaths/Active Cons "r(sd)/r(mean)
 *summ hazard_aac [aweight=percentpop]
 *disp "Active Deaths/Active Cons WEIGHTED "r(sd)/r(mean)
 label var hazard_aac "Active Deaths/Active Contracts"
-histogram hazard_aac, frequency //addl
+histogram hazard_aac, frequency  //addl
 graph save ./Output/hist_county_aac.gph, replace
 /*TOTAL ACTIVE CON*/
 gen hazard_tac=deaths/countyactivecons
@@ -341,5 +343,6 @@ graph save ./Output/hist_county_tac.gph, replace
 
 **COMBINE ALL FOUR COUNTY GRAPHS
 graph combine ./Output/hist_county_aaa.gph ./Output/hist_county_taa.gph ./Output/hist_county_aac.gph ///
-	./Output/hist_county_tac.gph, title("Death Hazard Rate by County") saving(./Output/hist_county_combined.gph, replace) 
+	./Output/hist_county_tac.gph, title("Death Hazard Rate by County") saving(./Output/hist_county_combined.gph, replace) ///
+	xcommon ycommon
 graph export ./Output/hist_county_combined.png, replace
