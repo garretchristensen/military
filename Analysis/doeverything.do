@@ -24,6 +24,7 @@ cd $dir
 /*SHOW DISPERSION OF DEATHS*/
 *do ./Analysis/DataSummaryTable.do //simple data summary table
 *do ./Analysis/table1graph.do //prints the rec/pop, death/pop, and rec/death graphs, by state
+	*also national recs,deaths over time
 *do ./Analysis/table1bycounty.do //graphs binomial hazard rate
 
 /*NATIONAL LEVEL STUFF*/
