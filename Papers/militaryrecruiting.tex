@@ -60,13 +60,24 @@ One possibility is that when someone dies in an occupation, the siblings and fri
 Here are a few examples to illustrate the point.  The New York City Fire Department implements a recruitment policy giving a  10-point bonus on the employment exam to any applicant who is the child of a firefighter who was killed on 9/11.\footnote {See \url{http://www.nyc.gov/html/fdny/html/community/ff_faq_080106.shtm\#legacy}} The legacy points led to a minor uproar when they were initially refused to 13 applicants whose parent had died due to 9/11-related illnesses, but not at the World Trade Center on September 11, 2001.\footnote{See \url{http://www.nydailynews.com/new-york/gov-cuomo-13-fdny-sons-brave-future-article-1.1585065}} Dan Barta joined the Binghamton, NY police force after his father was killed in the line of duty, saying ``it has been my dream since that day [the day my father was killed] to be a Binghamton Police Officer.'' 
 \footnote{See \url{http://www.wbng.com/home/Serving-the-community-A-family-legacy-230269421.html}} Similarly, the ``sandhogs'' who do the dangerous work of boring the tunnels under New York City often follow in (fallen) friends or family members' footsteps.\footnote{See \url{http://www.villagevoice.com/2012-04-11/news/sandhogs-tunneling-second-avenue-subway/full/} or \url{http://www.nydailynews.com/archives/news/brave-sandhogs-pause-reflect-article-1.569895}} 
 
-This possible incentive effect is clearly not unique to a single instance, and not unique to the military, though at least one example from the military received media attention: 61-year-old orthopedic surgeon Bill Krissoff acquired an age waiver and enlisted in the Navy Medical Corps after his son Nathan was killed in the Marines in Iraq.\footnote{See \url{http://www.npr.org/templates/story/story.php?storyId=17013597}}
+This possible incentive effect is clearly not unique to a single instance, and not unique to the military, though at least one example from the military received media attention: 61-year-old orthopedic surgeon Bill Krissoff acquired an age waiver and enlisted in the Navy Medical Corps after his son Nathan was killed in the Marines in Iraq.\footnote{See \url{http://www.npr.org/templates/story/story.php?storyId=17013597}.  There is also anecdotal evidence that recruiting stations were overwhelmed with potential recruits
+after 9/11, but it is a goal of this paper to empirically determine whether increased risk actually led to more or fewer recruits. Compare \url{http://www.nytimes.com/2001/11/12/us/nation-challenged-recruit-self-described-slacker-decides-he-s-ready-be-soldier.html},
+which describes an individual motivated to enlist to \url{http://www.nytimes.com/2001/09/16/us/after-attacks-military-despite-national-rush-emotion-recruiting-centers-aren-t.html}, in which recruiters claim not to have seen a significant increase
+in qualified recruits.}%
+
 Since some of the Marine Corps' support operations are provided by the Navy, serving in the Navy Medical Corps enabled Krissoff to give medical care to those with whom his son had fought and died. 
 
 Is there a model that can test whether these examples are evidence of a more general phenomenon? This paper is an empirical test of the size of the deterrent or incentive effect of deaths in the military on recruiting, and an analysis of when the effect may be larger or smaller. My analysis draws on a valuable new dataset obtained through Freedom of Information Act requests, comprising the complete set of active duty enlisted applicants to the military from 2001 to 2006, matched with detailed data on every death of a US soldier that occurred in Operation Iraqi Freedom and Operation
 Enduring Freedom (i.e., the war in Afghanistan) during the same period. I have made these datasets publicly available on the Internet using Harvard's Dataverse.\footnote{Please see \url{https://dataverse.harvard.edu/dataverse/garretchristensen} for data. All analysis files necessary to replicate this paper are also available online at \url{https://github.com/garretchristensen/military}.}
 
-With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting. I flexibly control for the underlying characteristics of counties as well as nation-wide changes over time using county and monthly fixed effects and state time trends. After controlling for these underlying characteristics, the hometown of the casualty is arguably exogenous. I use this source of variation to analyze the causal effects of local deaths on local military recruiting. 
+With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting. I flexibly control for the underlying characteristics of counties as well as nation-wide changes over time using county and monthly fixed effects and state time trends. After controlling for these underlying characteristics, the hometown of the casualty is arguably exogenous. I use this source of variation to analyze the causal effects of local deaths on local military recruiting.\footnote{I find that the recruiting response is always significantly different
+for local deaths (deaths in the same county) than for deaths from
+more distant locales (deaths from outside the county but in the same
+state, and deaths from outside the state). Coefficients on deaths from outside the state (national deaths) cannot be estimated due to the monthly fixed effects in most models, however in (possibly misspecified) models without the fixed effects, local deaths
+are multiple orders of magnitude larger for local deaths than
+for national deaths. See \cite{ChettySalience} or the companion \cite{ChettyEarly},
+which develops a structural model using bounded rationality to estimate salience parameters.%
+} 
 
 Using natural log-based estimates of semi-elasticities, I
 find that when a soldier died in Iraq or Afghanistan, that soldier's
@@ -131,15 +142,12 @@ a wide geographic recruiting base, or if they desire to minimize costs,
 they could use the findings in this paper to help in their decision
 to reallocate recruiting funding and manpower. 
 
-The rest of the paper is as follows: section \ref{sec:Literature-Review} describes the military
-recruitment process and places my work in the literature. Section
-\ref{sec:Model} presents a very simple model of occupational choice
-that helps to frame the empirical results, section \ref{sec:Data} describes the
-data used for my analysis, section \ref{sec:Analysis} presents the analysis, and section
-\ref{sec:Conclusion} concludes.
+The rest of the paper is as follows: section \ref{sec:Literature-Review} describes the military recruitment process and places my work in the literature.
+%Section \ref{sec:Model} presents a very simple model of occupational choice that helps to frame the empirical results, 
+Section \ref{sec:Data} describes the data used for my analysis, section \ref{sec:Analysis} presents the analysis, and section \ref{sec:Conclusion} concludes.
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Background\label{sec:Literature-Review}}
 The military plays a very large role in the United States economy.
 In 2010, President Obama signed a bill authorizing \$680 billion in
@@ -298,123 +306,8 @@ of local violent attacks in Afghanistan, but not in Iraq. These results are cons
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{A Simple Model\label{sec:Model}}
 
-
-In order to better frame the empirical analysis in economic terms,
-I will briefly discuss a model of occupational choice, adapted from
-standard models in \cite{Roy} and \cite{RosenOccChoiceHandbook},
-which have previously been used to discuss the military in \cite{Handbook}
-and \cite{FisherDraftModelAER1969}. Additional insights are adapted
-from behavioral models as discussed in \cite{StefanoPsychReview}. 
-
-Assume that individuals are choosing between two occupation types,
-military $(M)$ and civilian $(C)$, and utility depends on wages
-$(w)$ as well as a taste parameter $(\tau)$. Thus, 
-
-
-\begin{equation}
-u^{C}=w^{C}+\tau^{C}
-\end{equation}
- and 
-
-\begin{equation}
-u^{M}=w^{M}+\tau^{M}.
-\end{equation}
-
-
-Individuals will choose to enlist if $u^{M}>u^{C},$ or
-
-\begin{equation}
-(w^{M}-w^{C})>\tau=(\tau^{C}-\tau^{M})\label{eq:main eqn}
-\end{equation}
-
-
-
-that is, if the pay differential is greater than their relative preference
-for civilian life. Taste for military employment is a function of
-both the perceived risk of death an individual would face when employed
-by the military and an innate desire to serve in the military for
-cultural, patriotic, or other psychological reasons, which is itself
-a function of perceived risk of death. I write:
-
-
-\begin{equation}
-\tau^{M}=\tau^{M}(p(\hat{r}),\hat{r})
-\end{equation}
-
-
-
-where $p(\hat{r})$ is the level of patriotism or innate desire for
-a given individual and $\hat{r}\in(0,1)$ is the perceived risk of
-death in the military. I assume that $p$ and $\tau^{M}$ are differentiable
-functions that vary across individuals in the population, creating
-the potential for different outcomes for different individuals. The
-empirical analysis in section \ref{sub:interactions} provides strong
-evidence that counties (and presumably, the individuals within those
-counties) have heterogeneous responses to risk and death depending
-on characteristics such as racial demographics and political preferences. 
-
-If I were to assume that patriotism were fixed for each individual
-instead of being a function of risk, that is, $\tau^{M}(p,\hat{r})$,
-then theory would predict that $\frac{\partial\tau^{M}}{\partial\hat{r}}<0$, i.e., 
-that more relative risk would make an occupation type less desirable,
-since higher risk of death or injury would lower expected future earnings.
-But by allowing patriotism to be a function of perceived risk, and
-by allowing for the possibility that $\frac{dp}{d\hat{r}}>0$, it
-thus becomes a possibility that $\frac{\partial\tau^{M}}{\partial\hat{r}}>0$ ,
-that the military becomes more attractive as it becomes more dangerous.
-
-As with the anecdotal example of Bill Krisoff mentioned earlier, additional
-deaths, which are signals of potential for future danger, may increase
-an individual's sense of duty, revenge, patriotism, or honor and make
-military employment more preferred. There is also anecdotal evidence
-that recruiting stations were overwhelmed with potential recruits
-after 9/11, but it is a goal of this paper to empirically determine
-whether increased risk actually led to more or fewer recruits.%
-\footnote{Compare \url{http://www.nytimes.com/2001/11/12/us/nation-challenged-recruit-self-described-slacker-decides-he-s-ready-be-soldier.html},
-which describes an individual motivated to enlist to \url{http://www.nytimes.com/2001/09/16/us/after-attacks-military-despite-national-rush-emotion-recruiting-centers-aren-t.html}, in which recruiters claim not to have seen a significant increase
-in qualified recruits.%
-} To estimate $\frac{\partial\tau^{M}}{\partial\hat{r}}$, I assume the other terms
-in (\ref{eq:main eqn})---the preference for civilian employment,
-and the military and civilian wages---are all constant with respect
-to risk of death in the military. These and other identifying assumptions
-are discussed further in section \ref{sec:Analysis}.
-
-In addition to empirically determining the sign and magnitude of the
-partial derivative mentioned above, the central economic question
-analyzed in this paper is whether individuals accurately perceive
-the increased risk they would face by enlisting in the military. Observing
-that the nation is at war and that soldiers are dying, potential recruits
-are assumed to infer some likelihood of their own death several months
-out into the future if they were to enlist. But information acquisition
-may be costly. Media coverage may be biased towards local events,
-so individuals with limited resources available for information acquisition
-may not be as well informed about deaths of soldiers from more distant
-locales. Or even if equally well informed, distant deaths may somehow
-seem less emotionally salient than deaths of soldiers from the local
-area. Thus I write $\hat{r}$$=r(d^{local}+(1-\theta)d^{distant})$,
-where $\theta\in(0,1)$ is the degree of inattention paid to distant
-deaths, a function of salience and competing stimuli. 
-
-If in actuality deaths from distant locales contain no more information than local deaths
-on the true risk of death to a new enlistee, a standard model of full information would assume $\theta=0$. A major purpose of this paper is to see if, for whatever
-reason, $\theta>0$ in the observed data, and individuals are responding
-differently to local deaths than they are to distant deaths. The empirical
-results in section \ref{sec:Analysis} consistently show that potential
-recruits are responding far more strongly to local deaths than to
-distant deaths. %
-\footnote{I find that the recruiting response is always significantly different
-for local deaths (deaths in the same county) than for deaths from
-more distant locales (deaths from outside the county but in the same
-state, and deaths from outside the state). Coefficients on deaths from outside the state (national deaths) cannot be estimated due to the monthly fixed effects in most models, however in (possibly misspecified) models without the fixed effects, local deaths
-are multiple orders of magnitude larger for local deaths than
-for national deaths. See \cite{ChettySalience} for actual estimation
-of a structural parameter very similar to $\theta$, or the companion \cite{ChettyEarly},
-which develops a structural interpretation for $\theta$ using bounded
-rationality.%
-}
-
+%Used to be a model here. Now it's gone.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Data\label{sec:Data}}
