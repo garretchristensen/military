@@ -7,14 +7,12 @@ cap log close
 log using ./Logs/highquality.smcl, replace
 
 /*HAVE TO KEEP FILE MANAGEMENT STUFF UP HERE, OUTSIDE APP/CON LOOP*/
-*cap rm ./Output/highqualitybyserviceP.txt
-*cap rm ./Output/highqualitybyserviceLN.txt
+
 cap rm ./Output/highqualitybytypeLN.txt
 cap rm ./Output/highqualitybytypeP.txt
 cap rm ./Output/highqualitybytypeLN.tex
 cap rm ./Output/highqualitybytypeP.tex
 *cap rm ./Output/highqualitybytypePX.txt
-*cap rm ./Output/redefbyservicedeath.txt
 *cap rm ./Output/redefPrace.txt
 *cap rm ./Output/redefPhostile.txt
 *cap rm ./Output/redefPgender.txt
@@ -226,30 +224,7 @@ outreg2 using ./Output/redefPwarINT.txt, lab tex ct(`header1') bdec(3) tdec(3) b
 
 *****************************************************************************
 *****************************************************************************
-/*OLD STUFF I'VE TESTED THAT'S TOO MUCH
-/*(1)RECRUITS OF DIFFERENT SERVICES--OLS*/
-foreach service in AR FR MR NR{
- gen LN`service'monthcounty=ln(`service'monthcounty)
- reghdfe LN`service'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51 [aweight=avgcountypop], robust cluster(fips) absorb(fips)
- outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp using ./Output/highqualitybyserviceLN.txt, ct(`file'`service'recs) bdec(3) tdec(3) bracket se append
-}
-/*RECRUITS OF DIFFERENT SERVICES--POISSON*/
-foreach service in AR FR MR NR{
- xtpoisson `service'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
- estimates store `service'
- outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp using ./Output/highqualitybyserviceP.txt, ct(`file'`service'recs) bdec(3) tdec(3) bracket se append
-}
-*/
-/*(3)DEATHS OF DIFFERENT SERVICES--POISSON*/
-/*FIRST RESIZE AND GEN LAGS FOR ALL TYPES OF DIFFERENT DEATHS*/
-/*sort fips month
-foreach type in AR FR MR NR WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN {
- foreach var in monthcountydeath outofcounty{
-  quietly gen L1`type'`var'=`type'`var'[_n-1]/100 if fips[_n]==fips[_n-1]
-  quietly replace `type'`var'=`type'`var'/100
- } 
-}
-*/
+
 
 /*
 /*ONLY LOCAL SPLIT OUT*/
