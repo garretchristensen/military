@@ -225,20 +225,7 @@ outreg2 using ./Output/redefPwarINT.txt, lab tex ct(`header1') bdec(3) tdec(3) b
 *****************************************************************************
 *****************************************************************************
 
-
-/*
-/*ONLY LOCAL SPLIT OUT*/
-xtpoisson active monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1outofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
-test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
-outreg2 monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1outofcounty stateunemp countyunemp  using ./Output/redefbyservicedeath.txt, ct(`file'servicedeath) bdec(3) tdec(3) bracket se adds("Test Lag County Deaths", r(p)) append
-
-/*LOCAL AND STATE SPLIT OUT*/
-xtpoisson active monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1ARoutofcounty L1FRoutofcounty L1MRoutofcounty L1NRoutofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
-test L1ARoutofcounty=L1FRoutofcounty=L1MRoutofcounty=L1NRoutofcounty
-local LagState=r(p)
-test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
-outreg2 monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1ARoutofcounty L1FRoutofcounty L1MRoutofcounty L1NRoutofcounty stateunemp countyunemp  using ./Output/redefbyservicedeath.txt, ct(`file'wstate) bdec(3) tdec(3) bracket se adds("Test Lag County Deaths", r(p), "Test Lag State", `LagState') append
-
+/* OLD STUFF NOBODY WANTS TO SEE
 /****************************************************************************/
 /*(4) DEATHS OF DIFFERENT RACES*/
 
