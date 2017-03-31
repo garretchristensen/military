@@ -11,6 +11,7 @@ log using ./Logs/servicebranch-simple.smcl, replace
 *cap rm ./Output/servicebranchP.txt
 *cap rm ./Output/servicebranchLN.txt
 
+foreach file in APP CON{ /*BEGIN HUGE LOOP OVER BOTH FILES*/
 use ./Data/county`file'_raw.dta, clear /*LOOPS OVER BOTH FILES!*/
 destring month, replace //necessary for reghdfe command
 destring stateyear, replace //necessary for reghdfe command
@@ -51,9 +52,9 @@ if r(max)<.01|r(max)>1 {
 foreach service in AR FR MR NR{
  gen LN`service'monthcounty=ln(`service'monthcounty)
  reghdfe LN`service'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
-	statetrend2-statetrend51 [aweight=avgcountypop], robust cluster(fips) absorb(fips month)
+	statetrend2-statetrend51 [aweight=avgcountypop], vce(cluster fips) absorb(fips month)
  outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp using ./Output/servicebranchrecLN.txt, ///
-	ct(`file'`service'recs) bdec(3) tdec(3) bracket se append
+	tex label ct(`file'`service'recs) bdec(3) tdec(3) bracket se append
 }
 /*RECRUITS OF DIFFERENT SERVICES--POISSON*/
 foreach service in AR FR MR NR{
@@ -61,9 +62,9 @@ foreach service in AR FR MR NR{
 	statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
  estimates store `service'
  outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp using ./Output/servicebranchrecP.txt, tex ///
-	ct(`file'`service'recs) bdec(3) tdec(3) bracket se append
+	label ct(`file'`service'recs) bdec(3) tdec(3) bracket se append
 }
-*/
+
 /*(3)DEATHS OF DIFFERENT SERVICES--POISSON*/
 /*FIRST RESIZE AND GEN LAGS FOR ALL TYPES OF DIFFERENT DEATHS*/
 /*sort fips month
@@ -79,10 +80,11 @@ foreach type in AR FR MR NR WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN 
 /*ONLY LOCAL SPLIT OUT*/
 /*LN*/
 reghdfe LNactive monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath ///
-	outofcounty L1outofcounty stateunemp countyunemp statetrend2-statetrend51, robust cluster(fips) absorb(fips month) 
+	outofcounty L1outofcounty stateunemp countyunemp statetrend2-statetrend51, vce(cluster fips) absorb(fips month)
 test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
 outreg2 monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1outofcounty ///
-	stateunemp countyunemp  using ./Output/servicebranchdeathLN.txt, tex ct(`file'servicedeath) bdec(3) tdec(3) bracket se adds("Test Lag County Deaths", r(p)) append
+	stateunemp countyunemp  using ./Output/servicebranchdeathLN.txt, tex label ct(`file'servicedeath) bdec(3) tdec(3) bracket ///
+	se adds("Test Lag County Deaths", r(p)) append
 
 /*ONLY LOCAL SPLIT OUT*/
 /*Poisson*/
@@ -90,14 +92,14 @@ xtpoisson active monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MR
 	stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
 test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
 outreg2 monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1outofcounty stateunemp ///
-	countyunemp  using ./Output/servicebranchdeath.txt, tex ct(`file'servicedeath) bdec(3) tdec(3) bracket se adds("Test Lag County Deaths", r(p)) append
+	countyunemp  using ./Output/servicebranchdeath.txt, tex label ct(`file'servicedeath) bdec(3) tdec(3) bracket se adds("Test Lag County Deaths", r(p)) append
 
 
 /*LOCAL AND STATE SPLIT OUT*/
-xtpoisson active monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1ARoutofcounty L1FRoutofcounty L1MRoutofcounty L1NRoutofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
-test L1ARoutofcounty=L1FRoutofcounty=L1MRoutofcounty=L1NRoutofcounty
-local LagState=r(p)
-test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
-outreg2 monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1ARoutofcounty L1FRoutofcounty L1MRoutofcounty L1NRoutofcounty stateunemp countyunemp  using ./Output/redefbyservicedeath.txt, ct(`file'wstate) bdec(3) tdec(3) bracket se adds("Test Lag County Deaths", r(p), "Test Lag State", `LagState') append
+*xtpoisson active monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1ARoutofcounty L1FRoutofcounty L1MRoutofcounty L1NRoutofcounty stateunemp countyunemp monthfe3-monthfe58 statetrend2-statetrend51, fe exposure(avgcountypop) vce(robust)
+*test L1ARoutofcounty=L1FRoutofcounty=L1MRoutofcounty=L1NRoutofcounty
+*local LagState=r(p)
+*test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
+*outreg2 monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath outofcounty L1ARoutofcounty L1FRoutofcounty L1MRoutofcounty L1NRoutofcounty stateunemp countyunemp  using ./Output/redefbyservicedeath.txt, ct(`file'wstate) bdec(3) tdec(3) bracket se adds("Test Lag County Deaths", r(p), "Test Lag State", `LagState') append
 
 } //Loop over both APP and CON

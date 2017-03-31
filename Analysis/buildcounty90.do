@@ -557,7 +557,8 @@ tab stateyear, gen(stateyearfe)
 sort fips month
 foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp nationalunemp ///
 	monthnationalmort monthstatemort monthcountymort Rmonthcountydeath Routofcounty Routofstate ///
-	IRAQmonthcountydeath AFGHANmonthcountydeath IRAQoutofcounty AFGHANoutofcounty{
+	IRAQmonthcountydeath AFGHANmonthcountydeath IRAQoutofcounty AFGHANoutofcounty ///
+	ARmonthcountydeath FRmonthcountydeath MRmonthcountydeath NRmonthcountydeath {
  foreach X of numlist 1/12 {
   quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
   label var L`X'`var' "`X' monthly lags of `var'"
