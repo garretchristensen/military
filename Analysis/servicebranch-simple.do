@@ -32,34 +32,50 @@ else{
 			replace `lag'`war'monthcountydeath=`lag'`war'monthcountydeath/100
 		}
 	}
-
+	
+replace outofcounty=outofcounty/100
+replace L1outofcounty=L1outofcounty/100
 label var monthcountydeath "In-County Deaths/100"
 label var L1monthcountydeath "Lag In-County Deaths/100"
 label var outofcounty "Out-of-County Deaths/100"
 label var L1outofcounty "Lag Out-of-County Deaths/100"
-label var AFGHANmonthcountydeath "Afghanistan In-County Deaths/100"
-label var L1AFGHANmonthcountydeath "Afghanistan Lag In-County Deaths/100"
-label var AFGHANoutofcounty "Afghanistan Out-of-County Deaths/100"
-label var L1AFGHANoutofcounty "Afghanistan Lag Out-of-County Deaths/100" 
-label var IRAQmonthcountydeath "Iraq In-County Deaths/100"
-label var L1IRAQmonthcountydeath "Iraq Lag In-County Deaths/100"
-label var IRAQoutofcounty "Iraq Out-of-County Deaths/100"
-label var L1IRAQoutofcounty "Iraq Lag Out-of-County Deaths/100" 
+label var L1ARmonthcountydeath "Army LagIn-County Deaths/100"
+label var L1MRmonthcountydeath "Marines Lag In-County Deaths/100"
+label var L1FRmonthcountydeath "Air Force Lag In-County Deaths/100"
+label var L1NRmonthcountydeath "Navy Lag In-County Deaths/100" 
  
 summ monthcountydeath //Make sure this is between 0 and .08 not 0 to 8.
 if r(max)<.01|r(max)>1 {
 	display "you divided deaths by 100 too little/much"
 	throw a hissy fit
 }
+summ L1ARmonthcountydeath //Make sure this is between 0 and .0X not 0 to X.
+if r(max)<.01|r(max)>1 {
+	display "you divided Army deaths by 100 too little/much"
+	throw a hissy fit
+}
 
 ********************************************************************
 /*(1)RECRUITS OF DIFFERENT SERVICES--OLS*/
 foreach service in AR FR MR NR{
+if "`service'"=="AR"{
+	local header2="Army"
+}
+if "`service'"=="FR"{
+	local header2="Air Force"
+}
+if "`service'"=="MR"{
+	local header2="Marines"
+}
+if "`service'"=="NR"{
+	local header2="Navy"
+}
+
  gen LN`service'monthcounty=ln(`service'monthcounty+1)
  reghdfe LN`service'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
 	 [aweight=avgcountypop], vce(cluster fips) absorb(fips month stateyear)
  outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp using ./Output/servicebranchrecLN.txt, ///
-	tex label ct(`header') ti(Recruits by Service Branch vs Deaths and Unemployment) bdec(3) tdec(3) bracket se append ///
+	tex label ct(`header', `header2') ti(Recruits by Service Branch vs Deaths and Unemployment) bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear, YES) ///
 	addnote("Notes: Table shows linear regression estimates of log (service branch active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
@@ -78,14 +94,14 @@ foreach service in AR FR MR NR{
 /*ONLY LOCAL SPLIT OUT*/
 /*LN*/
 reghdfe LNactive monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MRmonthcountydeath L1NRmonthcountydeath ///
-	outofcounty L1outofcounty stateunemp countyunemp statetrend2-statetrend51, vce(cluster fips) absorb(fips month)
+	outofcounty L1outofcounty stateunemp countyunemp, vce(cluster fips) absorb(fips month stateyear)
 test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
 outreg2 using ./Output/servicebranchdeathLN.txt, tex label ct(`file'servicedeath) bdec(3) tdec(3) bracket se ///
 	addstat("Test Lag County Deaths", r(p)) append ///
 	addtext(County FE, YES, Month FE, YES, Stateyear, YES) ///
 	addnote("Notes: Table shows linear regression estimates of log (active duty recruits +1) on deaths in a particular service branch.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"The first four columns show applicants and the last four show contracts.", Filename:servicebranchrecLN.tex) ///
+	"The first column shows applicants and the last shows contracts.", Filename:servicebranchrecLN.tex) ///
 
 /*
 /*ONLY LOCAL SPLIT OUT*/
