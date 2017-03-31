@@ -593,15 +593,17 @@ estimates.
 
 As a robustness check on my main specification, I have also run regressions including deaths one month into the future. In the main log-linear specification, deaths from the same county one month into the future appear to have small but statistically significant relationships with recruits. However, the Poisson models, as well as the log-linear model using only active duty deaths, show clearly that deaths in the future do not correlate signficantly with current recruiting levels.  These regressions are shown in Appendix Table~\ref{Flo:forwardbasicLN} and Table~\ref{Flo:forwardPbasic}. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Heterogeneity of the Deterrent Effect\label{sub:interactions}}
 
 The analysis in the previous two subsections makes it clear that in-county
 deaths result in a significant decrease in county recruiting. An important
 corollary question concerns the heterogeneity of this effect.
 All counties are unlikely to observe the same deterrent effect of
-death. Here I investigate the recruiting response to deaths based
-on a county's demographic and cultural makeup, specifically, its population,
-unemployment, racial makeup, rural/urban status, and political alignment.
+death. Here I analyze the recruiting response to deaths based
+on different characteristics of counties, the deaths, or the recruits. First, I test the effect of differences in a county's demographic and cultural makeup, specifically, its population, unemployment, racial makeup, rural/urban status, and political alignment. Second, I test the response for different types of recruits, and third, for different types of deaths. I have also tested the difference for different service branches in the armed forces, for both deaths and recruits. I find only weak evidence that recruits to some service branches respond differently than those to other branches, and no evidence that recruits respond based on the branch in which the service branch occurred. These results are shown in the Appendix section~\ref{sec:Introduction}.   
+
+\subsubsection{Heterogeneity by County Characteristics}
 
 Table \ref{Flo:Linear Interactions} displays these regressions.
 They all include monthly and county fixed effects, out of county but
@@ -674,7 +676,7 @@ W. Bush (in either 2000 or 2004).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Recruiting Response for Different Types of Recruits \label{sub:Different Recruit Types}}
+\subsubsection{Recruiting Response for Different Types of Recruits \label{sub:Different Recruit Types}}
 
 
 The military, like any other organization, has a strong interest in
@@ -729,7 +731,7 @@ Again, I have tested whether the results are the same when done using Poisson re
 
 %The appendix includes a similar analysis in Table \ref{Flo:Recruits by Service} with recruits broken out by military service branch.
 
-\subsection{Recruiting Response for Different Types of Deaths\label{sub:Different Death Types}}
+\subsubsection{Recruiting Response for Different Types of Deaths\label{sub:Different Death Types}}
 
 In addition to responses for different types of recruits, I have run analysis comparing the response to deaths of different types, specifically, the service branch in which the death occurred, the gender of the casualty, the classification of the death by the military as hostile or non-hostile, the race of
 the casualty, and the war in which the deceased was killed (Iraq or
@@ -1093,26 +1095,44 @@ Tests of the heterogeneity of the effect by which the war in which the death occ
 \label{Flo:Deaths by WarP}
 \input{../Output/redefPwar}
 \end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Recruits and Deaths by Service Branch}\label{sec:servicebranch}
+In this section I examine how the individual services fare in their recruiting. There are clearly differences between the services in terms of their operations; perhaps stemming from this there are often assumed to be significant cultural differences between the branches, leading to a difference in the type of people who make up the potential applicant pool for each of the services, and the possibility for a difference in the potential applicants' response to a local death.
 
-%\subsection{Recruits and Deaths Across Service Branches}
-%In this section I examine how the individual services fare in their recruiting. There are clearly differences between the services in terms of their operations; perhaps stemming from this there are often assumed to be significant cultural differences between the branches, leading to a difference in the type of people who make up the potential applicant pool for each of the services, and the possibility for a difference in the potential applicants' response to a local death.
+Table \ref{Flo:Recruits by Service} shows these estimates, again using weighted least squares analysis at the month-county level, with county, monthly, and state-year fixed effects. It appears that Marine recruiting decreases at a rate of over 2\% for every death, while the Air Force reaction to death is a statistically insignificant 0.05\% reduction in recruits. Deaths at the state level and state and county unemployment seem to have effects that are less clearly distinguishable across service branches. This makes sense given that very few of the deaths in Iraq and Afghanistan have come from the Air Force, while many have come from the Marines. But an even larger proportion have come from the Army, so if potential recruits were simply steeringaway from the branches of the military with the most deaths, the Army would be the branch with the largest recruiting response to deaths, which is not the case. I have repeated this exercise using Poisson regressions, and the deterrent effects by service branch maintain the same ratios relative to one another, exhibiting further evidence that the recruiting deterrent is greatest for the Marine Corps. 
 
-%Table \ref{Flo:Recruits by Service} shows these estimates, again using Poisson regression analysis at the month-county level, with county and monthly fixed effects and state time trends. It appears that Marine recruiting decreases at a rate of over 2\% for every death, while the Air Force reaction to death is a statistically insignificant 0.05\% reduction in recruits. Deaths at the state level and state and county unemployment seem to have effects that are less clearly distinguishable across service branches. This makes sense given that very few of the deaths in Iraq and Afghanistan have come from the Air Force, while many have come from the Marines. But an even larger proportion have come from the Army, so if potential recruits were simply steeringaway from the branches of the military with the most deaths, the Army would be the branch with the largest recruiting response to deaths, which is not the case. I have repeated this exercise using weighted least squares regressions of the log of the recruits of each service branch, and the deterrent effects by service branch maintain the same ratios relative to one another, exhibiting further evidence that the recruiting deterrent is greatest for the Marine Corps. 
 % Break recruits out by service branch
-%\pagebreak{}
-%\clearpage{}
-%\begin{table}
-%\caption{}
-%\label{Flo:Recruits by Service}\includegraphics[bb=45bp 0bp 612bp 730bp,clip, scale=0.91]{../Output/PDF/highqualitybyserviceP}
-%\end{table}
+%made by servicebranch-simple.do
+\begin{table}
+\caption{}
+\label{Flo:Recruits by Service}
+\scalebox{0.8}{
+\input{../Output/servicebranchrecLN}}
+\end{table}
 
-%Amongst the four branches of the military, the deaths in Iraq and Afghanistan have been highly concentrated amongst soldiers in the Army and the Marines. In the data used in this paper, roughly 2000 deaths are from the Army, 800 from the Marines, 85 from the Navy, and 50 from the Air Force. Since there have been 40 times more deaths in the Army than the Air Force, it is entirely possible that potential Army recruits have instead gone on to join the Air Force instead.
+Amongst the four branches of the military, the deaths in Iraq and Afghanistan have been highly concentrated amongst soldiers in the Army and the Marines. In the data used in this paper, roughly 2000 deaths are from the Army, 800 from the Marines, 85 from the Navy, and 50 from the Air Force. Since there have been 40 times more deaths in the Army than the Air Force, it is entirely possible that potential Army recruits have instead gone on to join the Air Force instead.
 
-%To test this, I have rearranged the data into county-month-service branch observations and test the recruiting response to a specific service branch after deaths from the same service branch and from other service branches. Table \ref{Flo:Death by Same-Service Other-Service} shows the results of these tests. Poisson regressions shows the percent response to a death in the same service branch as the recruit, and in any of the other three service branches. As before, I have controlled for monthly fixed effects, state trends, and state and county unemployment.
+One way to get at the question of deaths by service branch is to lump all the recruits together but show the specific  response to deaths in a given service. These estimates are shown in Table \ref{Flo: Death by Service}. The coefficients are positive for Air Force and the Navy in-county deaths, however they are not statistically significant. I have also run specifications with the in-state but out-of-county deaths split by service branch, and I have run tests of equivalence of the coefficients for all the service branches. The hypotheses of equality cannot be rejected for county deaths, but can be for state deaths. 
+
+% Break deaths out by service branch
+%made by servicebranch-simple.do
+\clearpage{}
+\pagebreak{}
+\begin{table}
+\caption{}
+\label{Flo: Death by Service}
+\scalebox{0.8}{
+\input{../Output/servicebranchdeathLN}}
+\end{table}
+
+To test this another way, I have rearranged the data into county-month-service branch observations and test the recruiting response to a specific service branch after deaths from the same service branch and from other service branches. Regressions shows the percent response to a death in the same service branch as the recruit, and in any of the other three service branches. As before, I include a full set of fixed effects, and state and county unemployment. Results indicate that there are not statistically significant differences in the response to lagged same-service-branth deaths and lagged other-service-branch deaths. These results are not shown but are available upon request.
+%Table \ref{Flo:Death by Same-Service Other-Service} shows the results of these tests. 
+
 %In these regressions I have included interacted county{*}service branch fixed effects as well. The bottom of the table shows pair-wise comparisons of the corresponding same-service and other-service death coefficients. For example, for applicants, a lagged same-service in-county death leads to a 0.7\% reduction in recruits in that service, while a lagged other-service in-county death leads to a 1.1\% reduction in recruits for that service. In all of the specifications, tests fail to reject the hypothesis that the effect of a lagged same-service in-county death is statistically identical to that of a lagged other-service in-county death. The same can be said of lagged same-service out-of-county deaths and lagged other-service out-of-county deaths. However, for several of the current-month deaths, statistical tests reject equivalence.
+
 %They indicate that same-service deaths have a larger (and positive effect) than do other-service deaths. \emph{A priori} I would have assumed that if anything, same-service deaths would lead to a larger decrease in recruits, since recruits could either not sign up or substitute to a different service, but this does not seem to be the case. The results are further evidence that potential recruits are not using the information contained in a death (in this case, the service branch in which the death occurred) in a sophisticated or strictly risk-based manner.
 
-%A slightly different way to get at the question of deaths by service branch is to lump all the recruits together but show the specific  response to deaths in a given service. These estimates are shown in Table \ref{Flo: Death by Service}. The coefficients are positive for Air Force and the Navy in-county deaths, however they are not statistically significant. I have also run specifications with the in-state but out-of-county deaths split by service branch, and I have run tests of equivalence of the coefficients for all the service branches. The hypotheses of equality cannot be rejected for county deaths, butcan be for state deaths. 
+%
 
 
 
@@ -1178,13 +1198,7 @@ Tests of the heterogeneity of the effect by which the war in which the death occ
 %\label{Flo:Death by Same-Service Other-Service}\includegraphics[bb=45bp 0bp 612bp 730bp,scale=0.91]{../Output/PDF/redefbyserviceP}
 %\end{table}
 
-%12 Break deaths out by service branch
-%\clearpage{}
-%\pagebreak{}
-%\begin{table}
-%\caption{}
-%\label{Flo: Death by Service}\includegraphics[bb=45bp 0bp 612bp 730bp, scale=0.95]{../Output/PDF/redefbyservicedeath}
-%\end{table}
+
 
 
 \end{document}
