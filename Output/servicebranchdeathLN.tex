@@ -1,0 +1,40 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcc} \hline
+ & (1) & (2) \\
+VARIABLES & APPservicedeath & CONservicedeath \\ \hline
+ &  &  \\
+In-County Deaths/100 & -0.637 & -1.427** \\
+ & [0.567] & [0.575] \\
+Army LagIn-County Deaths/100 & -2.238** & -2.150** \\
+ & [0.885] & [0.859] \\
+Air Force Lag In-County Deaths/100 & 8.461** & 0.156 \\
+ & [3.893] & [4.551] \\
+Marines Lag In-County Deaths/100 & -2.227* & -3.832*** \\
+ & [1.239] & [1.236] \\
+Navy Lag In-County Deaths/100 & 1.992 & -3.475 \\
+ & [2.649] & [4.215] \\
+Out-of-County Deaths/100 & -0.089 & 0.047 \\
+ & [0.074] & [0.069] \\
+Lag Out-of-County Deaths/100 & -0.048 & -0.031 \\
+ & [0.072] & [0.073] \\
+State Unemployment & -0.028*** & -0.021*** \\
+ & [0.005] & [0.005] \\
+County Unemployment & 0.008*** & 0.009*** \\
+ & [0.002] & [0.002] \\
+ &  &  \\
+Observations & 178,910 & 178,910 \\
+R-squared & 0.859 & 0.836 \\
+County FE & YES & YES \\
+Month FE & YES & YES \\
+Stateyear & YES & YES \\
+ Test Lag County Deaths & 0.0238 & 0.613 \\ \hline
+\multicolumn{3}{c}{ Robust standard errors in brackets} \\
+\multicolumn{3}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{3}{c}{ Notes: Table shows linear regression estimates of log (active duty recruits +1) on deaths in a particular service branch.} \\
+\multicolumn{3}{c}{ Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{3}{c}{ The first column shows applicants and the last shows contracts.} \\
+\multicolumn{3}{c}{ Filename:servicebranchrecLN.tex} \\
+\end{tabular}
+\end{document}

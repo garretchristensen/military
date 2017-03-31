@@ -130,7 +130,7 @@ reghdfe LNactive monthcountydeath L1monthcountydeath outofcounty L1outofcounty /
 reghdfe LNactive monthcountydeath L1monthcountydeath [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)
 outreg2 using ./Output/LNLinearW.tex, tex label ///
-	ti(Log County Applicants vs Deaths and Unemployment) ///
+	ti(Log County Recruits vs Deaths and Unemployment) ///
 	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
@@ -215,7 +215,7 @@ if r(max)>1|r(max)<.01 {
 reghdfe LNactive Rmonthcountydeath L1Rmonthcountydeath [aweight=avgcountypop], ///
 	absorb(fips month) vce(cluster fips)
 outreg2 using ./Output/LNLinearWR.tex, tex label ///
-	ti(Log County Applicants vs Active Duty Deaths and Unemployment) ///
+	ti(Log County Recruits vs Active Duty Deaths and Unemployment) ///
 	ct(`header') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on \textit{only} active duty deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///

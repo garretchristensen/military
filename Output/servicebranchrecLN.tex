@@ -1,0 +1,35 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccccc}
+\multicolumn{9}{c}{Recruits by Service Branch vs Deaths and Unemployment} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) \\
+ & Applicants & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts & Contracts \\
+VARIABLES & Army & Air Force & Marines & Navy & Army & Air Force & Marines & Navy \\ \hline
+ &  &  &  &  &  &  &  &  \\
+In-County Deaths/100 & -0.438 & -1.807*** & -1.400*** & -0.808 & -0.418 & -2.636*** & -0.615 & -1.594*** \\
+ & [0.269] & [0.604] & [0.530] & [0.577] & [0.329] & [0.874] & [0.625] & [0.461] \\
+Lag In-County Deaths/100 & -1.385*** & -0.131 & -2.503*** & -1.577*** & -1.640*** & -2.287*** & -1.070* & -2.036*** \\
+ & [0.324] & [0.993] & [0.606] & [0.450] & [0.553] & [0.538] & [0.600] & [0.537] \\
+Out-of-County Deaths/100 & 0.195** & 0.231* & 0.024 & 0.151 & 0.237* & 0.227* & 0.045 & 0.010 \\
+ & [0.088] & [0.139] & [0.118] & [0.107] & [0.138] & [0.133] & [0.125] & [0.116] \\
+Lag Out-of-County Deaths/100 & -0.094 & 0.148 & -0.099 & 0.101 & -0.157 & 0.176 & -0.047 & -0.145 \\
+ & [0.084] & [0.133] & [0.122] & [0.117] & [0.110] & [0.159] & [0.113] & [0.120] \\
+State Unemployment & -0.016* & -0.005 & -0.037*** & -0.034*** & -0.026** & 0.002 & -0.034*** & -0.021 \\
+ & [0.009] & [0.013] & [0.010] & [0.011] & [0.012] & [0.013] & [0.010] & [0.016] \\
+County Unemployment & 0.009* & 0.008 & 0.019*** & 0.011* & 0.017*** & 0.003 & 0.021*** & 0.010* \\
+ & [0.005] & [0.006] & [0.005] & [0.006] & [0.005] & [0.005] & [0.004] & [0.005] \\
+ &  &  &  &  &  &  &  &  \\
+Observations & 178,739 & 178,739 & 178,739 & 178,739 & 178,739 & 178,739 & 178,739 & 178,739 \\
+R-squared & 0.939 & 0.878 & 0.909 & 0.931 & 0.918 & 0.865 & 0.904 & 0.921 \\
+County FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+ Stateyear & YES & YES & YES & YES & YES & YES & YES & YES \\ \hline
+\multicolumn{9}{c}{ Robust standard errors in brackets} \\
+\multicolumn{9}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{9}{c}{ Notes: Table shows linear regression estimates of log (service branch active duty recruits +1) on deaths.} \\
+\multicolumn{9}{c}{ Fixed effects are included separately by county and month, and for each state-year, as indiciated,} \\
+\multicolumn{9}{c}{ The first four columns show applicants and the last four show contracts.} \\
+\multicolumn{9}{c}{ Filename:servicebranchrecLN.tex} \\
+\end{tabular}
+\end{document}
