@@ -193,14 +193,13 @@ initial interest. Four of the 11 sections of the ASVAB are used as
 the AFQT. Assuming that a potential soldier passes the examination
 (one needs a score of 31 or higher to enlist in the Army) the applicant will
 then return to the recruiting center and be shown by their recruiter
-what jobs are available and when. All recruits in the data have AFQT scores, so potential recruits are only entered into
-my data set as soon as they have taken the test.
+what jobs are available and when. All recruits in the data have AFQT scores, so potential recruits are only entered into my data set as soon as they have taken the test.
 
 Once a potential recruit has taken the exam, chosen a military career
 (the availability of which depends on their test score) and is assigned
 a departure and enrollment date, they can sign a contract and take
 the oath of military service. This is the point at which a potential
-recruit is recorded as a {}``contract'' in the data. When a contracted
+recruit is recorded as a ``contract'' in the data. When a contracted
 recruit finally ships off to training, they are recorded as an {}``accession.''
 These accessions are the most commonly reported figures in the media
 and in Defense Department press releases pertaining to the military
@@ -219,7 +218,7 @@ to boot camp, is much more seasonal. I follow this convention and use applicants
 %to use, because recruits can sign a binding contract to join the military
 %up to a year in advance through the Delayed Entry Program. When they
 %actually ship out is very seasonal and highest in the summer.) 
-Attempts have been made to account for both the supply and demand side of recruiting (\cite{Dertouzos-RAND-1985}, \cite{Hanssens-Levien-Advertising}, \cite{Dertouzous-Polich-Army-Ads}, \cite{Asch-Incentives}) though in this paper I focus on the supply side only.
+Attempts have been made to account for both the supply and demand side of recruiting (\cite{Dertouzos-RAND-1985}, \cite{Hanssens-Levien-Advertising}, \cite{Dertouzous-Polich-Army-Ads}, \cite{Asch-Incentives}). Demand can affect the quality and quantity of recruits because waivers for drug use or criminal activity (which would normally preclude one from enlisting) are sometimes available in periods of high demand. In this paper I focus on the supply side only.
 
 %More recent work has attempted to control for both the demand side
 %of the process, acknowledging changes in the military's need for recruits,
@@ -442,7 +441,7 @@ rate of death of its soldiers, and the behavioral explanation is still reasonabl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{County-Level Analysis\label{sub:County OLS}}
 
-The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model.\footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata 12 \citep{reghdfe}. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitatively very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a negative binomial specification. Again, the results are very similar.} The regression generally follows the model:
+The primary analysis is at the county level, the smallest region at which there is close to a one-to-one relationship from death data geographic unit to recruit data geographic unit. Main results are estimated using ordinary leasts squares and a log-linear model.\footnote{Log-linear estimates are calculated using Sergio Correia's reghdfe package in Stata 12 \citep{reghdfe} To interpret log-linear coefficients as percent changes, one should exponentiate coefficients, but at the small numbers in this papers values are nearly identical, and values reported in the body of the text refer strictly to values in tables. Since data on recruits is in count form, the Poisson model may also be appropriate for the data, as linear models of course ignore the restriction of the dependent variable of recruits to non-negative integers. See \cite{cameron2013countdata} for a complete discussion. For the sake of robustness and transparency, I have also tested Poisson regressions, which are shown in the Appendix. The results are qualitatively very similar, showing that a death leads to slightly larger decreases in percentage terms when estimated with log-linear OLS regressions than in the Poisson regressions. The appendix also includes a negative binomial specification. Again, the results are very similar.} The regression generally follows the model:
 $$Recruits_{it}=\beta_{0}Deaths_{i,t}+\beta_{1}Deaths_{i,t-1}+\beta_{2}Unemployment_{it}\\
 +x'_{it}\eta+\alpha_{i}+\gamma_{t}+u_{it}$$
 where Deaths implies deaths from the given county, Unemployment county unemployment, and $x$ includes in-state (but out of county) deaths as well as
@@ -601,7 +600,7 @@ deaths result in a significant decrease in county recruiting. An important
 corollary question concerns the heterogeneity of this effect.
 All counties are unlikely to observe the same deterrent effect of
 death. Here I analyze the recruiting response to deaths based
-on different characteristics of counties, the deaths, or the recruits. First, I test the effect of differences in a county's demographic and cultural makeup, specifically, its population, unemployment, racial makeup, rural/urban status, and political alignment. Second, I test the response for different types of recruits, and third, for different types of deaths. I have also tested the difference for different service branches in the armed forces, for both deaths and recruits. I find only weak evidence that recruits to some service branches respond differently than those to other branches, and no evidence that recruits respond based on the branch in which the service branch occurred. These results are shown in the Appendix section~\ref{sec:Introduction}.   
+on different characteristics of counties, the deaths, or the recruits. First, I test the effect of differences in a county's demographic and cultural makeup, specifically, its population, unemployment, racial makeup, rural/urban status, and political alignment. Second, I test the response for different types of recruits, and third, for different types of deaths. I have also tested the difference for different service branches in the armed forces, for both deaths and recruits. I find weak evidence that recruits to some service branches respond differently than recruits to other branches, but the patterns are not consistent across the stages of recruiting. I also find limited evidence that recruits respond based on the branch in which the service branch occurred. These results are shown in the Appendix section~\ref{sec:servicebranch}.   
 
 \subsubsection{Heterogeneity by County Characteristics}
 
@@ -1099,7 +1098,9 @@ Tests of the heterogeneity of the effect by which the war in which the death occ
 \subsection{Recruits and Deaths by Service Branch}\label{sec:servicebranch}
 In this section I examine how the individual services fare in their recruiting. There are clearly differences between the services in terms of their operations; perhaps stemming from this there are often assumed to be significant cultural differences between the branches, leading to a difference in the type of people who make up the potential applicant pool for each of the services, and the possibility for a difference in the potential applicants' response to a local death.
 
-Table \ref{Flo:Recruits by Service} shows these estimates, again using weighted least squares analysis at the month-county level, with county, monthly, and state-year fixed effects. It appears that Marine recruiting decreases at a rate of over 2\% for every death, while the Air Force reaction to death is a statistically insignificant 0.05\% reduction in recruits. Deaths at the state level and state and county unemployment seem to have effects that are less clearly distinguishable across service branches. This makes sense given that very few of the deaths in Iraq and Afghanistan have come from the Air Force, while many have come from the Marines. But an even larger proportion have come from the Army, so if potential recruits were simply steeringaway from the branches of the military with the most deaths, the Army would be the branch with the largest recruiting response to deaths, which is not the case. I have repeated this exercise using Poisson regressions, and the deterrent effects by service branch maintain the same ratios relative to one another, exhibiting further evidence that the recruiting deterrent is greatest for the Marine Corps. 
+Table \ref{Flo:Recruits by Service} shows these estimates, again using weighted least squares analysis at the month-county level, with county, monthly, and state-year fixed effects. It appears that Marine recruiting decreases at a rate of over 2\% for every death, while the Air Force reaction to death is a statistically insignificant 0.1\% reduction in applicants. The pattern is the opposite for contracts, however, with the largest decrease among Air Force recruits. Data that could follow individual recruits from application to contract to accession could potentially further illuminate this question, but unfortunately my data cannot. 
+
+Deaths at the state level and state and county unemployment seem to have effects that are less clearly distinguishable across service branches. This makes sense given that very few of the deaths in Iraq and Afghanistan have come from the Air Force, while many have come from the Marines. But an even larger proportion have come from the Army, so if potential recruits were simply steeringaway from the branches of the military with the most deaths, the Army would be the branch with the largest recruiting response to deaths, which is not the case. I have repeated this exercise using Poisson regressions, and the deterrent effects by service branch maintain the same ratios relative to one another, exhibiting further evidence that the recruiting deterrent is greatest for the Marine Corps. 
 
 % Break recruits out by service branch
 %made by servicebranch-simple.do
@@ -1112,12 +1113,10 @@ Table \ref{Flo:Recruits by Service} shows these estimates, again using weighted 
 
 Amongst the four branches of the military, the deaths in Iraq and Afghanistan have been highly concentrated amongst soldiers in the Army and the Marines. In the data used in this paper, roughly 2000 deaths are from the Army, 800 from the Marines, 85 from the Navy, and 50 from the Air Force. Since there have been 40 times more deaths in the Army than the Air Force, it is entirely possible that potential Army recruits have instead gone on to join the Air Force instead.
 
-One way to get at the question of deaths by service branch is to lump all the recruits together but show the specific  response to deaths in a given service. These estimates are shown in Table \ref{Flo: Death by Service}. The coefficients are positive for Air Force and the Navy in-county deaths, however they are not statistically significant. I have also run specifications with the in-state but out-of-county deaths split by service branch, and I have run tests of equivalence of the coefficients for all the service branches. The hypotheses of equality cannot be rejected for county deaths, but can be for state deaths. 
+One way to get at the question of deaths by service branch is to lump all the recruits together but show the specific  response to deaths in a given service. These estimates are shown in Table \ref{Flo: Death by Service}. For applicants, the coefficients are large and positive for Air Force and the Navy in-county deaths, however they are not statistically significant for the Navy. I have also run specifications with the in-state but out-of-county deaths split by service branch, and I have run tests of equivalence of the coefficients for all the service branches. The null hypotheses of equality can be rejected for county deaths for applicants, but , but cannot be for state deaths. Neither tests reject for contracts.
 
 % Break deaths out by service branch
 %made by servicebranch-simple.do
-\clearpage{}
-\pagebreak{}
 \begin{table}
 \caption{}
 \label{Flo: Death by Service}
