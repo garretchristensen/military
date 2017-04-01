@@ -556,9 +556,7 @@ tab stateyear, gen(stateyearfe)
 /* (1) CREATE LAGS*/
 sort fips month
 foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp nationalunemp ///
-	monthnationalmort monthstatemort monthcountymort Rmonthcountydeath Routofcounty Routofstate ///
-	IRAQmonthcountydeath AFGHANmonthcountydeath IRAQoutofcounty AFGHANoutofcounty ///
-	ARmonthcountydeath FRmonthcountydeath MRmonthcountydeath NRmonthcountydeath {
+	monthnationalmort monthstatemort monthcountymort Rmonthcountydeath Routofcounty Routofstate{
  foreach X of numlist 1/12 {
   quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
   label var L`X'`var' "`X' monthly lags of `var'"
@@ -567,10 +565,25 @@ foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp na
  } 
 }
 
-label var monthcountydeath "Current In-County Deaths"
+foreach var in IRAQmonthcountydeath AFGHANmonthcountydeath IRAQoutofcounty AFGHANoutofcounty ///
+	ARmonthcountydeath FRmonthcountydeath MRmonthcountydeath NRmonthcountydeath ///
+	ARoutofcounty FRoutofcounty MRoutofcounty NRoutofcounty{
+ foreach X of numlist 1/2 {
+  quietly gen L`X'`var'=`var'[_n-`X'] if fips[_n]==fips[_n-`X']
+  label var L`X'`var' "`X' monthly lags of `var'"
+  quietly gen F`X'`var'=`var'[_n+`X'] if fips[_n]==fips[_n+`X']
+  label var F`X'`var' "`X' monthly leads of `var'"
+ } 
+}
+
+label var monthcountydeath "In-County Deaths"
 label var L1monthcountydeath "Lag In-County Deaths"
-label var outofcounty "Current Out-of-County Deaths"
+label var outofcounty "Out-of-County Deaths"
 label var L1outofcounty "Lag Out-of-County Deaths"
+label var L1ARoutofcounty "Army Lag Out-of-County Deaths"
+label var L1FRoutofcounty "Air Force Lag Out-of-County Deaths"
+label var L1MRoutofcounty "Marines Lag Out-of-County Deaths"
+label var L1NRoutofcounty "Navy Lag Out-of-County Deaths"
 
 compress
 sa ./Data/county`FILE'90_raw.dta, replace
