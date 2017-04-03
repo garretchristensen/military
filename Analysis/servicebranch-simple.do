@@ -98,6 +98,7 @@ if "`service'"=="NR"{
  outreg2 monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp using ./Output/servicebranchrecP.txt, ///
 	tex label ct(`header', `header2') ti(Recruits by Service Branch vs Deaths and Unemployment--Poisson) bdec(3) tdec(3) bracket se append ///
 	addtext(County FE, YES, Month FE, YES, Statetrend, YES) ///
+	drop(monthfe3-monthfe58 statetrend2-statetrend51) ///
 	addnote("Notes: Table shows Poisson regression estimates of service branch active duty recruits on deaths.", ///
 	"Fixed effects are included separately by county and month, and linear trends for each state, as indicated,", ///
 	"The first four columns show applicants and the last four show contracts.", Filename:servicebranchrecP.tex) 
@@ -153,7 +154,7 @@ xtpoisson active monthcountydeath L1ARmonthcountydeath L1FRmonthcountydeath L1MR
 test L1ARoutofcounty=L1FRoutofcounty=L1MRoutofcounty=L1NRoutofcounty
 local LagState=r(p)
 test L1ARmonthcountydeath=L1FRmonthcountydeath=L1MRmonthcountydeath=L1NRmonthcountydeath
-outreg2 using ./Output/redefbyservicedeath.txt, tex label ct(`header') bdec(3) tdec(3) bracket se ///
+outreg2 using ./Output/servicebranchdeathP.txt, tex label ct(`header') bdec(3) tdec(3) bracket se ///
 	addstat("Test Lag County Deaths", r(p), "Test Lag State", `LagState') append ///
 	addtext(County FE, YES, Month FE, YES, Statetrend, YES) ///
 	drop(monthfe3-monthfe58 statetrend2-statetrend51)

@@ -212,7 +212,7 @@ Although a good deal of research has been conducted on the labor supply
 elasticity of the all-volunteer US military, little, if any, has analyzed
 the effect of war-time deaths on the labor supply. Most of the existing
 research has focused on the supply elasticity with respect to salaries or unemployment, starting with 1960's estimates of labor supply in the absence of a draft, such as
-\cite{Altman-Fechter-AER-1967} and \cite{Altman-JHR-1969}. \cite{Dale-Gilroy-AER-Note-1985} showed that higher unemployment typically led to higher recruiting levels and established the importance of using applicants and contracts in analysis instead of accessions, as the final stage in the recruiting process, defined as shipping off
+\cite{Altman-Fechter-AER-1967} and \cite{Altman-JHR-1969}. Recent research has investigated the effect on supply of a faster route to citizenship for non-citizen legal residents \citep{cunha2014expedited}. \cite{Dale-Gilroy-AER-Note-1985} showed that higher unemployment typically led to higher recruiting levels and established the importance of using applicants and contracts in analysis instead of accessions, as the final stage in the recruiting process, defined as shipping off
 to boot camp, is much more seasonal. I follow this convention and use applicants and contracts. %a slightly %earlier stage in the recruiting process
 %referred to as {}``contracts'' is a much better dependent variable
 %to use, because recruits can sign a binding contract to join the military
@@ -273,7 +273,7 @@ Attempts have been made to account for both the supply and demand side of recrui
 %\cite{Heaton-Asch} or by instrumenting for the military wage using
 %the legislative formula for annual increases, as in \cite{Gelber}.
 
-There has been some limited research analyzing the effect of US casualties
+There has been some limited research analyzing the effect of US fatalities
 in Iraq and Afghanistan at the national level (see\cite{BigRandDocument}, \cite{Simon-Warner-DEATHS!}).
 %estimates that casualties in Iraq were responsible for anywhere from
 %a 6 to 60 percent decline in Army recruiting depending on methodology,
@@ -806,6 +806,8 @@ may be able to better explain the observed recruiting phenomenon.
 \bibliography{military_bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The appendix command is issued once, prior to all appendices, if any.
 \newpage
 \appendix
@@ -842,6 +844,8 @@ observe roughly 9 million total applicants), however it appears that
 much of the contracts data for Reservists and Army and Air National
 Guard are missing. The data contain only 375 Army Reservist contracts,
 an implausibly low number over a 17-year period. Note that all active duty (both applicants and contracts) and reserve/guard applicants data appears complete, at least as far as any civilian can confirm data obtained through FOIA. To account for the missing reserve and guard contracts, all of the analysis is run using only the applicants or contracts to the active duty components of the military. The main regression specification is repeated in the Appendix Table~\ref{Flo:allrecruits} using all recruits (active, reserve, and guard), which results in very similar, if not slightly larger, estimates.} I am able to match roughly 96\% of the applicant observations by ZIP code to a US county.
+
+The military has an enlistment option referred to as the Delayed Entry Program (DEP) for enlistees who do not wish to or are not able to ship to basic training immediately upon signing their contract. DEP enlistees sign a contract to ship to training up on a specific date up to one year in advance. For example, many enlistees sign a contract during their senior year of high school and ship to basic training after graduating. Of course, some who sign a DEP contract do not access, and instead are discharged. My data unfortunately contains no information on whether an applicant/contract/accession enlists via the DEP or direct from contract to accession, and because the FOIA data does not enable me to track individuals across the enlistment process, I am unable to back out this information. A potentially fruitful avenue of research for those with direct access to administrative data would be to track individuals through the process, and to measure the rate of DEP discharges.
 
 %%What does this do? Classical measurement error? Or since the X variable is likely to be under-reported if anything, is that not necessarily attenuation bias?
 The military has typically not released or maintained publicly available
@@ -1125,6 +1129,9 @@ One way to get at the question of deaths by service branch is to lump all the re
 \end{table}
 
 To test this another way, I have rearranged the data into county-month-service branch observations and test the recruiting response to a specific service branch after deaths from the same service branch and from other service branches. Regressions shows the percent response to a death in the same service branch as the recruit, and in any of the other three service branches. As before, I include a full set of fixed effects, and state and county unemployment. Results indicate that there are not statistically significant differences in the response to lagged same-service-branth deaths and lagged other-service-branch deaths. These results are not shown but are available upon request.
+
+To some extent my results show a similar effect to that of \cite{cunha2014expedited}---their research shows that non-citizen enlistees switch away from the service branches with more fatalities (Army, Marines) towards the Navy and Air Force---but my results appear to find less clear evidence for a consistent or similar story. Contracts to the Air Force decrease the most due to a fatality, but Applicants decrease the least.
+  
 %Table \ref{Flo:Death by Same-Service Other-Service} shows the results of these tests. 
 
 %In these regressions I have included interacted county{*}service branch fixed effects as well. The bottom of the table shows pair-wise comparisons of the corresponding same-service and other-service death coefficients. For example, for applicants, a lagged same-service in-county death leads to a 0.7\% reduction in recruits in that service, while a lagged other-service in-county death leads to a 1.1\% reduction in recruits for that service. In all of the specifications, tests fail to reject the hypothesis that the effect of a lagged same-service in-county death is statistically identical to that of a lagged other-service in-county death. The same can be said of lagged same-service out-of-county deaths and lagged other-service out-of-county deaths. However, for several of the current-month deaths, statistical tests reject equivalence.
