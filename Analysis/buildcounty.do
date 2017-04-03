@@ -183,6 +183,8 @@ bysort month: egen AFGHANmonthtotaldeath=count(age) if war=="Afghanistan"
 /*BUILD TOTAL DEATHS BY PAYGRADE*/
 bysort month: egen E3monthtotaldeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"
 bysort month: egen E4monthtotaldeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04"
+bysort month: egen E3Pmonthtotaldeath=count(age) if paygrade!="E01"& paygrade!="E02"& paygrade!="E03"
+bysort month: egen E4Pmonthtotaldeath=count(age) if paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04"
 
 label var BLACKmonthtotaldeath "Total BLACK deaths this month"
 label var WHITEmonthtotaldeath "Total WHITE deaths this month"
@@ -196,7 +198,8 @@ label var IRAQmonthtotaldeath "Total IRAQ deaths this month"
 label var AFGHANmonthtotaldeath "Total AFGHAN deaths this month"
 label var E3monthtotaldeath "Total E3 or less paygrade deaths this month"
 label var E4monthtotaldeath "Total E4 or less paygrade deaths this month"
-
+label var E3Pmonthtotaldeath "Total more than E3 paygrade deaths this month"
+label var E4Pmonthtotaldeath "Total more than E4 paygrade deaths this month"
 
 /******************************************************STATE*************************************/
 /*BUILD STATE DEATHS AND STATE BY SERVICE*/
@@ -225,6 +228,8 @@ bysort monthstate: egen AFGHANmonthstatedeath=count(age) if war=="Afghanistan"
 /*BUILD STATE DEATHS BY PAYGRADE*/
 bysort monthstate: egen E3monthstatedeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"
 bysort monthstate: egen E4monthstatedeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04"
+bysort monthstate: egen E3Pmonthstatedeath=count(age) if paygrade!="E01"&paygrade!="E02"&paygrade!="E03"
+bysort monthstate: egen E4Pmonthstatedeath=count(age) if paygrade!="E01"&paygrade!="E02"&paygrade!="E03"&paygrade!="E04"
 
 label var BLACKmonthstatedeath "Total BLACK deaths this month-state"
 label var WHITEmonthstatedeath "Total WHITE deaths this month-state"
@@ -238,6 +243,8 @@ label var IRAQmonthstatedeath "Total IRAQ deaths this month-state"
 label var AFGHANmonthstatedeath "Total AFGHAN deaths this month-state"
 label var E3monthstatedeath "Total E3 or less paygrade deaths this month-state"
 label var E4monthstatedeath "Total E4 or less paygrade deaths this month-state"
+label var E3Pmonthstatedeath "Total more than E3 paygrade deaths this month-state"
+label var E4Pmonthstatedeath "Total more than E4 paygrade deaths this month-state"
 
 /*********************************************COUNTY***************************************/
 /*BUILD DEATHS BY MONTH AND COUNTY*/
@@ -455,8 +462,10 @@ bysort monthcounty: egen AFGHANmonthcountydeath=count(age) if war=="Afghanistan"
 /*BUILD COUNTY DEATHS BY PAYGRADE*/
 bysort monthcounty: egen E3monthcountydeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"
 bysort monthcounty: egen E4monthcountydeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04"
+bysort monthcounty: egen E3Pmonthcountydeath=count(age) if paygrade!="E01"&paygrade!="E02"&paygrade!="E03"
+bysort monthcounty: egen E4Pmonthcountydeath=count(age) if paygrade!="E01"&paygrade!="E02"&paygrade!="E03"&paygrade!="E04"
 
-foreach var in H notH FEMALE MALE IRAQ AFGHAN E3 E4{
+foreach var in H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
  replace `var'monthcountydeath=0 if `var'monthcountydeath==.
 }
 label var BLACKmonthcountydeath "Total BLACK deaths this month-county"
@@ -471,6 +480,8 @@ label var IRAQmonthcountydeath "Total IRAQ deaths this month-county"
 label var AFGHANmonthcountydeath "Total AFGHAN deaths this month-county"
 label var E3monthcountydeath "Total E3 or less paygrade deaths this month-county"
 label var E4monthcountydeath "Total E4 or less paygrade deaths this month-county"
+label var E3Pmonthcountydeath "Total more than E3 paygrade deaths this month-county"
+label var E4Pmonthcountydeath "Total more than E4 paygrade deaths this month-county"
 
 count
 duplicates drop monthcounty, force
@@ -492,7 +503,7 @@ sort monthcounty
 /*MERGE IN DEATHS*/
 merge 1:1 monthcounty using ./Deaths/deathsbymonthcounty.dta
 replace monthcountydeath=0 if _merge==1 & monthcountydeath==. /*IF THERE WERE NO DEATHS IN THE COUNTY, SET=0*/
-foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4{
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
   replace `servicebranch'monthcountydeath=0 if _merge==1 & `servicebranch'monthcountydeath==.
  }
 rename _merge mergedeathtounemp
@@ -504,7 +515,7 @@ quietly replace monthtotaldeath=NEWmonthtotaldeath
 drop NEWmonthtotaldeath
 quietly replace monthtotaldeath=0 if monthtotaldeath==.
 /*BY SERVICE*/
-foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4{
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
   quietly bysort month: egen `servicebranch'NEWmonthtotaldeath=max(`servicebranch'monthtotaldeath)
   quietly replace `servicebranch'monthtotaldeath=`servicebranch'NEWmonthtotaldeath
   drop `servicebranch'NEWmonthtotaldeath
@@ -518,7 +529,7 @@ replace monthstatedeath=NEWmonthstatedeath
 drop NEWmonthstatedeath
 replace monthstatedeath=0 if monthstatedeath==.
 /*BY SERVICE*/
-foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV BLACK WHITE HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4{
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV BLACK WHITE HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
   bysort monthstate: egen `servicebranch'NEWmonthstatedeath=max(`servicebranch'monthstatedeath)
   replace `servicebranch'monthstatedeath=`servicebranch'NEWmonthstatedeath
   drop `servicebranch'NEWmonthstatedeath
@@ -666,7 +677,7 @@ gen Rmonthstatedeath=ARmonthstatedeath+MRmonthstatedeath+FRmonthstatedeath+NRmon
 gen Rmonthtotaldeath=ARmonthtotaldeath+MRmonthtotaldeath+FRmonthtotaldeath+NRmonthtotaldeath
 label var Rmonthcountydeath "Active duty deaths this month-county"
 label var Rmonthstatedeath "Active duty deaths this month-state"
-foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHAN E3 E4{
+foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHAN E3 E4 E3P E4P{
  gen `type'outofstate=`type'monthtotaldeath-`type'monthstatedeath
  gen `type'outofcounty=`type'monthstatedeath-`type'monthcountydeath
  label var `type'outofstate "`type' out of state deaths this month"
@@ -735,6 +746,7 @@ foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp na
 
 foreach var in IRAQmonthcountydeath AFGHANmonthcountydeath IRAQoutofcounty AFGHANoutofcounty ///
 	E3monthcountydeath E3outofcounty E4monthcountydeath E4outofcounty ///
+	E3Pmonthcountydeath E3Poutofcounty E4Pmonthcountydeath E4Poutofcounty ///
 	ARmonthcountydeath FRmonthcountydeath MRmonthcountydeath NRmonthcountydeath ///
 	ARoutofcounty FRoutofcounty MRoutofcounty NRoutofcounty{
  foreach X of numlist 1/2 {
@@ -757,6 +769,10 @@ label var L1E3monthcounty "Lag E3 paygrade In-County Deaths"
 label var L1E4monthcounty "Lag E4 paygrade In-County Deaths"
 label var L1E3outofcounty "Lag E3 paygrade Out-of-County Deaths"
 label var L1E4outofcounty "Lag E4 paygrade Out-of-County Deaths"
+label var L1E3Pmonthcounty "Lag E3-plus paygrade In-County Deaths"
+label var L1E4Pmonthcounty "Lag E4-plus paygrade In-County Deaths"
+label var L1E3Poutofcounty "Lag E3-plus paygrade Out-of-County Deaths"
+label var L1E4Poutofcounty "Lag E4-plus paygrade Out-of-County Deaths"
 compress
 sa ./Data/county`FILE'_raw.dta, replace
 

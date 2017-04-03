@@ -41,7 +41,8 @@ do ./Analysis/buildcounty.do // puts together APPLICANTS, death, recruiter, mort
 *do ./Analysis/redefrunninglags.do //LN&P regs for longer-term lags
 *do ./Analysis/redefhighquality.do //LN&P regs of LQ/HQ recruits, plus deaths of many ifferent types, and interactions with diff war deaths
 *do ./Analysis/PandLN90.do /*Main LN&P regs with 90-2006 deaths*/
-do ./Analysis/servicebranch-simple.do //LN&P regs of recs by service branch and deaths by service branch
+*do ./Analysis/servicebranch-simple.do //LN&P regs of recs by service branch and deaths by service branch
+do ./Analysis/paygrade.do //LN regs of deaths by <=E3 and <=E4 paygrade
 *do ./Analysis/redefbyservice2013.12.11.do /*reshape the data month-county-service branch, run linear and possion regs*/
 
 /*OTHER FUNCTIONAL FORMS*/
