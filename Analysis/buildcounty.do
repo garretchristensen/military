@@ -166,6 +166,9 @@ foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV {
   label var `servicebranch'monthtotaldeath "Total `servicebranch' deaths this month" 
  }
 
+ 
+ 
+ 
 /*BUILD TOTAL DEATHS BY RACE*/
 bysort month: egen BLACKmonthtotaldeath=count(age) if raceethnic=="BLACK OR AFRICAN AMERICAN"
 bysort month: egen WHITEmonthtotaldeath=count(age) if raceethnic=="WHITE"
@@ -462,9 +465,9 @@ bysort monthcounty: egen AFGHANmonthcountydeath=count(age) if war=="Afghanistan"
 /*BUILD COUNTY DEATHS BY PAYGRADE*/
 bysort monthcounty: egen E3monthcountydeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"
 bysort monthcounty: egen E4monthcountydeath=count(age) if paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04"
-bysort monthcounty: egen E3Pmonthcountydeath=count(age) if paygrade!="E01"&paygrade!="E02"&paygrade!="E03"
-bysort monthcounty: egen E4Pmonthcountydeath=count(age) if paygrade!="E01"&paygrade!="E02"&paygrade!="E03"&paygrade!="E04"
-
+bysort monthcounty: egen E3Pmonthcountydeath=count(age) if paygrade!="E01" & paygrade!="E02" & paygrade!="E03"
+bysort monthcounty: egen E4Pmonthcountydeath=count(age) if paygrade!="E01" & paygrade!="E02" & paygrade!="E03" & paygrade!="E04"
+stop
 foreach var in H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
  replace `var'monthcountydeath=0 if `var'monthcountydeath==.
 }
@@ -485,6 +488,8 @@ label var E4Pmonthcountydeath "Total more than E4 paygrade deaths this month-cou
 
 count
 duplicates drop monthcounty, force
+
+
 count
 keep monthstate monthstatedeath monthtotaldeath monthcounty *monthcountydeath *monthstatedeath *monthtotaldeath 
 compress
@@ -510,26 +515,17 @@ rename _merge mergedeathtounemp
 
 /*CAN'T JUST SET ALL DEATHS=0 BECAUSE TOTAL & STATE ARE >0. CALC VIA EGEN*/
 /*THIS IS 'SPREADING' THE TOTAL DEATHS TO OTHER STATES WITHOUT ANY, SO THEIR MONTH-TOTAL IS CORRECTED*/
-bysort month: egen NEWmonthtotaldeath=max(monthtotaldeath)
-quietly replace monthtotaldeath=NEWmonthtotaldeath
-drop NEWmonthtotaldeath
-quietly replace monthtotaldeath=0 if monthtotaldeath==.
 /*BY SERVICE*/
-foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
+foreach servicebranch in "" AG AR AV CR CV FG FR FV MR MV NR NV WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
   quietly bysort month: egen `servicebranch'NEWmonthtotaldeath=max(`servicebranch'monthtotaldeath)
   quietly replace `servicebranch'monthtotaldeath=`servicebranch'NEWmonthtotaldeath
   drop `servicebranch'NEWmonthtotaldeath
   quietly replace `servicebranch'monthtotaldeath=0 if `servicebranch'monthtotaldeath==.
  }
 
-
 /*SPREAD STATE DEATHS TO IN-STATE COUNTIES WITHOUT ANY DEATHS*/
-bysort monthstate: egen NEWmonthstatedeath=max(monthstatedeath)
-replace monthstatedeath=NEWmonthstatedeath
-drop NEWmonthstatedeath
-replace monthstatedeath=0 if monthstatedeath==.
 /*BY SERVICE*/
-foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV BLACK WHITE HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
+foreach servicebranch in "" AG AR AV CR CV FG FR FV MR MV NR NV BLACK WHITE HISP OTH H notH FEMALE MALE IRAQ AFGHAN E3 E4 E3P E4P{
   bysort monthstate: egen `servicebranch'NEWmonthstatedeath=max(`servicebranch'monthstatedeath)
   replace `servicebranch'monthstatedeath=`servicebranch'NEWmonthstatedeath
   drop `servicebranch'NEWmonthstatedeath
