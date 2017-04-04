@@ -71,7 +71,7 @@ Since some of the Marine Corps' support operations are provided by the Navy, ser
 Is there a model that can test whether these examples are evidence of a general phenomenon in military recruiting? This paper is an empirical test of the size of the deterrent or incentive effect of deaths in the military on recruiting, and an analysis of when the effect may be larger or smaller. My analysis draws on a valuable new dataset obtained through Freedom of Information Act requests, comprising the complete set of active duty enlisted applicants to the military from 2001 to 2006, matched with detailed data on every death of a US soldier that occurred in Operation Iraqi Freedom and Operation
 Enduring Freedom (i.e., the war in Afghanistan) during the same period. I have made these datasets publicly available on the Internet using Harvard's Dataverse.\footnote{Please see \url{https://dataverse.harvard.edu/dataverse/garretchristensen} for data. All analysis files necessary to replicate this paper are also available online at \url{https://github.com/garretchristensen/military}.}
 
-With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting. I flexibly control for the underlying characteristics of counties as well as nation-wide changes over time using county and monthly fixed effects and state time trends. After controlling for these underlying characteristics, the hometown of the casualty is arguably exogenous. I use this source of variation to analyze the causal effects of local deaths on local military recruiting.\footnote{I find that the recruiting response is always significantly different
+With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting. I flexibly control for the underlying characteristics of counties as well as nation-wide changes over time using county and monthly fixed effects and state time trends. After controlling for these underlying characteristics, the hometown of the fatality is arguably exogenous. I use this source of variation to analyze the causal effects of local deaths on local military recruiting.\footnote{I find that the recruiting response is always significantly different
 for local deaths (deaths in the same county) than for deaths from
 more distant locales (deaths from outside the county but in the same
 state, and deaths from outside the state). Coefficients on deaths from outside the state (national deaths) cannot be estimated due to the monthly fixed effects in most models, however in (possibly misspecified) models without the fixed effects, local deaths
@@ -322,10 +322,10 @@ contains 6.4 million active duty observations, the contracts data
 set has 3.6 million active duty observations. I am able to match roughly 96\% of the applicant observations by ZIP code to a US county.
 
 
-The main casualty data come from a publicly available list compiled by the Defense Manpower Data Center. Starting October 7, 2001, every fatality in Operation Iraqi Freedom
+The main fatality data come from a publicly available list compiled by the Defense Manpower Data Center. Starting October 7, 2001, every fatality in Operation Iraqi Freedom
 and Operation Enduring Freedom is listed, and includes the service branch, component (active/reserve/guard), name, rank,
 pay grade, date of death, hostile status of death, age, gender, home of record city, home of record county, home of record state, home
-of record country, unit, incident geographic code, casualty geographic code, casualty county, city of loss, and race/ethnicity of the deceased.
+of record country, unit, incident geographic code, fatality geographic code, fatality county, city of loss, and race/ethnicity of the deceased.
 
 The data includes {}``home of record'' which is where the soldier lived on the day they joined the service, and generally does not change over the course of military service, no matter how long. This is important with regards to my claim of plausible random assignment of death with respect to county after controlling for military population levels---the data is not biased by service-men and women with very dangerous military professions buying homes near their duty-base and changing their legal residence to the county in which the base sits. 
 
@@ -732,9 +732,9 @@ Again, I have tested whether the results are the same when done using Poisson re
 
 \subsubsection{Recruiting Response for Different Types of Deaths\label{sub:Different Death Types}}
 
-In addition to responses for different types of recruits, I have run analysis comparing the response to deaths of different types, specifically, the service branch in which the death occurred, the gender of the casualty, the classification of the death by the military as hostile or non-hostile, the race of
-the casualty, and the war in which the deceased was killed (Iraq or
-Afghanistan). Casualties are found to have no significantly different
+In addition to responses for different types of recruits, I have run analysis comparing the response to deaths of different types, specifically, the service branch in which the death occurred, the gender of the deceased, the classification of the death by the military as hostile or non-hostile, the race of
+the deceased, and the war in which the deceased was killed (Iraq or
+Afghanistan). Deaths are found to have no significantly different
 deterrent effect based on gender, hostility-status, and race.%
 \footnote{%Although statistical tests cannot reject that the race of the death does not affect the size of the deterrent effect, I have also run regressions interacting the race of the death with county racial characteristics. The coefficient of interaction between black deaths and black population is twice the magnitude of the coefficient on the interaction of white deaths and black population, indicating that perhaps counties with more blacks are even more deterred by black soldier deaths, although the difference between these two interactions is again not significant. The appendix includes results in Tables \ref{Flo:Death by Same-Service Other-Service} and \ref{Flo: Death by Service} 
 I have also compared deaths across military service branches, finding no significant differences by branch.} 
@@ -852,17 +852,17 @@ The military has typically not released or maintained publicly available
 datasets of the deaths of its soldiers in the last two decades, which
 were numerous even in times of peace. The onset of the wars in Iraq
 and Afghanistan changed this, as the military made data on a large number of
-deaths available to the public. The main casualty data come from a public list compiled by the Statistical
+deaths available to the public. The main fatality data come from a public list compiled by the Statistical
 Information Analysis Division at the Defense Manpower Data Center
-and freely obtained from their website.\footnote{This data was obtained from  \url{http://siadapp.dmdc.osd.mil/personnel/CASUALTY/castop.htm} in 2010, but that site no longer operates. Similar data was available in 2014 from \url{https://www.dmdc.osd.mil/dcas/pages/casualties.xhtml}.}
+and freely obtained from their website.\footnote{This data was obtained from  \url{http://siadapp.dmdc.osd.mil/personnel/CASUALTY/castop.htm} in 2010, but that site no longer operates. Similar data was available in 2017 from the Defense Casualty Analysis System\url{https://www.dmdc.osd.mil/dcas/pages/casualties.xhtml}. I archived this data at \url{https://dataverse.harvard.edu/dataverse/garretchristensen}.}
 
 Starting October 7, 2001, every fatality in Operation Iraqi Freedom
 and Operation Enduring Freedom is listed, and includes
 the service branch, component (active/reserve/guard), name, rank,
 pay grade, date of death, hostile status of death, age, gender, home
 of record city, home of record county, home of record state, home
-of record country, unit, incident geographic code, casualty geographic
-code, casualty county, city of loss, and race/ethnicity of the deceased.
+of record country, unit, incident geographic code, fatality geographic
+code, fatality county, city of loss, and race/ethnicity of the deceased.
 
 The data includes {}``home of record'' which is where the soldier lived on the day they joined the service, and generally does not change over the course of military service, no matter how long. This is important with regards to my claim of plausible random assignment of death with respect to county after controlling for military population levels---the data is not biased by service-men and women with very dangerous military professions buying homes near their duty-base and changing their legal residence to the county in which the base sits. 
 
@@ -1130,7 +1130,7 @@ One way to get at the question of deaths by service branch is to lump all the re
 
 To test this another way, I have rearranged the data into county-month-service branch observations and test the recruiting response to a specific service branch after deaths from the same service branch and from other service branches. Regressions shows the percent response to a death in the same service branch as the recruit, and in any of the other three service branches. As before, I include a full set of fixed effects, and state and county unemployment. Results indicate that there are not statistically significant differences in the response to lagged same-service-branth deaths and lagged other-service-branch deaths. These results are not shown but are available upon request.
 
-To some extent my results show a similar effect to that of \cite{cunha2014expedited}---their research shows that non-citizen enlistees switch away from the service branches with more fatalities (Army, Marines) towards the Navy and Air Force---but my results appear to find less clear evidence for a consistent or similar story. Contracts to the Air Force decrease the most due to a fatality, but Applicants decrease the least.
+To some extent my results show a similar effect to that of \cite{cunha2014expedited}---their research shows that non-citizen enlistees switch away from the service branches with more fatalities (Army, Marines) towards the Navy and Air Force---but my results appear to find less clear evidence for a consistent or similar story. Contracts to the Air Force decrease the most due to a fatality, but Applicants decrease the least, and Navy and Air Force deaths do not appear to have consistent and significant effects on recruiting.
   
 %Table \ref{Flo:Death by Same-Service Other-Service} shows the results of these tests. 
 
