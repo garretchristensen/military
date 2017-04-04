@@ -433,10 +433,10 @@ drop if _merge!=3 /*MASTER IS DEATHS FILE. USING IS CROSSWALK*/
 rename _merge mergedeathcounty
 gen monthcounty=month+countyfp
 /*BUILD MONTHLY COUNTY DEATHS BY SERVICE*/
-bysort monthcounty: egen monthcountydeath=count(age)
+quietly bysort monthcounty: egen monthcountydeath=count(age)
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV {
-  bysort monthcounty: egen `servicebranch'monthcountydeath=count(age) if servicebranch=="`servicebranch'"
-  replace `servicebranch'monthcountydeath=0 if `servicebranch'monthcounty==.
+  quietly bysort monthcounty: egen `servicebranch'monthcountydeath=count(age) if servicebranch=="`servicebranch'"
+  quietly replace `servicebranch'monthcountydeath=0 if `servicebranch'monthcounty==.
   label var `servicebranch'monthcountydeath "`servicebranch' deaths this month-county"
 }
 
