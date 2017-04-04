@@ -150,26 +150,28 @@ bysort month: egen monthtotaldeath=count(age)
 gen servicebranch=service+component
 foreach service in A M F N{
  foreach branch in R V{ /*KEEP ALL DEATHS, RESERVE AND ACTIVE*/ 
-  bysort month: egen `service'`branch'monthtotaldeath=count(age) if servicebranch=="`service'`branch'"
+  bysort month: egen `service'`branch'monthtotaldeath=total(servicebranch=="`service'`branch'")
  }
 }
-bysort month:egen AGmonthtotaldeath=count(age) if servicebranch=="AG"
+bysort month:egen AGmonthtotaldeath=total(servicebranch=="AG")
+
+
 
 /*BUILD TOTAL DEATHS BY RACE*/
-bysort month: egen BLACKmonthtotaldeath=count(age) if raceethnic=="BLACK OR AFRICAN AMERICAN"
-bysort month: egen WHITEmonthtotaldeath=count(age) if raceethnic=="WHITE"
-bysort month: egen HISPmonthtotaldeath=count(age) if raceethnic=="HISPANIC"
-bysort month: egen OTHmonthtotaldeath=count(age) if raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN"
+bysort month: egen BLACKmonthtotaldeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
+bysort month: egen WHITEmonthtotaldeath=total(raceethnic=="WHITE")
+bysort month: egen HISPmonthtotaldeath=total(raceethnic=="HISPANIC")
+bysort month: egen OTHmonthtotaldeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
 /*BUILD TOTAL DEATHS BY HOSTILE STATUS*/
-bysort month: egen Hmonthtotaldeath=count(age) if hostile=="H"
-bysort month: egen notHmonthtotaldeath=count(age) if hostile==""
+bysort month: egen Hmonthtotaldeath=total(hostile=="H")
+bysort month: egen notHmonthtotaldeath=total(hostile=="")
 /*BUILD TOTAL DEATHS BY GENDER*/
-bysort month: egen FEMALEmonthtotaldeath=count(age) if gender=="F"
-bysort month: egen MALEmonthtotaldeath=count(age) if gender=="M"
+bysort month: egen FEMALEmonthtotaldeath=total(gender=="F")
+bysort month: egen MALEmonthtotaldeath=total(gender=="M")
 /*BUILD TOTAL DEATHS BY WAR*/
-bysort month: egen IRAQmonthtotaldeath=count(age) if war=="Iraq"
-bysort month: egen AFGHANmonthtotaldeath=count(age) if war=="Afghanistan"
-bysort month: egen OTHERmonthtotaldeath=count(age) if war==""
+bysort month: egen IRAQmonthtotaldeath=total(war=="Iraq")
+bysort month: egen AFGHANmonthtotaldeath=total(war=="Afghanistan")
+bysort month: egen OTHERmonthtotaldeath=total(war=="")
 
 /******************************************************STATE*************************************/
 /*BUILD STATE DEATHS AND STATE BY SERVICE*/
@@ -177,26 +179,26 @@ gen monthstate=month+homestate
 bysort monthstate: egen monthstatedeath=count(age)
 foreach service in A M F N{
  foreach branch in R V{
-  bysort monthstate: egen `service'`branch'monthstatedeath=count(age) if servicebranch=="`service'`branch'"
+  bysort monthstate: egen `service'`branch'monthstatedeath=total(servicebranch=="`service'`branch'")
  }
 }
-bysort month:egen AGmonthstatedeath=count(age) if servicebranch=="AG"
+bysort month:egen AGmonthstatedeath=total(servicebranch=="AG")
 
 /*BUILD STATE DEATHS BY RACE*/
-bysort monthstate: egen BLACKmonthstatedeath=count(age) if raceethnic=="BLACK OR AFRICAN AMERICAN"
-bysort monthstate: egen WHITEmonthstatedeath=count(age) if raceethnic=="WHITE"
-bysort monthstate: egen HISPmonthstatedeath=count(age) if raceethnic=="HISPANIC"
-bysort monthstate: egen OTHmonthstatedeath=count(age) if raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN"
+bysort monthstate: egen BLACKmonthstatedeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
+bysort monthstate: egen WHITEmonthstatedeath=total(raceethnic=="WHITE")
+bysort monthstate: egen HISPmonthstatedeath=total(raceethnic=="HISPANIC")
+bysort monthstate: egen OTHmonthstatedeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
 /*BUILD STATE DEATHS BY HOSTILE STATUS*/
-bysort monthstate: egen Hmonthstatedeath=count(age) if hostile=="H"
-bysort monthstate: egen notHmonthstatedeath=count(age) if hostile==""
+bysort monthstate: egen Hmonthstatedeath=total(hostile=="H")
+bysort monthstate: egen notHmonthstatedeath=total(hostile=="")
 /*BUILD STATE DEATHS BY GENDER*/
-bysort monthstate: egen FEMALEmonthstatedeath=count(age) if gender=="F"
-bysort monthstate: egen MALEmonthstatedeath=count(age) if gender=="M"
+bysort monthstate: egen FEMALEmonthstatedeath=total(gender=="F")
+bysort monthstate: egen MALEmonthstatedeath=total(gender=="M")
 /*BUILD STATE DEATHS BY WAR*/
-bysort monthstate: egen IRAQmonthstatedeath=count(age) if war=="Iraq"
-bysort monthstate: egen AFGHANmonthstatedeath=count(age) if war=="Afghanistan"
-bysort monthstate: egen OTHERmonthstatedeath=count(age) if war==""
+bysort monthstate: egen IRAQmonthstatedeath=total(war=="Iraq")
+bysort monthstate: egen AFGHANmonthstatedeath=total(war=="Afghanistan")
+bysort monthstate: egen OTHERmonthstatedeath=total(war=="")
 
 
 /*********************************************COUNTY***************************************/
@@ -247,35 +249,26 @@ gen monthcounty=month+countyfp
 bysort monthcounty: egen monthcountydeath=count(age)
 foreach service in A M F N{
  foreach branch in R V{
-  bysort monthcounty: egen `service'`branch'monthcountydeath=count(age) if servicebranch=="`service'`branch'"
-  replace `service'`branch'monthcountydeath=0 if `service'`branch'monthcounty==.
+  bysort monthcounty: egen `service'`branch'monthcountydeath=total(servicebranch=="`service'`branch'")
  }
 }
-bysort monthcounty:egen AGmonthcountydeath=count(age) if servicebranch=="AG"
-replace AGmonthcountydeath=0 if AGmonthcountydeath==.
+bysort monthcounty:egen AGmonthcountydeath=total(servicebranch=="AG")
 /*ADDED 122910--RACE*/
-bysort monthcounty: egen BLACKmonthcountydeath=count(age) if raceethnic=="BLACK OR AFRICAN AMERICAN"
-replace BLACKmonthcountydeath=0 if BLACKmonthcountydeath==.
-bysort monthcounty: egen WHITEmonthcountydeath=count(age) if raceethnic=="WHITE"
-replace WHITEmonthcountydeath=0 if WHITEmonthcountydeath==.
-bysort monthcounty: egen HISPmonthcountydeath=count(age) if raceethnic=="HISPANIC"
-replace HISPmonthcountydeath=0 if HISPmonthcountydeath==.
-bysort monthcounty: egen OTHmonthcountydeath=count(age) if raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN"
-replace OTHmonthcountydeath=0 if OTHmonthcountydeath==.
+bysort monthcounty: egen BLACKmonthcountydeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
+bysort monthcounty: egen WHITEmonthcountydeath=total(raceethnic=="WHITE")
+bysort monthcounty: egen HISPmonthcountydeath=total(raceethnic=="HISPANIC")
+bysort monthcounty: egen OTHmonthcountydeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
 
 /*BUILD COUNTY DEATHS BY HOSTILE STATUS*/
-bysort monthcounty: egen Hmonthcountydeath=count(age) if hostile=="H"
-bysort monthcounty: egen notHmonthcountydeath=count(age) if hostile==""
+bysort monthcounty: egen Hmonthcountydeath=total(hostile=="H")
+bysort monthcounty: egen notHmonthcountydeath=total(hostile=="")
 /*BUILD COUNTY DEATHS BY GENDER*/
-bysort monthcounty: egen FEMALEmonthcountydeath=count(age) if gender=="F"
-bysort monthcounty: egen MALEmonthcountydeath=count(age) if gender=="M"
+bysort monthcounty: egen FEMALEmonthcountydeath=total(gender=="F")
+bysort monthcounty: egen MALEmonthcountydeath=total(gender=="M")
 /*BUILD COUNTY DEATHS BY WAR*/
-bysort monthcounty: egen IRAQmonthcountydeath=count(age) if war=="Iraq"
-bysort monthcounty: egen AFGHANmonthcountydeath=count(age) if war=="Afghanistan"
-bysort monthcounty: egen OTHERmonthcountydeath=count(age) if war==""
-foreach var in H notH FEMALE MALE IRAQ AFGHAN OTHER{
- replace `var'monthcountydeath=0 if `var'monthcountydeath==.
-}
+bysort monthcounty: egen IRAQmonthcountydeath=total(war=="Iraq")
+bysort monthcounty: egen AFGHANmonthcountydeath=total(war=="Afghanistan")
+bysort monthcounty: egen OTHERmonthcountydeath=total(war=="")
 
 count
 duplicates drop monthcounty, force
@@ -330,6 +323,7 @@ bysort month:egen AGNEWmonthtotaldeath=max(AGmonthtotaldeath)
 drop AGmonthtotaldeath
 rename AGNEWmonthtotaldeath AGmonthtotaldeath
 replace AGmonthtotaldeath=0 if AGmonthtotaldeath==.
+
 /*BY RACE, HOSTILE, GENDER, WAR*/
 foreach race in WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN OTHER{
  bysort month: egen `race'NEWmonthtotaldeath=max(`race'monthtotaldeath)
