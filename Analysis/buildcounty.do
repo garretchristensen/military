@@ -458,7 +458,7 @@ quietly bysort monthcounty: egen AFGHANmonthcountydeath=total(war=="Afghanistan"
 /*BUILD COUNTY DEATHS BY PAYGRADE*/
 quietly bysort monthcounty: egen E3monthcountydeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03")
 quietly bysort monthcounty: egen E4monthcountydeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04")
-quietly bysort monthcounty: egen E3Pmonthcountydeath=total(paygrade!="E01" & paygrade!="E02" & paygrade!="E03"&paygrade!=""
+quietly bysort monthcounty: egen E3Pmonthcountydeath=total(paygrade!="E01" & paygrade!="E02" & paygrade!="E03"&paygrade!="")
 quietly bysort monthcounty: egen E4Pmonthcountydeath=total(paygrade!="E01" & paygrade!="E02" & paygrade!="E03" & paygrade!="E04"&paygrade!="")
 
 label var BLACKmonthcountydeath "Total BLACK deaths this month-county"
@@ -531,7 +531,7 @@ foreach servicebranch in "" AG AR AV CR CV FG FR FV MR MV NR NV BLACK WHITE HISP
   drop `servicebranch'NEWmonthstatedeath
   quietly replace `servicebranch'monthstatedeath=0 if `servicebranch'monthstatedeath==.
 }
-stop
+
 sort monthcounty
 
 ************************************************************************

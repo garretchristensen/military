@@ -28,8 +28,8 @@ label var WorstP "County P-Value"
 histogram WorstP if WorstP!=1, width(.01) frequency ti(Active Duty Deaths and Applicants) //addl
 graph save ./Output/hist_binomial.gph, replace
 
-count if WorstP<(.05/3129) //was 8 last time I checked
-if r(N)!=8{
+count if WorstP<(.05/3129) //After deaths rebuilt (using egen total) 4/3/17, this reduced to six
+if r(N)!=6{  
  throw a hissy fit
 }
 disp "this is how many counties couldn't come from the average dist"
