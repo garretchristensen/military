@@ -1,0 +1,41 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccc} \hline
+ & (1) & (2) & (3) & (4) \\
+VARIABLES & Log Active Duty Recruits & Log Active Duty Recruits & Log Active Duty Recruits & Log Active Duty Recruits \\ \hline
+ &  &  &  &  \\
+In-County Deaths/100 & -0.656 & -0.657 & -1.437** & -1.437** \\
+ & [0.567] & [0.567] & [0.575] & [0.575] \\
+Lag Paygrade E4 In-County Deaths/100 & -2.523*** & -2.514*** & -2.355*** & -2.350*** \\
+ & [0.806] & [0.807] & [0.824] & [0.824] \\
+Lag E4-plus paygrade In-County Deaths & -0.010 & -0.011 & -0.024** & -0.024** \\
+ & [0.009] & [0.009] & [0.010] & [0.010] \\
+Out-of-County Deaths/100 & -0.090 & -0.086 & 0.048 & 0.051 \\
+ & [0.074] & [0.074] & [0.069] & [0.070] \\
+Lag Paygrade E4 Out-Of-County Deaths/100 &  & 0.064 &  & 0.047 \\
+ &  & [0.103] &  & [0.102] \\
+Lag E4-plus paygrade Out-of-County Deaths &  & -0.002 &  & -0.001 \\
+ &  & [0.001] &  & [0.001] \\
+State Unemployment & -0.028*** & -0.028*** & -0.021*** & -0.021*** \\
+ & [0.005] & [0.005] & [0.005] & [0.005] \\
+County Unemployment & 0.008*** & 0.008*** & 0.009*** & 0.009*** \\
+ & [0.002] & [0.002] & [0.002] & [0.002] \\
+Lag Out-of-County Deaths/100 & -0.046 &  & -0.029 &  \\
+ & [0.072] &  & [0.073] &  \\
+ &  &  &  &  \\
+Observations & 178,910 & 178,910 & 178,910 & 178,910 \\
+R-squared & 0.859 & 0.859 & 0.836 & 0.836 \\
+County FE & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES \\
+Stateyear FE & YES & YES & YES & YES \\
+Test In-County & 0.00182 & 0.00190 & 0.00464 & 0.00476 \\
+ Test Out-of-County &  & 0.526 &  & 0.636 \\ \hline
+\multicolumn{5}{c}{ Robust standard errors in brackets} \\
+\multicolumn{5}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{5}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative} \\
+\multicolumn{5}{c}{ lagged deaths by paygrade. Fixed effects are included separately by county and month as indiciated,} \\
+\multicolumn{5}{c}{ The first four columns show applicants and the last four show contracts.} \\
+\multicolumn{5}{c}{ Filename:paygrade4.tex} \\
+\end{tabular}
+\end{document}

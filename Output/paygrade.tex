@@ -1,0 +1,42 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccccc} \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) \\
+ & Applicants & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts & Contracts \\
+VARIABLES & E3 & E3 & E4 & E4 & E3 & E3 & E4 & E4 \\ \hline
+ &  &  &  &  &  &  &  &  \\
+In-County Deaths/100 & -0.930 & -0.987 & -0.173 & 0.306 & -1.052 & -1.477 & 1.250 & 0.881 \\
+ & [1.531] & [1.659] & [1.363] & [1.443] & [1.297] & [1.433] & [1.840] & [1.923] \\
+Lag Low Paygrade In-County Deaths/100 & 0.260 & 0.175 & -0.557 & -1.108 & -1.921 & -1.567 & -2.840 & -2.518 \\
+ & [2.160] & [2.246] & [1.742] & [1.800] & [2.252] & [2.322] & [2.183] & [2.247] \\
+Lag High Paygrade In-county Deaths/100 & 0.282 & 0.289 & -0.516 & -1.039 & 0.106 & 0.466 & -2.997 & -2.708 \\
+ & [1.833] & [1.941] & [1.860] & [1.913] & [1.591] & [1.687] & [2.259] & [2.319] \\
+Out-of-County Deaths/100 & -0.089 & -0.191 & -0.089 & 0.595 & 0.048 & -0.417 & 0.048 & -0.374 \\
+ & [0.074] & [0.855] & [0.074] & [0.753] & [0.069] & [0.854] & [0.069] & [0.787] \\
+Lag Low Paygrade Out-of-County Deaths/100 &  & -0.025 &  & -0.774 &  & 0.114 &  & 0.301 \\
+ &  & [0.854] &  & [0.762] &  & [0.857] &  & [0.797] \\
+Lag High Paygrade Out-of-County Deaths/100 &  & 0.157 &  & -0.560 &  & 0.628 &  & 0.607 \\
+ &  & [0.863] &  & [0.752] &  & [0.852] &  & [0.779] \\
+State Unemployment & -0.028*** & -0.027*** & -0.028*** & -0.027*** & -0.021*** & -0.020*** & -0.021*** & -0.021*** \\
+ & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] & [0.005] \\
+County Unemployment & 0.008*** & 0.008*** & 0.008*** & 0.008*** & 0.009*** & 0.009*** & 0.009*** & 0.009*** \\
+ & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] & [0.002] \\
+Lag Out-of-County Deaths/100 & -0.048 &  & -0.048 &  & -0.033 &  & -0.032 &  \\
+ & [0.072] &  & [0.072] &  & [0.073] &  & [0.073] &  \\
+ &  &  &  &  &  &  &  &  \\
+Observations & 178,910 & 182,050 & 178,910 & 182,050 & 178,910 & 182,050 & 178,910 & 182,050 \\
+R-squared & 0.859 & 0.859 & 0.859 & 0.859 & 0.836 & 0.835 & 0.836 & 0.835 \\
+County FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Stateyear FE & YES & YES & YES & YES & YES & YES & YES & YES \\
+Test In-County & 0.987 & 0.931 & 0.972 & 0.952 & 0.140 & 0.139 & 0.892 & 0.870 \\
+ Test Out-of-County &  & 0.350 &  & 0.236 &  & 0.00747 &  & 0.0688 \\ \hline
+\multicolumn{9}{c}{ Robust standard errors in brackets} \\
+\multicolumn{9}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{9}{c}{ Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative} \\
+\multicolumn{9}{c}{ lagged deaths by paygrade. Fixed effects are included separately by county and month as indiciated,} \\
+\multicolumn{9}{c}{ The first four columns show applicants and the last four show contracts.} \\
+\multicolumn{9}{c}{ Filename:paygrade.tex} \\
+\end{tabular}
+\end{document}
