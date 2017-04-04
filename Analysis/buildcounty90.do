@@ -148,13 +148,9 @@ rename homeofrecordcity homecity
 /*BUILD TOTAL DEATHS AND TOTAL BY SERVICE*/
 bysort month: egen monthtotaldeath=count(age)
 gen servicebranch=service+component
-foreach service in A M F N{
- foreach branch in R V{ /*KEEP ALL DEATHS, RESERVE AND ACTIVE*/ 
-  bysort month: egen `service'`branch'monthtotaldeath=total(servicebranch=="`service'`branch'")
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
+  bysort month: egen `servicebranch'monthtotaldeath=total(servicebranch=="`servicebranch'")
  }
-}
-bysort month:egen AGmonthtotaldeath=total(servicebranch=="AG")
-
 
 
 /*BUILD TOTAL DEATHS BY RACE*/
@@ -177,12 +173,9 @@ bysort month: egen OTHERmonthtotaldeath=total(war=="")
 /*BUILD STATE DEATHS AND STATE BY SERVICE*/
 gen monthstate=month+homestate
 bysort monthstate: egen monthstatedeath=count(age)
-foreach service in A M F N{
- foreach branch in R V{
-  bysort monthstate: egen `service'`branch'monthstatedeath=total(servicebranch=="`service'`branch'")
- }
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
+   bysort monthstate: egen `servicebranch'monthstatedeath=total(servicebranch=="`servicebranch'")
 }
-bysort month:egen AGmonthstatedeath=total(servicebranch=="AG")
 
 /*BUILD STATE DEATHS BY RACE*/
 bysort monthstate: egen BLACKmonthstatedeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
@@ -247,11 +240,10 @@ gen countyfp=state_numeric+county_numeric
 gen monthcounty=month+countyfp
 /*BUILD MONTHLY COUNTY DEATHS BY SERVICE*/
 bysort monthcounty: egen monthcountydeath=count(age)
-foreach service in A M F N{
- foreach branch in R V{
-  bysort monthcounty: egen `service'`branch'monthcountydeath=total(servicebranch=="`service'`branch'")
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
+  bysort monthcounty: egen `servicebranch'monthcountydeath=total(servicebranch=="`servicebranch'")
  }
-}
+
 bysort monthcounty:egen AGmonthcountydeath=total(servicebranch=="AG")
 /*ADDED 122910--RACE*/
 bysort monthcounty: egen BLACKmonthcountydeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
@@ -291,11 +283,10 @@ sort monthcounty
 /*MERGE IN DEATHS*/
 merge 1:1 monthcounty using ./Deaths/deathsbymonthcounty90.dta
 replace monthcountydeath=0 if _merge==1 & monthcountydeath==. /*IF THERE WERE NO DEATHS IN THE COUNTY, SET=0*/
-foreach service in A M F N{
- foreach branch in R V{
-  replace `service'`branch'monthcountydeath=0 if _merge==1 & `service'`branch'monthcountydeath==.
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
+  replace `servicebranch'monthcountydeath=0 if _merge==1 & `servicebranch'monthcountydeath==.
  }
-}
+
 /*BY RACE, HOSTILITY, GENDER, WAR*/
 foreach race in WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN OTHER{
  replace `race'monthcountydeath=0 if _merge==1 & `race'monthcountydeath==.
@@ -310,19 +301,14 @@ drop monthtotaldeath
 rename NEWmonthtotaldeath monthtotaldeath
 replace monthtotaldeath=0 if monthtotaldeath==.
 /*BY SERVICE*/
-foreach service in A M F N{
- foreach branch in R V{
-  bysort month: egen `service'`branch'NEWmonthtotaldeath=max(`service'`branch'monthtotaldeath)
-  drop `service'`branch'monthtotaldeath
-  rename `service'`branch'NEWmonthtotaldeath `service'`branch'monthtotaldeath
-  replace `service'`branch'monthtotaldeath=0 if `service'`branch'monthtotaldeath==.
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
+  bysort month: egen `servicebranch'NEWmonthtotaldeath=max(`servicebranch'monthtotaldeath)
+  drop `servicebranch'monthtotaldeath
+  rename `servicebranch'NEWmonthtotaldeath `servicebranch'monthtotaldeath
+  replace `servicebranch'monthtotaldeath=0 if `servicebranch'monthtotaldeath==.
  }
 }
-/*ARMY GUARD*/
-bysort month:egen AGNEWmonthtotaldeath=max(AGmonthtotaldeath)
-drop AGmonthtotaldeath
-rename AGNEWmonthtotaldeath AGmonthtotaldeath
-replace AGmonthtotaldeath=0 if AGmonthtotaldeath==.
+
 
 /*BY RACE, HOSTILE, GENDER, WAR*/
 foreach race in WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN OTHER{
@@ -338,19 +324,14 @@ drop monthstatedeath
 rename NEWmonthstatedeath monthstatedeath
 replace monthstatedeath=0 if monthstatedeath==.
 /*BY SERVICE*/
-foreach service in A M F N{
- foreach branch in R V{
-  bysort monthstate: egen `service'`branch'NEWmonthstatedeath=max(`service'`branch'monthstatedeath)
-  drop `service'`branch'monthstatedeath
-  rename `service'`branch'NEWmonthstatedeath `service'`branch'monthstatedeath
-  replace `service'`branch'monthstatedeath=0 if `service'`branch'monthstatedeath==.
+foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
+  bysort monthstate: egen `servicebranch'NEWmonthstatedeath=max(`servicebranch'monthstatedeath)
+  drop `servicebranch'monthstatedeath
+  rename `servicebranch'NEWmonthstatedeath `servicebranch'monthstatedeath
+  replace `servicebranch'monthstatedeath=0 if `servicebranch'monthstatedeath==.
  }
 }
-/*ARMY GUARD*/
-bysort monthstate:egen AGNEWmonthstatedeath=max(AGmonthstatedeath)
-drop AGmonthstatedeath
-rename AGNEWmonthstatedeath AGmonthstatedeath
-replace AGmonthstatedeath=0 if AGmonthstatedeath==.
+
 /*BY RACE, HOSTILE, GENDER, WAR*/
 foreach race in BLACK WHITE HISP OTH H notH FEMALE MALE IRAQ AFGHAN OTHER{ 
  bysort monthstate: egen `race'NEWmonthstatedeath=max(`race'monthstatedeath)
