@@ -148,10 +148,6 @@ compress
 save ./Apps/`FILE'bymonthcounty.dta, replace
 
 /*BUILD DEATHS*/
-/**************************************************************************************************
-*DEATHS SHOULD BE BUILT LIKE RECRUITS-CREATE DUMMIES AND EGEN TOTAL, INSTEAD OF USING IF--YOU HAVE TO 
-*MAKE SURE EVERY OBSERVATION HAS THE SAME VALUE SINCE YOU EVENTUALLY DROP DUPLICATES
-***************************************************************************************************/
 use ./Deaths/allUS, clear
 compress
 drop if date<20010000|date>20060731
@@ -164,46 +160,20 @@ bysort month: egen monthtotaldeath=count(age)
 label var monthtotaldeath "Total deaths this month"
 
 gen servicebranch=service+component
-label servicebranch "Service and Component"
-tab servicebranch, gen(servicebranch)
-rename servicebranch1 servicebranchAG
-rename servicebranch2 servicebranchAR
-rename servicebranch3 servicebranchAV
-rename servicebranch4 servicebranchFG
-rename servicebranch5 servicebranchFR
-rename servicebranch6 servicebranchFV
-rename servicebranch7 servicebranchMR
-rename servicebranch8 servicebranchMV
-rename servicebranch9 servicebranchNR
-rename servicebranch10 servicebranchNV
-
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV {
-  bysort month: egen `servicebranch'monthtotaldeath=total(servicebranch`servicebranch')
+  bysort month: egen `servicebranch'monthtotaldeath=count(age) if servicebranch=="`servicebranch'"
+  quietly replace `servicebranch'monthtotaldeath=0 if `servicebranch'monthtotaldeath==.
   label var `servicebranch'monthtotaldeath "Total `servicebranch' deaths this month" 
  }
 
 /*BUILD TOTAL DEATHS BY RACE*/
-tab raceethnic, gen(raceethnic)
-rename raceethnic3 raceethnicBLACK
-rename raceethnic4 raceethnicHISP
-rename raceethnic7 raceethnicWHITE
-gen raceethnicOTH=""
-	replace raceethnicOTH=1 if raceethnic!="" & raceethnicBLACK==0 & raceethnicHISP==0 & raceethnicWHITE==0
-	replace raceethnicOTH=0 if raceethnic!="" & (raceethnicBLACK==1|raceethnicHISP==1| raceethnicWHITE==1)
-
-quietly bysort month: egen BLACKmonthtotaldeath=total(raceethnicBLACK)
-quietly bysort month: egen WHITEmonthtotaldeath=total(raceethnicWHITE)
-quietly bysort month: egen HISPmonthtotaldeath=total(raceethnicHISP)
-quietly bysort month: egen OTHmonthtotaldeath=total(raceethnicOTH)
+quietly bysort month: egen BLACKmonthtotaldeath=count(age) if raceethnic=="BLACK OR AFRICAN AMERICAN"
+quietly bysort month: egen WHITEmonthtotaldeath=count(age) if raceethnic=="WHITE"
+quietly bysort month: egen HISPmonthtotaldeath=count(age) if raceethnic=="HISPANIC"
+quietly bysort month: egen OTHmonthtotaldeath=count(age) if raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN"
 /*BUILD TOTAL DEATHS BY HOSTILE STATUS*/
-tab hostile, gen(hostile)
-rename hostile1 hostileH
-gen hostilenotH=(hostile!="H")
-quietly bysort month: egen Hmonthtotaldeath=total(hostileH)
-quietly bysort month: egen notHmonthtotaldeath=total(hostile=="")
-quietly bysort month: egen notHmonthtotaldeath2=total(hostilenotH)
-
-
+quietly bysort month: egen Hmonthtotaldeath=count(age) if hostile=="H"
+quietly bysort month: egen notHmonthtotaldeath=count(age) if hostile==""
 /*BUILD TOTAL DEATHS BY GENDER*/
 quietly bysort month: egen FEMALEmonthtotaldeath=count(age) if gender=="F"
 quietly bysort month: egen MALEmonthtotaldeath=count(age) if gender=="M"
