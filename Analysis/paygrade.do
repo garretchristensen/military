@@ -28,7 +28,7 @@ else{
 }
 foreach var in monthcountydeath outofcounty { 
 	foreach lag in "" L1 {
-		foreach war in "" E3 E4 E3P E4P ENLISTED OFFICER{
+		foreach war in ""  E4 E4P E5 E5P ENLISTED OFFICER{
 			replace `lag'`war'`var'=`lag'`war'`var'/100
 		}
 	}
@@ -64,12 +64,12 @@ if r(max)<.01|r(max)>1 {
 *********************************************************************************************
 *COMPARE UNDER AND OVER
 *LOOP OVER DIVIDING AT E3/E4
-forvalues X=3/4{
-if `X'==3{
-	local header2="E3"
+forvalues X=4/5{
+if `X'==4{
+	local header2="E4"
 }
 else{
-	local header2="E4"
+	local header2="E5"
 }
 
 	*PUT BOTH e3 and e4 into the same temp var for a nicer table
@@ -91,7 +91,7 @@ else{
 	test youngcounty=oldcounty
 	outreg2  using ./Output/paygrade.txt, lab tex ct(`header', `header2') bdec(3) tdec(3) bracket se append ///
 		addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative ", ///
-		"lagged deaths by paygrade--whether E3 and below compared to above. Separately for E4 and below, and above.", ///
+		"lagged deaths by paygrade--whether E4 and below compared to above. Separately for E5 and below, and above.", ///
 		"Fixed effects are included separately by county and month as indiciated,", ///
 		"The first four columns show applicants and the last four show contracts.", Filename:paygrade.tex) ///
 		addstat("Test In-County", r(p)) addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
@@ -108,11 +108,11 @@ else{
 
 
 	drop youngcounty oldcounty youngstate oldstate
-} //END LOOP OVER e3/4
+} //END LOOP OVER e4/5
 
 **************************************************************************
 *OFFICER VS. ENLISTED
-	*PUT BOTH e3 and e4 into the same temp var for a nicer table
+	*PUT BOTH e4 and e5 into the same temp var for a nicer table
 	gen youngcounty=L1ENLISTEDmonthcountydeath
 	gen oldcounty=L1OFFICERmonthcountydeath
 	gen youngstate=L1ENLISTEDoutofcounty

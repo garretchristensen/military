@@ -1088,6 +1088,7 @@ Tests of the entire set of recruits (active duty, guard, and reserve troops, not
 \input{../Output/allrecLNLinearW}}
 \end{table}
 
+\paragraph {Heterogeneity}
 Tests of the heterogeneity of the effect by which the war in which the death occur also appear significantly stronger using a Poisson regression. Results are shown in Appendix Table~\ref{Flo:Deaths by WarP}.
 
 \begin{table}
@@ -1095,6 +1096,17 @@ Tests of the heterogeneity of the effect by which the war in which the death occ
 \label{Flo:Deaths by WarP}
 \input{../Output/redefPwar}
 \end{table}
+
+I have also conducted tests by the experience of the soldier who was killed. This partially stems from a concern that Home of Record may change over the course of a military career. Note, however that legal residence and military Home of Record are separate and distinct. (For a thorough explanation see \url{https://www.army.mil/article/160640}.) Still, if Home of Record changes over the course of a military career when a soldier re-enlists, the death of a soldier may not be felt most accutely somewhere other than their Home of Record. To evaluate this, I separate the deaths by paygrade of the deceased, creating high paygrade and low paygrade groups to approximate the ability of soldiers to change their Home of Record. (Higher paygrade soldiers have, on average, been in the military longer and are more likely to reenlist  I create two groups: paygrade E4 or lower (55\% of the sample), and higher than E4 (counting all officer and warrant officer as higher grades). I repeat this same division with E5 as the cutoff (73\% of the sample). The results are shown in Appendix Table~\ref{Flo:paygrade}. Though it appears that lower paygrade soldiers have a larger coefficient of deterrent, none of the differences are significant. I have also tested officer (including warrant officer) deaths separately from enlisted soldier deaths and find no significant differences.
+
+%made in paygrade.do on 4/6/2017
+\begin{table}
+\caption{}
+\label{Flo:paygrade}
+\scalebox{0.8}{
+\input{../Output/paygrade}}
+\end{table}
+  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Recruits and Deaths by Service Branch}\label{sec:servicebranch}
 In this section I examine how the individual services fare in their recruiting. There are clearly differences between the services in terms of their operations; perhaps stemming from this there are often assumed to be significant cultural differences between the branches, leading to a difference in the type of people who make up the potential applicant pool for each of the services, and the possibility for a difference in the potential applicants' response to a local death.
