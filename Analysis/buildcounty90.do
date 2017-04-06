@@ -45,11 +45,11 @@ sort month
 *
 /*COLLAPSE RECRUITS BY MONTH & STATE*/
 /*CREAT LEVELS OF RECRUITS: >50 AFQT AND GRADUATED HIGH SCHOOL*/
-bysort month stab: egen monthstaterecruit=count(zip)
-bysort month stab: egen monthstaterecruitLQ=count(zip) if afqt<50 |educ<31
-bysort month stab: egen monthstaterecruitHQ50=count(zip) if afqt>49 & educ>=31
-bysort month stab: egen monthstaterecruitHQ50alt=count(zip) if afqt>49 & (educ>=31|educ==13)
-bysort month stab: egen monthstaterecruitHQ75=count(zip) if afqt>74 & educ>=41
+quietly bysort month stab: egen monthstaterecruit=count(zip)
+quietly bysort month stab: egen monthstaterecruitLQ=count(zip) if afqt<50 |educ<31
+quietly bysort month stab: egen monthstaterecruitHQ50=count(zip) if afqt>49 & educ>=31
+quietly bysort month stab: egen monthstaterecruitHQ50alt=count(zip) if afqt>49 & (educ>=31|educ==13)
+quietly bysort month stab: egen monthstaterecruitHQ75=count(zip) if afqt>74 & educ>=41
 label var monthstaterecruit "Recruits in this month state"
 label var monthstaterecruitLQ "Recruits-Low Quality in this month state"
 label var monthstaterecruitHQ50 "Recruits-High Quality in this month state"
@@ -59,21 +59,21 @@ label var monthstaterecruitHQ75 "Recruits-Very High Quality in this month state"
 
 
 foreach var in AG AR AV CR CV FG FR FV MR MV NR NV {
-  gen `var'=0
-  gen `var'LQ=0 /*LOW QUALITY*/
-  gen `var'HQ50=0 /* AFQT >50, High School degree*/
-  gen `var'HQ50alt=0 /* AFQT 50+, Certificate*/
-  gen `var'HQ75=0 /*AFQT 75, some college*/
-  replace `var'=1 if unit=="`var'"
-  replace `var'LQ=1 if unit=="`var'" & (afqt<50 |educ<31)
-  replace `var'HQ50=1 if unit=="`var'" & afqt>49 & educ>=31
-  replace `var'HQ50alt=1 if unit=="`var'" & afqt>49 & (educ>=31|educ==13)
-  replace `var'HQ75=1 if unit=="`var'" & afqt>74 & educ>=41
-  bysort month stab: egen `var'monthstate=total(`var')
-  bysort month stab: egen `var'LQmonthstate=total(`var'LQ)
-  bysort month stab: egen `var'HQ50monthstate=total(`var'HQ50)
-  bysort month stab: egen `var'HQ50altmonthstate=total(`var'HQ50alt)
-  bysort month stab: egen `var'HQ75monthstate=total(`var'HQ75)
+  quietly gen `var'=0
+  quietly gen `var'LQ=0 /*LOW QUALITY*/
+  quietly gen `var'HQ50=0 /* AFQT >50, High School degree*/
+  quietly gen `var'HQ50alt=0 /* AFQT 50+, Certificate*/
+  quietly gen `var'HQ75=0 /*AFQT 75, some college*/
+  quietly replace `var'=1 if unit=="`var'"
+  quietly replace `var'LQ=1 if unit=="`var'" & (afqt<50 |educ<31)
+  quietly replace `var'HQ50=1 if unit=="`var'" & afqt>49 & educ>=31
+  quietly replace `var'HQ50alt=1 if unit=="`var'" & afqt>49 & (educ>=31|educ==13)
+  quietly replace `var'HQ75=1 if unit=="`var'" & afqt>74 & educ>=41
+  quietly bysort month stab: egen `var'monthstate=total(`var')
+  quietly bysort month stab: egen `var'LQmonthstate=total(`var'LQ)
+  quietly bysort month stab: egen `var'HQ50monthstate=total(`var'HQ50)
+  quietly bysort month stab: egen `var'HQ50altmonthstate=total(`var'HQ50alt)
+  quietly bysort month stab: egen `var'HQ75monthstate=total(`var'HQ75)
   drop `var' `var'LQ `var'HQ50 `var'HQ50alt `var'HQ75
   label var `var'monthstate "`var' Recruits in this month state"
   label var `var'LQmonthstate "`var' Recruits-Low Quality in this month state"
@@ -82,16 +82,16 @@ foreach var in AG AR AV CR CV FG FR FV MR MV NR NV {
   label var `var'HQ75monthstate "`var' Recruits-Very High Quality in this month state"
   compress
 }
-gen monthstate=month+stab
+quietly gen monthstate=month+stab
 
 
 
 /*COLLAPSE RECRUITS BY MONTH & COUNTY*/
-bysort month countyfp: egen monthcountyrecruit=count(zip)
-bysort month countyfp: egen monthcountyrecruitLQ=count(zip) if afqt<50 |educ<31
-bysort month countyfp: egen monthcountyrecruitHQ50=count(zip) if afqt>49 & educ>=31
-bysort month countyfp: egen monthcountyrecruitHQ50alt=count(zip) if afqt>49 & (educ>=31|educ==13)
-bysort month countyfp: egen monthcountyrecruitHQ75=count(zip) if afqt>74 & educ>=41
+quietly bysort month countyfp: egen monthcountyrecruit=count(zip)
+quietly bysort month countyfp: egen monthcountyrecruitLQ=count(zip) if afqt<50 |educ<31
+quietly bysort month countyfp: egen monthcountyrecruitHQ50=count(zip) if afqt>49 & educ>=31
+quietly bysort month countyfp: egen monthcountyrecruitHQ50alt=count(zip) if afqt>49 & (educ>=31|educ==13)
+quietly bysort month countyfp: egen monthcountyrecruitHQ75=count(zip) if afqt>74 & educ>=41
 label var monthcountyrecruit "Recruits in this month county"
 label var monthcountyrecruitLQ "Recruits-Low Quality in this month county"
 label var monthcountyrecruitHQ50 "Recruits-High Quality in this month county"
@@ -100,21 +100,21 @@ label var monthcountyrecruitHQ75 "Recruits-Very High Quality in this month count
 
 
 foreach var in AG AR AV CR CV FG FR FV MR MV NR NV {
-  gen `var'=0
-  gen `var'LQ=0 /*LOW QUALITY*/
-  gen `var'HQ50=0 /* AFQT >50, High School degree*/
-  gen `var'HQ50alt=0 /* AFQT 50+, Certificate*/
-  gen `var'HQ75=0 /*AFQT 75, some college*/
-  replace `var'=1 if unit=="`var'" 
-  replace `var'LQ=1 if unit=="`var'" & (afqt<50|educ<31)
-  replace `var'HQ50=1 if unit=="`var'" & afqt>49 & educ>=31
-  replace `var'HQ50alt=1 if unit=="`var'" & afqt>49 & (educ>=31|educ==13)
-  replace `var'HQ75=1 if unit=="`var'" & afqt>74 & educ>=41
-  bysort month countyfp: egen `var'monthcounty=total(`var')
-  bysort month countyfp: egen `var'LQmonthcounty=total(`var'LQ)
-  bysort month countyfp: egen `var'HQ50monthcounty=total(`var'HQ50)
-  bysort month countyfp: egen `var'HQ50altmonthcounty=total(`var'HQ50alt)
-  bysort month countyfp: egen `var'HQ75monthcounty=total(`var'HQ75)
+  quietly gen `var'=0
+  quietly gen `var'LQ=0 /*LOW QUALITY*/
+  quietly gen `var'HQ50=0 /* AFQT >50, High School degree*/
+  quietly gen `var'HQ50alt=0 /* AFQT 50+, Certificate*/
+  quietly gen `var'HQ75=0 /*AFQT 75, some college*/
+  quietly replace `var'=1 if unit=="`var'" 
+  quietly replace `var'LQ=1 if unit=="`var'" & (afqt<50|educ<31)
+  quietly replace `var'HQ50=1 if unit=="`var'" & afqt>49 & educ>=31
+  quietly replace `var'HQ50alt=1 if unit=="`var'" & afqt>49 & (educ>=31|educ==13)
+  quietly replace `var'HQ75=1 if unit=="`var'" & afqt>74 & educ>=41
+  quietly bysort month countyfp: egen `var'monthcounty=total(`var')
+  quietly bysort month countyfp: egen `var'LQmonthcounty=total(`var'LQ)
+  quietly bysort month countyfp: egen `var'HQ50monthcounty=total(`var'HQ50)
+  quietly bysort month countyfp: egen `var'HQ50altmonthcounty=total(`var'HQ50alt)
+  quietly bysort month countyfp: egen `var'HQ75monthcounty=total(`var'HQ75)
   drop `var' `var'LQ `var'HQ50 `var'HQ50alt `var'HQ75
   label var `var'monthcounty "`var' Recruits in this month county"
   label var `var'LQmonthcounty "`var' Recruits-Low Quality in this month county"
@@ -123,7 +123,7 @@ foreach var in AG AR AV CR CV FG FR FV MR MV NR NV {
   label var `var'HQ75monthcounty "`var' Recruits-Very High Quality in this month county"
   compress
 }
-gen monthcounty=month+countyfp
+quietly gen monthcounty=month+countyfp
 count
 duplicates drop monthcounty, force
 count
@@ -146,52 +146,52 @@ rename homeofrecordcity homecity
 
 /************************************************* TOTAL **************************************/
 /*BUILD TOTAL DEATHS AND TOTAL BY SERVICE*/
-bysort month: egen monthtotaldeath=count(age)
-gen servicebranch=service+component
+quietly bysort month: egen monthtotaldeath=count(age)
+quietly gen servicebranch=service+component
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
-  bysort month: egen `servicebranch'monthtotaldeath=total(servicebranch=="`servicebranch'")
+  quietly bysort month: egen `servicebranch'monthtotaldeath=total(servicebranch=="`servicebranch'")
  }
 
 
 /*BUILD TOTAL DEATHS BY RACE*/
-bysort month: egen BLACKmonthtotaldeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
-bysort month: egen WHITEmonthtotaldeath=total(raceethnic=="WHITE")
-bysort month: egen HISPmonthtotaldeath=total(raceethnic=="HISPANIC")
-bysort month: egen OTHmonthtotaldeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
+quietly bysort month: egen BLACKmonthtotaldeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
+quietly bysort month: egen WHITEmonthtotaldeath=total(raceethnic=="WHITE")
+quietly bysort month: egen HISPmonthtotaldeath=total(raceethnic=="HISPANIC")
+quietly bysort month: egen OTHmonthtotaldeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
 /*BUILD TOTAL DEATHS BY HOSTILE STATUS*/
-bysort month: egen Hmonthtotaldeath=total(hostile=="H")
-bysort month: egen notHmonthtotaldeath=total(hostile=="")
+quietly bysort month: egen Hmonthtotaldeath=total(hostile=="H")
+quietly bysort month: egen notHmonthtotaldeath=total(hostile=="")
 /*BUILD TOTAL DEATHS BY GENDER*/
-bysort month: egen FEMALEmonthtotaldeath=total(gender=="F")
-bysort month: egen MALEmonthtotaldeath=total(gender=="M")
+quietly bysort month: egen FEMALEmonthtotaldeath=total(gender=="F")
+quietly bysort month: egen MALEmonthtotaldeath=total(gender=="M")
 /*BUILD TOTAL DEATHS BY WAR*/
-bysort month: egen IRAQmonthtotaldeath=total(war=="Iraq")
-bysort month: egen AFGHANmonthtotaldeath=total(war=="Afghanistan")
-bysort month: egen OTHERmonthtotaldeath=total(war=="")
+quietly bysort month: egen IRAQmonthtotaldeath=total(war=="Iraq")
+quietly bysort month: egen AFGHANmonthtotaldeath=total(war=="Afghanistan")
+quietly bysort month: egen OTHERmonthtotaldeath=total(war=="")
 
 /******************************************************STATE*************************************/
 /*BUILD STATE DEATHS AND STATE BY SERVICE*/
-gen monthstate=month+homestate
-bysort monthstate: egen monthstatedeath=count(age)
+quietly gen monthstate=month+homestate
+quietly bysort monthstate: egen monthstatedeath=count(age)
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
-   bysort monthstate: egen `servicebranch'monthstatedeath=total(servicebranch=="`servicebranch'")
+   quietly bysort monthstate: egen `servicebranch'monthstatedeath=total(servicebranch=="`servicebranch'")
 }
 
 /*BUILD STATE DEATHS BY RACE*/
-bysort monthstate: egen BLACKmonthstatedeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
-bysort monthstate: egen WHITEmonthstatedeath=total(raceethnic=="WHITE")
-bysort monthstate: egen HISPmonthstatedeath=total(raceethnic=="HISPANIC")
-bysort monthstate: egen OTHmonthstatedeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
+quietly bysort monthstate: egen BLACKmonthstatedeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
+quietly bysort monthstate: egen WHITEmonthstatedeath=total(raceethnic=="WHITE")
+quietly bysort monthstate: egen HISPmonthstatedeath=total(raceethnic=="HISPANIC")
+quietly bysort monthstate: egen OTHmonthstatedeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
 /*BUILD STATE DEATHS BY HOSTILE STATUS*/
-bysort monthstate: egen Hmonthstatedeath=total(hostile=="H")
-bysort monthstate: egen notHmonthstatedeath=total(hostile=="")
+quietly bysort monthstate: egen Hmonthstatedeath=total(hostile=="H")
+quietly bysort monthstate: egen notHmonthstatedeath=total(hostile=="")
 /*BUILD STATE DEATHS BY GENDER*/
-bysort monthstate: egen FEMALEmonthstatedeath=total(gender=="F")
-bysort monthstate: egen MALEmonthstatedeath=total(gender=="M")
+quietly bysort monthstate: egen FEMALEmonthstatedeath=total(gender=="F")
+quietly bysort monthstate: egen MALEmonthstatedeath=total(gender=="M")
 /*BUILD STATE DEATHS BY WAR*/
-bysort monthstate: egen IRAQmonthstatedeath=total(war=="Iraq")
-bysort monthstate: egen AFGHANmonthstatedeath=total(war=="Afghanistan")
-bysort monthstate: egen OTHERmonthstatedeath=total(war=="")
+quietly bysort monthstate: egen IRAQmonthstatedeath=total(war=="Iraq")
+quietly bysort monthstate: egen AFGHANmonthstatedeath=total(war=="Afghanistan")
+quietly bysort monthstate: egen OTHERmonthstatedeath=total(war=="")
 
 
 /*********************************************COUNTY***************************************/
@@ -204,9 +204,9 @@ use ./Apps/zip_crosswalk.dta /*THIS HAS COUNTY NAME AND FIPS CODE. DEATHS FILE J
 /*Oct 30, 11--where did this zip_crosswalk come from? Acland? It has ~31,000 ZIPS, which isn't complete. That's not important here since it's just using county, but earlier it is.*/
 duplicates drop countyfp, force
 /*MAKE UPPER-CASE*/
-replace county=upper(county)
+quietly replace county=upper(county)
 /*GET RID OF PERIODS*/
-replace county=subinstr(county,".","",.)
+quietly replace county=subinstr(county,".","",.)
 sort stab county
 save ./Apps/temp_crosswalk.dta, replace
 
@@ -230,37 +230,36 @@ drop state_numeric
 rename CRAP state_numeric
 replace state_numeric="0"+state_numeric if length(state_numeric)==1
 
-gen CRAP=string(county_numeric)
+quietly gen CRAP=string(county_numeric)
 drop county_numeric
 rename CRAP county_numeric
-replace county_numeric="00"+county_numeric if length(county_numeric)==1
-replace county_numeric="0"+county_numeric if length(county_numeric)==2
+quietly replace county_numeric="00"+county_numeric if length(county_numeric)==1
+quietly replace county_numeric="0"+county_numeric if length(county_numeric)==2
 
-gen countyfp=state_numeric+county_numeric
-gen monthcounty=month+countyfp
+quietly gen countyfp=state_numeric+county_numeric
+quietly gen monthcounty=month+countyfp
 /*BUILD MONTHLY COUNTY DEATHS BY SERVICE*/
-bysort monthcounty: egen monthcountydeath=count(age)
+quietly bysort monthcounty: egen monthcountydeath=count(age)
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
-  bysort monthcounty: egen `servicebranch'monthcountydeath=total(servicebranch=="`servicebranch'")
+  quietly bysort monthcounty: egen `servicebranch'monthcountydeath=total(servicebranch=="`servicebranch'")
  }
 
-bysort monthcounty:egen AGmonthcountydeath=total(servicebranch=="AG")
 /*ADDED 122910--RACE*/
-bysort monthcounty: egen BLACKmonthcountydeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
-bysort monthcounty: egen WHITEmonthcountydeath=total(raceethnic=="WHITE")
-bysort monthcounty: egen HISPmonthcountydeath=total(raceethnic=="HISPANIC")
-bysort monthcounty: egen OTHmonthcountydeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
+quietly bysort monthcounty: egen BLACKmonthcountydeath=total(raceethnic=="BLACK OR AFRICAN AMERICAN")
+quietly bysort monthcounty: egen WHITEmonthcountydeath=total(raceethnic=="WHITE")
+quietly bysort monthcounty: egen HISPmonthcountydeath=total(raceethnic=="HISPANIC")
+quietly bysort monthcounty: egen OTHmonthcountydeath=total(raceethnic!="HISPANIC" & raceethnic!="WHITE" & raceethnic!="BLACK OR AFRICAN AMERICAN" & raceethnic!="")
 
 /*BUILD COUNTY DEATHS BY HOSTILE STATUS*/
-bysort monthcounty: egen Hmonthcountydeath=total(hostile=="H")
-bysort monthcounty: egen notHmonthcountydeath=total(hostile=="")
+quietly bysort monthcounty: egen Hmonthcountydeath=total(hostile=="H")
+quietly bysort monthcounty: egen notHmonthcountydeath=total(hostile=="")
 /*BUILD COUNTY DEATHS BY GENDER*/
-bysort monthcounty: egen FEMALEmonthcountydeath=total(gender=="F")
-bysort monthcounty: egen MALEmonthcountydeath=total(gender=="M")
+quietly bysort monthcounty: egen FEMALEmonthcountydeath=total(gender=="F")
+quietly bysort monthcounty: egen MALEmonthcountydeath=total(gender=="M")
 /*BUILD COUNTY DEATHS BY WAR*/
-bysort monthcounty: egen IRAQmonthcountydeath=total(war=="Iraq")
-bysort monthcounty: egen AFGHANmonthcountydeath=total(war=="Afghanistan")
-bysort monthcounty: egen OTHERmonthcountydeath=total(war=="")
+quietly bysort monthcounty: egen IRAQmonthcountydeath=total(war=="Iraq")
+quietly bysort monthcounty: egen AFGHANmonthcountydeath=total(war=="Afghanistan")
+quietly bysort monthcounty: egen OTHERmonthcountydeath=total(war=="")
 
 count
 duplicates drop monthcounty, force
@@ -275,86 +274,85 @@ use ./Unemployment/countyunemployment.dta, clear /*This starts in 1990, so shoul
 keep if month<200608
 drop if statefips=="72" /*Use only the 50 states, not Puerto Rico*/
 tostring month, replace
-gen monthcounty=month+fips
-gen monthstate=month+substr(name,-2,.) 
-replace monthstate=month+"DC" if name=="District of Columbia"
+quietly gen monthcounty=month+fips
+quietly gen monthstate=month+substr(name,-2,.) 
+quietly replace monthstate=month+"DC" if name=="District of Columbia"
 move monthcounty fips
 sort monthcounty
 /*MERGE IN DEATHS*/
 merge 1:1 monthcounty using ./Deaths/deathsbymonthcounty90.dta
 replace monthcountydeath=0 if _merge==1 & monthcountydeath==. /*IF THERE WERE NO DEATHS IN THE COUNTY, SET=0*/
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
-  replace `servicebranch'monthcountydeath=0 if _merge==1 & `servicebranch'monthcountydeath==.
+  quietly replace `servicebranch'monthcountydeath=0 if _merge==1 & `servicebranch'monthcountydeath==.
  }
 
 /*BY RACE, HOSTILITY, GENDER, WAR*/
 foreach race in WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN OTHER{
- replace `race'monthcountydeath=0 if _merge==1 & `race'monthcountydeath==.
+ quietly replace `race'monthcountydeath=0 if _merge==1 & `race'monthcountydeath==.
 }
 
 rename _merge mergedeathtounemp
 
 /*CAN'T JUST SET ALL DEATHS=0 BECAUSE TOTAL & STATE ARE >0. CALC VIA EGEN*/
 /*THIS IS 'SPREADING' THE TOTAL DEATHS TO OTHER STATES WITHOUT ANY, SO THEIR MONTH-TOTAL IS CORRECTED*/
-bysort month: egen NEWmonthtotaldeath=max(monthtotaldeath)
+quietly bysort month: egen NEWmonthtotaldeath=max(monthtotaldeath)
 drop monthtotaldeath
 rename NEWmonthtotaldeath monthtotaldeath
-replace monthtotaldeath=0 if monthtotaldeath==.
+quietly replace monthtotaldeath=0 if monthtotaldeath==.
 /*BY SERVICE*/
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
-  bysort month: egen `servicebranch'NEWmonthtotaldeath=max(`servicebranch'monthtotaldeath)
+  quietly bysort month: egen `servicebranch'NEWmonthtotaldeath=max(`servicebranch'monthtotaldeath)
   drop `servicebranch'monthtotaldeath
   rename `servicebranch'NEWmonthtotaldeath `servicebranch'monthtotaldeath
-  replace `servicebranch'monthtotaldeath=0 if `servicebranch'monthtotaldeath==.
+  quietly replace `servicebranch'monthtotaldeath=0 if `servicebranch'monthtotaldeath==.
  }
-}
-
 
 /*BY RACE, HOSTILE, GENDER, WAR*/
 foreach race in WHITE BLACK HISP OTH H notH FEMALE MALE IRAQ AFGHAN OTHER{
- bysort month: egen `race'NEWmonthtotaldeath=max(`race'monthtotaldeath)
+ quietly bysort month: egen `race'NEWmonthtotaldeath=max(`race'monthtotaldeath)
  drop `race'monthtotaldeath
  rename `race'NEWmonthtotaldeath `race'monthtotaldeath
- replace `race'monthtotaldeath=0 if `race'monthtotaldeath==.
+ quietly replace `race'monthtotaldeath=0 if `race'monthtotaldeath==.
 }
 
 /*SPREAD STATE DEATHS TO IN-STATE COUNTIES WITHOUT ANY DEATHS*/
-bysort monthstate: egen NEWmonthstatedeath=max(monthstatedeath)
+quietly bysort monthstate: egen NEWmonthstatedeath=max(monthstatedeath)
 drop monthstatedeath
 rename NEWmonthstatedeath monthstatedeath
-replace monthstatedeath=0 if monthstatedeath==.
+quietly replace monthstatedeath=0 if monthstatedeath==.
 /*BY SERVICE*/
 foreach servicebranch in AG AR AV CR CV FG FR FV MR MV NR NV{
-  bysort monthstate: egen `servicebranch'NEWmonthstatedeath=max(`servicebranch'monthstatedeath)
+  quietly bysort monthstate: egen `servicebranch'NEWmonthstatedeath=max(`servicebranch'monthstatedeath)
   drop `servicebranch'monthstatedeath
   rename `servicebranch'NEWmonthstatedeath `servicebranch'monthstatedeath
-  replace `servicebranch'monthstatedeath=0 if `servicebranch'monthstatedeath==.
+  quietly replace `servicebranch'monthstatedeath=0 if `servicebranch'monthstatedeath==.
  }
-}
+
 
 /*BY RACE, HOSTILE, GENDER, WAR*/
 foreach race in BLACK WHITE HISP OTH H notH FEMALE MALE IRAQ AFGHAN OTHER{ 
- bysort monthstate: egen `race'NEWmonthstatedeath=max(`race'monthstatedeath)
+ quietly bysort monthstate: egen `race'NEWmonthstatedeath=max(`race'monthstatedeath)
  drop `race'monthstatedeath
  rename `race'NEWmonthstatedeath `race'monthstatedeath
- replace `race'monthstatedeath=0 if `race'monthstatedeath==.
+ quietly replace `race'monthstatedeath=0 if `race'monthstatedeath==.
 }
 
 sort monthcounty
 save temp_90deathsjustbeforeappmerge.dta, replace
 /*MERGE IN RECRUITS*/
 
-merge 1:1 monthcounty using ./Apps/`FILE'bymonthcounty90.dta /*Use same set of apps and main, the only thing that's different to compare the non-combat deaths
+merge 1:1 monthcounty using ./Apps/`FILE'bymonthcounty90.dta 
+/*Use same set of apps and main, the only thing that's different to compare the non-combat deaths
 is the death data*/
 rename _merge merge_apps
 drop original-type countyfp-county
 foreach var of varlist monthstaterecruit-NRmonthstate {
- bysort monthstate: egen new`var'=max(`var')
+ quietly bysort monthstate: egen new`var'=max(`var')
  drop `var'
  rename new`var' `var'
 }
 foreach var of varlist monthcountyrecruit-NRmonthstate{
- replace `var'=0 if `var'==.
+ quietly replace `var'=0 if `var'==.
 }
 
 
@@ -375,20 +373,20 @@ destring year, replace
 tostring month, replace
 gen calendar=substr(month,5,2)
 destring calendar, replace
-gen jan=1 if calendar==1
-gen feb=1 if calendar==2
-gen mar=1 if calendar==3
-gen apr=1 if calendar==4
-gen may=1 if calendar==5
-gen jun=1 if calendar==6
-gen jul=1 if calendar==7
-gen aug=1 if calendar==8
-gen sep=1 if calendar==9
-gen oct=1 if calendar==10
-gen nov=1 if calendar==11
-gen dec=1 if calendar==12
+quietly gen jan=1 if calendar==1
+quietly gen feb=1 if calendar==2
+quietly gen mar=1 if calendar==3
+quietly gen apr=1 if calendar==4
+quietly quietly gen may=1 if calendar==5
+quietly gen jun=1 if calendar==6
+quietly gen jul=1 if calendar==7
+quietly gen aug=1 if calendar==8
+quietly gen sep=1 if calendar==9
+quietly gen oct=1 if calendar==10
+quietly gen nov=1 if calendar==11
+quietly gen dec=1 if calendar==12
 foreach var in jan feb mar apr may jun jul aug sep oct nov dec{
- replace `var'=0 if `var'==.
+ quietly replace `var'=0 if `var'==.
 }
 compress
 save temp_county, replace
@@ -409,10 +407,10 @@ keep if yr>2000
 */
 
 use temp_county.dta
-gen qtr=1
-replace qtr=2 if apr==1|may==1|jun==1
-replace qtr=3 if jul==1|aug==1|sep==1
-replace qtr=4 if oct==1|nov==1|dec==1
+quietly gen qtr=1
+quietly replace qtr=2 if apr==1|may==1|jun==1
+quietly replace qtr=3 if jul==1|aug==1|sep==1
+quietly replace qtr=4 if oct==1|nov==1|dec==1
 destring statefips, replace
 sort statefips year qtr
 merge m:1 statefips year qtr using ./Recruiters/Warner.dta
@@ -430,7 +428,7 @@ rename _merge mergegoodmortality
 EVERY MONTH. THAT'S OK.
 _merge==1 is the counties without deaths, _merge==2 is the 999 counties that can't be identified, 
 JUST LIKE WITH THE MILITARY DEATHS, I MUST 'SPREAD' THESE DEATHS TO THE COUNTIES WITHOUT*/
-replace monthcountymort=0 if monthcountymort==.
+quietly replace monthcountymort=0 if monthcountymort==.
 bysort statefips month: egen newmonthstatemort=max(monthstatemort)
 drop monthstatemort
 rename newmonthstatemort monthstatemort
@@ -465,24 +463,24 @@ rename age1824_male countypopmonth
 label var countypopmonth "Young Male 18-24 Population By Month"
 
 /*ADD SLIGHTLY ALTERED/EXCLUSIVE DEATH DEFINITIONS*/
-gen outofstate=monthtotaldeath-monthstatedeath
-gen outofcounty=monthstatedeath-monthcountydeath
+quietly gen outofstate=monthtotaldeath-monthstatedeath
+quietly gen outofcounty=monthstatedeath-monthcountydeath
 label var outofstate "Out of state deaths this month"
 label var outofcounty "Out of county but in-state deaths this month"
-gen Rmonthcountydeath=ARmonthcountydeath+MRmonthcountydeath+FRmonthcountydeath+NRmonthcountydeath
-gen Rmonthstatedeath=ARmonthstatedeath+MRmonthstatedeath+FRmonthstatedeath+NRmonthstatedeath
-gen Rmonthtotaldeath=ARmonthtotaldeath+MRmonthtotaldeath+FRmonthtotaldeath+NRmonthtotaldeath
+quietly gen Rmonthcountydeath=ARmonthcountydeath+MRmonthcountydeath+FRmonthcountydeath+NRmonthcountydeath
+quietly gen Rmonthstatedeath=ARmonthstatedeath+MRmonthstatedeath+FRmonthstatedeath+NRmonthstatedeath
+quietly gen Rmonthtotaldeath=ARmonthtotaldeath+MRmonthtotaldeath+FRmonthtotaldeath+NRmonthtotaldeath
 label var Rmonthcountydeath "Active duty deaths this month-county"
 label var Rmonthstatedeath "Active duty deaths this month-state"
 foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHAN{
- gen `type'outofstate=`type'monthtotaldeath-`type'monthstatedeath
- gen `type'outofcounty=`type'monthstatedeath-`type'monthcountydeath
+ quietly gen `type'outofstate=`type'monthtotaldeath-`type'monthstatedeath
+ quietly gen `type'outofcounty=`type'monthstatedeath-`type'monthcountydeath
  label var `type'outofstate "`type' out of state deaths this month"
  label var `type'outofcounty "`type' out of county but in-state deaths this month"
 }
 /*CON IS MISSING RESERVE--ACTIVE DUTY ONLY*/
-gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
-gen LNactive=ln(active+1)
+quietly gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
+quietly gen LNactive=ln(active+1)
 label var active "Active Duty Recruits"
 label var LNactive "Log Active Duty Recruits"
 
@@ -498,34 +496,34 @@ drop if countyfips==999 /*This means they don't know. Right?*/
 tab month, generate(monthfe)
 
 /*GENERATE YEAR FIXED EFFECTS*/ //Why don't I make these somewhere everyone can reach them?
-gen year1999=1 if year==1999
-gen year2000=1 if year==2000
-gen year2001=1 if year==2001
-gen year2002=1 if year==2002
-gen year2003=1 if year==2003
-gen year2004=1 if year==2004
-gen year2005=1 if year==2005
-gen year2006=1 if year==2006
+quietly gen year1999=1 if year==1999
+quietly gen year2000=1 if year==2000
+quietly gen year2001=1 if year==2001
+quietly gen year2002=1 if year==2002
+quietly gen year2003=1 if year==2003
+quietly gen year2004=1 if year==2004
+quietly gen year2005=1 if year==2005
+quietly gen year2006=1 if year==2006
 foreach var in 1999 2000 2001 2002 2003 2004 2005 2006{
- replace year`var'=0 if year`var'==.
+ quietly replace year`var'=0 if year`var'==.
 }
-gen yearcounty=string(year)+string(fips)
+quietly gen yearcounty=string(year)+string(fips)
 
 /*STATE TREND*/
 tab statefips, gen(statefe)
-gen mo=substr(month,5,2)
+quietly gen mo=substr(month,5,2)
 destring mo, replace
-gen fancymonth=ym(year,mo)
+quietly gen fancymonth=ym(year,mo)
 tsset fips fancymonth
-gen t=fancymonth-500 /*changed from 501 2/1/2016--1 to 58 not 0 to 57*/
+quietly gen t=fancymonth-500 /*changed from 501 2/1/2016--1 to 58 not 0 to 57*/
 tab statefips, gen(statetrend)
 forvalues X=1/51 {
- replace statetrend`X'=statetrend`X'*t
+ quietly replace statetrend`X'=statetrend`X'*t
 }
 
 
 /*STATE YEAR INTERACTED FE*/
-gen stateyear=string(year)+string(statefips)
+quietly gen stateyear=string(year)+string(statefips)
 tab stateyear, gen(stateyearfe)
 
 /* (1) CREATE LAGS*/
