@@ -71,10 +71,10 @@ else{
 }
 
 	*PUT BOTH e3 and e4 into the same temp var for a nicer table
-	gen youngcounty=E`X'monthcountydeath
-	gen oldcounty=E`X'Pmonthcountydeath
-	gen youngstate=E`X'outofcounty
-	gen oldstate=E`X'Poutofcounty
+	gen youngcounty=L1E`X'monthcountydeath
+	gen oldcounty=L1E`X'Pmonthcountydeath
+	gen youngstate=L1E`X'outofcounty
+	gen oldstate=L1E`X'Poutofcounty
 	*Give the temp the label
 	label var youngcounty "Lag Low Paygrade In-County Deaths/100"
 	label var oldcounty "Lag High Paygrade In-county Deaths/100"
@@ -90,7 +90,8 @@ else{
 	test youngcounty=oldcounty
 	outreg2  using ./Output/paygrade.txt, lab tex ct(`header', `header2') bdec(3) tdec(3) bracket se append ///
 		addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative ", ///
-		"lagged deaths by paygrade. Fixed effects are included separately by county and month as indiciated,", ///
+		"lagged deaths by paygrade--whether E3 and below compared to above. Separately for E4 and below, and above.", ///
+		"Fixed effects are included separately by county and month as indiciated,", ///
 		"The first four columns show applicants and the last four show contracts.", Filename:paygrade.tex) ///
 		addstat("Test In-County", r(p)) addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 	
