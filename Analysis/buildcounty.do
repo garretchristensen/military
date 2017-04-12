@@ -185,11 +185,10 @@ quietly bysort month: egen AFGHANmonthtotaldeath=total(war=="Afghanistan")
 /*BUILD TOTAL DEATHS BY PAYGRADE*/
 quietly bysort month: egen E3monthtotaldeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03")
 quietly bysort month: egen E4monthtotaldeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04")
-quietly bysort month: egen E3Pmonthtotaldeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="")
-quietly bysort month: egen E4Pmonthtotaldeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" & paygrade!="")
+quietly bysort month: egen E3Pmonthtotaldeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="" & substr(paygrade,1,1)=="E")
+quietly bysort month: egen E4Pmonthtotaldeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" & paygrade!="" & substr(paygrade,1,1)=="E")
 quietly bysort month: egen E5monthtotaldeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04"|paygrade=="E05")
-quietly bysort month: egen E5Pmonthtotaldeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" ///
-	& paygrade!="E05" & paygrade!="")
+quietly bysort month: egen E5Pmonthtotaldeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" & paygrade!="E05" & paygrade!="" & substr(paygrade,1,1)=="E")
 quietly bysort month: egen OFFICERmonthtotaldeath=total(substr(paygrade,1,1)=="W"|substr(paygrade,1,1)=="O")
 quietly bysort month: egen ENLISTEDmonthtotaldeath=total(substr(paygrade,1,1)=="E")
 	
@@ -239,11 +238,10 @@ quietly bysort monthstate: egen AFGHANmonthstatedeath=total(war=="Afghanistan")
 /*BUILD STATE DEATHS BY PAYGRADE*/
 quietly bysort monthstate: egen E3monthstatedeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03")
 quietly bysort monthstate: egen E4monthstatedeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04")
-quietly bysort monthstate: egen E3Pmonthstatedeath=total(paygrade!="E01"&paygrade!="E02"&paygrade!="E03"&paygrade!="")
-quietly bysort monthstate: egen E4Pmonthstatedeath=total(paygrade!="E01"&paygrade!="E02"&paygrade!="E03"&paygrade!="E04"&paygrade!="")
+quietly bysort monthstate: egen E3Pmonthstatedeath=total(paygrade!="E01"&paygrade!="E02"&paygrade!="E03"&paygrade!="" & substr(paygrade,1,1)=="E")
+quietly bysort monthstate: egen E4Pmonthstatedeath=total(paygrade!="E01"&paygrade!="E02"&paygrade!="E03"&paygrade!="E04"&paygrade!="" & substr(paygrade,1,1)=="E")
 quietly bysort monthstate: egen E5monthstatedeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04"|paygrade=="E05")
-quietly bysort monthstate: egen E5Pmonthstatedeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" ///
-	& paygrade!="E05" & paygrade!="")
+quietly bysort monthstate: egen E5Pmonthstatedeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" & paygrade!="E05" & paygrade!="" & substr(paygrade,1,1)=="E")
 quietly bysort monthstate: egen OFFICERmonthstatedeath=total(substr(paygrade,1,1)=="W"|substr(paygrade,1,1)=="O")
 quietly bysort monthstate: egen ENLISTEDmonthstatedeath=total(substr(paygrade,1,1)=="E")
 
@@ -477,11 +475,10 @@ quietly bysort monthcounty: egen AFGHANmonthcountydeath=total(war=="Afghanistan"
 /*BUILD COUNTY DEATHS BY PAYGRADE*/
 quietly bysort monthcounty: egen E3monthcountydeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03")
 quietly bysort monthcounty: egen E4monthcountydeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04")
-quietly bysort monthcounty: egen E3Pmonthcountydeath=total(paygrade!="E01" & paygrade!="E02" & paygrade!="E03"&paygrade!="")
-quietly bysort monthcounty: egen E4Pmonthcountydeath=total(paygrade!="E01" & paygrade!="E02" & paygrade!="E03" & paygrade!="E04"&paygrade!="")
+quietly bysort monthcounty: egen E3Pmonthcountydeath=total(paygrade!="E01" & paygrade!="E02" & paygrade!="E03"&paygrade!="" & substr(paygrade,1,1)=="E")
+quietly bysort monthcounty: egen E4Pmonthcountydeath=total(paygrade!="E01" & paygrade!="E02" & paygrade!="E03" & paygrade!="E04"&paygrade!="" & substr(paygrade,1,1)=="E")
 quietly bysort monthcounty: egen E5monthcountydeath=total(paygrade=="E01"|paygrade=="E02"|paygrade=="E03"|paygrade=="E04"|paygrade=="E05")
-quietly bysort monthcounty: egen E5Pmonthcountydeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" ///
-	& paygrade!="E05" & paygrade!="")
+quietly bysort monthcounty: egen E5Pmonthcountydeath=total(paygrade!="E01"& paygrade!="E02"& paygrade!="E03" & paygrade!="E04" & paygrade!="E05" & paygrade!="" & substr(paygrade,1,1)=="E")
 
 quietly bysort monthcounty: egen OFFICERmonthcountydeath=total(substr(paygrade,1,1)=="W"|substr(paygrade,1,1)=="O")
 quietly bysort monthcounty: egen ENLISTEDmonthcountydeath=total(substr(paygrade,1,1)=="E")
@@ -599,25 +596,25 @@ drop if _merge==2 /*Hawaii county from ICPSR combined with other county*/
 rename _merge mergeicpsr
 
 /*MAKE THE CALENDAR MONTHS*/
-gen year=substr(monthcounty,1,4)
+quietly gen year=substr(monthcounty,1,4)
 destring year, replace
 tostring month, replace
-gen calendar=substr(month,5,2)
+quietly gen calendar=substr(month,5,2)
 destring calendar, replace
-gen jan=1 if calendar==1
-gen feb=1 if calendar==2
-gen mar=1 if calendar==3
-gen apr=1 if calendar==4
-gen may=1 if calendar==5
-gen jun=1 if calendar==6
-gen jul=1 if calendar==7
-gen aug=1 if calendar==8
-gen sep=1 if calendar==9
-gen oct=1 if calendar==10
-gen nov=1 if calendar==11
-gen dec=1 if calendar==12
+quietly gen jan=1 if calendar==1
+quietly gen feb=1 if calendar==2
+quietly gen mar=1 if calendar==3
+quietly gen apr=1 if calendar==4
+quietly gen may=1 if calendar==5
+quietly gen jun=1 if calendar==6
+quietly gen jul=1 if calendar==7
+quietly gen aug=1 if calendar==8
+quietly gen sep=1 if calendar==9
+quietly gen oct=1 if calendar==10
+quietly gen nov=1 if calendar==11
+quietly gen dec=1 if calendar==12
 foreach var in jan feb mar apr may jun jul aug sep oct nov dec{
- replace `var'=0 if `var'==.
+ quietly replace `var'=0 if `var'==.
 }
 compress
 save temp_county, replace
@@ -628,8 +625,8 @@ keep state state_name yr qtr *rec*
 rename yr year
 rename state statefips
 sort statefips year qtr
-drop if year<2001
-drop if year==2001 & qtr<4
+quietly drop if year<2001
+quietly drop if year==2001 & qtr<4
 compress
 save ./Recruiters/Warner.dta, replace
 
@@ -655,7 +652,7 @@ EVERY MONTH. THAT'S OK.
 _merge==1 is the counties without deaths, _merge==2 is the 999 counties that can't be identified, 
 JUST LIKE WITH THE MILITARY DEATHS, I MUST 'SPREAD' THESE DEATHS TO THE COUNTIES WITHOUT*/
 replace monthcountymort=0 if monthcountymort==.
-bysort statefips month: egen newmonthstatemort=max(monthstatemort)
+quietly bysort statefips month: egen newmonthstatemort=max(monthstatemort)
 drop monthstatemort
 rename newmonthstatemort monthstatemort
 move monthstatemort monthcountymort
@@ -690,24 +687,24 @@ rename age1824_male countypopmonth
 label var countypopmonth "Young Male 18-24 Population By Month"
 
 /*ADD SLIGHTLY ALTERED/EXCLUSIVE DEATH DEFINITIONS*/
-gen outofstate=monthtotaldeath-monthstatedeath
-gen outofcounty=monthstatedeath-monthcountydeath
+quietly gen outofstate=monthtotaldeath-monthstatedeath
+quietly gen outofcounty=monthstatedeath-monthcountydeath
 label var outofstate "Out of state deaths this month"
 label var outofcounty "Out of county but in-state deaths this month"
-gen Rmonthcountydeath=ARmonthcountydeath+MRmonthcountydeath+FRmonthcountydeath+NRmonthcountydeath
-gen Rmonthstatedeath=ARmonthstatedeath+MRmonthstatedeath+FRmonthstatedeath+NRmonthstatedeath
-gen Rmonthtotaldeath=ARmonthtotaldeath+MRmonthtotaldeath+FRmonthtotaldeath+NRmonthtotaldeath
+quietly gen Rmonthcountydeath=ARmonthcountydeath+MRmonthcountydeath+FRmonthcountydeath+NRmonthcountydeath
+quietly gen Rmonthstatedeath=ARmonthstatedeath+MRmonthstatedeath+FRmonthstatedeath+NRmonthstatedeath
+quietly gen Rmonthtotaldeath=ARmonthtotaldeath+MRmonthtotaldeath+FRmonthtotaldeath+NRmonthtotaldeath
 label var Rmonthcountydeath "Active duty deaths this month-county"
 label var Rmonthstatedeath "Active duty deaths this month-state"
 foreach type in R AR FR MR NR WHITE BLACK HISP OTH H notH MALE FEMALE IRAQ AFGHAN E3 E4 E5 E3P E4P E5P OFFICER ENLISTED{
- gen `type'outofstate=`type'monthtotaldeath-`type'monthstatedeath
- gen `type'outofcounty=`type'monthstatedeath-`type'monthcountydeath
+ quietly gen `type'outofstate=`type'monthtotaldeath-`type'monthstatedeath
+ quietly gen `type'outofcounty=`type'monthstatedeath-`type'monthcountydeath
  label var `type'outofstate "`type' out of state deaths this month"
  label var `type'outofcounty "`type' out of county but in-state deaths this month"
 }
 /*CON IS MISSING RESERVE--ACTIVE DUTY ONLY*/
-gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
-gen LNactive=ln(active+1)
+quietly gen active=ARmonthcounty+MRmonthcounty+NRmonthcounty+FRmonthcounty
+quietly gen LNactive=ln(active+1)
 label var active "Active Duty Recruits"
 label var LNactive "Log Active Duty Recruits"
 
@@ -724,35 +721,35 @@ drop if countyfips==999 /*This means they don't know. Right?*/
 tab month, generate(monthfe)
 
 /*GENERATE YEAR FIXED EFFECTS*/ //Why don't I make these somewhere everyone can reach them?
-gen year1999=1 if year==1999
-gen year2000=1 if year==2000
-gen year2001=1 if year==2001
-gen year2002=1 if year==2002
-gen year2003=1 if year==2003
-gen year2004=1 if year==2004
-gen year2005=1 if year==2005
-gen year2006=1 if year==2006
+quietly gen year1999=1 if year==1999
+quietly gen year2000=1 if year==2000
+quietly gen year2001=1 if year==2001
+quietly gen year2002=1 if year==2002
+quietly gen year2003=1 if year==2003
+quietly gen year2004=1 if year==2004
+quietly gen year2005=1 if year==2005
+quietly gen year2006=1 if year==2006
 foreach var in 1999 2000 2001 2002 2003 2004 2005 2006{
- replace year`var'=0 if year`var'==.
+ quietly replace year`var'=0 if year`var'==.
 }
-gen yearcounty=string(year)+string(fips)
+quietly gen yearcounty=string(year)+string(fips)
 
 /*STATE TREND*/
 tab statefips, gen(statefe)
-gen mo=substr(month,5,2)
+quietly gen mo=substr(month,5,2)
 destring mo, replace
-gen fancymonth=ym(year,mo)
+quietly gen fancymonth=ym(year,mo)
 tsset fips fancymonth
-gen t=fancymonth-500 /*changed from 501 2/1/2016--1 to 58 not 0 to 57*/
+quietly gen t=fancymonth-500 /*changed from 501 2/1/2016--1 to 58 not 0 to 57*/
 tab statefips, gen(statetrend)
 forvalues X=1/51 {
- replace statetrend`X'=statetrend`X'*t
+ quietly replace statetrend`X'=statetrend`X'*t
 }
 
 
 /*STATE YEAR INTERACTED FE*/
-gen stateyear=string(year)+string(statefips)
-tab stateyear, gen(stateyearfe)
+quietly gen stateyear=string(year)+string(statefips)
+quietly tab stateyear, gen(stateyearfe)
 
 /* (1) CREATE LAGS*/
 sort fips month
@@ -767,9 +764,9 @@ foreach var in monthcountydeath outofcounty outofstate countyunemp stateunemp na
 }
 
 foreach var in IRAQmonthcountydeath AFGHANmonthcountydeath IRAQoutofcounty AFGHANoutofcounty ///
-	E3monthcountydeath E3outofcounty E4monthcountydeath E4outofcounty E5monthcountydeath E5outofcounty///
-	E3Pmonthcountydeath E3Poutofcounty E4Pmonthcountydeath E4Poutofcounty E5Pmonthcountydeath E5Poutofcounty///
-	OFFICERmonthcountydeath OFFICERoutofcounty ENLISTEDmonthcountydeath ENLISTEDoutofcounty
+	E3monthcountydeath E3outofcounty E4monthcountydeath E4outofcounty E5monthcountydeath E5outofcounty ///
+	E3Pmonthcountydeath E3Poutofcounty E4Pmonthcountydeath E4Poutofcounty E5Pmonthcountydeath E5Poutofcounty ///
+	OFFICERmonthcountydeath OFFICERoutofcounty ENLISTEDmonthcountydeath ENLISTEDoutofcounty ///
 	ARmonthcountydeath FRmonthcountydeath MRmonthcountydeath NRmonthcountydeath ///
 	ARoutofcounty FRoutofcounty MRoutofcounty NRoutofcounty{
  foreach X of numlist 1/2 {
@@ -789,10 +786,10 @@ label var L1FRoutofcounty "Air Force Lag Out-of-County Deaths"
 label var L1MRoutofcounty "Marines Lag Out-of-County Deaths"
 label var L1NRoutofcounty "Navy Lag Out-of-County Deaths"
 forvalues X=3/5{
-label var L1E`X'monthcounty "Lag E`X' paygrade In-County Deaths"
-label var L1E`X'outofcounty "Lag E`X' paygrade Out-of-County Deaths"
-label var L1E`X'Pmonthcounty "Lag E`X'-plus paygrade In-County Deaths"
-label var L1E`X'Poutofcounty "Lag E`X'-plus paygrade Out-of-County Deaths"
+ label var L1E`X'monthcounty "Lag E`X' paygrade In-County Deaths"
+ label var L1E`X'outofcounty "Lag E`X' paygrade Out-of-County Deaths"
+ label var L1E`X'Pmonthcounty "Lag E`X'-plus paygrade In-County Deaths"
+ label var L1E`X'Poutofcounty "Lag E`X'-plus paygrade Out-of-County Deaths"
 }
 compress
 sa ./Data/county`FILE'_raw.dta, replace
