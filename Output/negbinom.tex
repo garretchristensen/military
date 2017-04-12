@@ -1,0 +1,37 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccccc}
+\multicolumn{7}{c}{Negative Binomial Regressions of Recruits vs Deaths and Unemployment} \\ \hline
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+VARIABLES & Applicants & Applicants & Applicants & Contracts & Contracts & Contracts \\ \hline
+ &  &  &  &  &  &  \\
+Current In-County Deaths/100 & -0.091 & -0.223 & -0.110 & 0.019 & -0.152 & -0.090 \\
+ & [0.217] & [0.218] & [0.220] & [0.265] & [0.266] & [0.268] \\
+Lag In-County Deaths/100 & -0.780*** & -0.921*** & -0.796*** & -0.650** & -0.838*** & -0.774*** \\
+ & [0.221] & [0.223] & [0.225] & [0.269] & [0.271] & [0.273] \\
+Current Out-of-County Deaths/100 &  & 0.212*** & 0.186*** &  & 0.228*** & 0.140** \\
+ &  & [0.051] & [0.054] &  & [0.061] & [0.064] \\
+Lag Out-of-County Deaths/100 &  & 0.174*** & 0.159*** &  & 0.201*** & 0.104 \\
+ &  & [0.052] & [0.055] &  & [0.062] & [0.065] \\
+State Unemployment &  & -0.003 & -0.026*** &  & -0.010*** & -0.026*** \\
+ &  & [0.003] & [0.004] &  & [0.003] & [0.004] \\
+County Unemployment &  & 0.015*** & 0.015*** &  & 0.016*** & 0.016*** \\
+ &  & [0.001] & [0.001] &  & [0.002] & [0.002] \\
+Constant & -4.598*** & -4.632*** & -4.490*** & -3.493*** & -3.473*** & -3.312*** \\
+ & [0.020] & [0.024] & [0.028] & [0.074] & [0.079] & [0.088] \\
+ &  &  &  &  &  &  \\
+Observations & 178,239 & 178,169 & 178,169 & 178,182 & 178,112 & 178,112 \\
+Number of fips & 3,127 & 3,127 & 3,127 & 3,126 & 3,126 & 3,126 \\
+County FE & YES & YES & YES & YES & YES & YES \\
+Month FE & YES & YES & YES & YES & YES & YES \\
+State Trends & NO & NO & YES & NO & NO & YES \\
+ Likelihood & -330862 & -330100 & -329450 & -278550 & -278077 & -277596 \\ \hline
+\multicolumn{7}{c}{ Standard errors in brackets} \\
+\multicolumn{7}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\multicolumn{7}{c}{ Notes: Table shows Negative Binomial regression of national active duty recruits on deaths.} \\
+\multicolumn{7}{c}{ Fixed effects are included separately by county and month, and linear state trends, as indicated,} \\
+\multicolumn{7}{c}{ The first four columns show applicants and the last three show contracts.} \\
+\multicolumn{7}{c}{ Filename:negbinom.tex} \\
+\end{tabular}
+\end{document}

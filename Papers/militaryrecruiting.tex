@@ -51,7 +51,7 @@ The effect exhibits significant heterogeneity: deaths in Iraq decrease recruitin
 
 
 \section{Introduction\label{sec:Introduction}}
-In a standard full information utility maximization model, one would predict that, all else equal, an increase in a profession's risk of death would decrease the desirability of employment in that profession. I present evidence that this may not be the best model to explain behavior, based on what can at times be similarly dangerous as the most dangerous civilian job, and is held by many more people: the United States military. I show that enlistees are responding differently to deaths from their county than to deaths from farther away, a finding that cannot be explained by easier access to news of local events. In contrast to standard predictions, I also show that job-related deaths can sometimes lead to increases in employment in an industry.
+In a standard full information utility maximization model, one would predict that, all else equal, an increase in a profession's risk of death would decrease the desirability of employment in that profession. I present evidence from the United States military that this may not be the best model to explain behavior. Parts of the military can at times be similarly dangerous as the most dangerous civilian job, and the military employs many more people. I show that enlistees are responding differently to deaths from their county than to deaths from farther away, a finding that cannot be explained by easier access to news of local events. In contrast to standard predictions, I also show that job-related deaths can sometimes lead to increases in employment in an industry.
 
 The purpose of this paper is to empirically test whether deaths of employees in a given occupation affect selection into that same occupation by other potential employees in the way that simple models predict. Since the time of Adam Smith, economists have used models with compensating differentials to explain wages in occupations entailing varying levels of risk or unpleasantness \citep{AdamSmith}. %Empirical studies have frequently estimated  the value of a life using risk of death in different occupations.\footnote{See for example \cite{thaler1976value}. \cite{RosenOccChoiceHandbook} summarizes the extensive use of compensating differentials as a theory that explains supply of workers to jobs of different types in numerous occupations, including dangerous ones such as the military.} 
 Researchers have estimated how compensating differentials vary based on individual characteristics (e.g. age, gender, or being a single parent), but all these models either assume that safety is a normal good or estimate it as such.\footnote{See \cite{DeLeireLevy2004}, \cite{BiddleZarkin} and \cite{garen1988compensating}. \cite{thaler1976value} build a model involving insurance that indicates that job safety is not necessarily normal with respect to property income, since property income is not at risk in the labor market and reduces the need for insurance, acting as a substitution effect.} To examine this question empirically, I use new data from US soldiers in the wars in Iraq and Afghanistan and analyze how deaths affected the enlistment decisions of young Americans, but the results may also apply to a few other occupations.
@@ -64,14 +64,12 @@ A few examples illustrate the point.  The New York City Fire Department implemen
 This possible incentive effect is not unique to a single instance, and perhaps it is not unique to the military, though at least one example from the military received media attention: 61-year-old orthopedic surgeon Bill Krissoff acquired an age waiver and enlisted in the Navy Medical Corps after his son Nathan was killed in the Marines in Iraq.\footnote{See \url{http://www.npr.org/templates/story/story.php?storyId=17013597}.  There is also anecdotal evidence that recruiting stations were overwhelmed with potential recruits
 after 9/11, but it is a goal of this paper to empirically determine whether increased risk actually led to more or fewer recruits. Compare \url{http://www.nytimes.com/2001/11/12/us/nation-challenged-recruit-self-described-slacker-decides-he-s-ready-be-soldier.html},
 which describes an individual motivated to enlist to \url{http://www.nytimes.com/2001/09/16/us/after-attacks-military-despite-national-rush-emotion-recruiting-centers-aren-t.html}, in which recruiters claim not to have seen a significant increase
-in qualified recruits.}%
-
-Since some of the Marine Corps' support operations are provided by the Navy, serving in the Navy Medical Corps enabled Krissoff to give medical care to those with whom his son had fought and died. 
+in qualified recruits.} Since some of the Marine Corps' support operations are provided by the Navy, serving in the Navy Medical Corps enabled Krissoff to give medical care to those with whom his son had fought and died. 
 
 Is there a model that can test whether these examples are evidence of a general phenomenon in military recruiting? This paper is an empirical test of the size of the deterrent or incentive effect of deaths in the military on recruiting, and an analysis of when the effect may be larger or smaller. My analysis draws on a valuable new dataset obtained through Freedom of Information Act requests, comprising the complete set of active duty enlisted applicants to the military from 2001 to 2006, matched with detailed data on every death of a US soldier that occurred in Operation Iraqi Freedom and Operation
 Enduring Freedom (i.e., the war in Afghanistan) during the same period. I have made these datasets publicly available on the Internet using Harvard's Dataverse.\footnote{Please see \url{https://dataverse.harvard.edu/dataverse/garretchristensen} for data. All analysis files necessary to replicate this paper are also available online at \url{https://github.com/garretchristensen/military}.}
 
-With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting. I flexibly control for the underlying characteristics of counties as well as nation-wide changes over time using county and monthly fixed effects and state time trends. After controlling for these underlying characteristics, the hometown of the fatality is arguably exogenous. I use this source of variation to analyze the causal effects of local deaths on local military recruiting.\footnote{I find that the recruiting response is always significantly different
+With detailed geographic and date information, I am able to analyze recruiting at the county-month level, a significant improvement upon much of the literature. I use data on the home locations of recently killed troops and correlate the deaths of soldiers from the local area with the local rates of recruiting. I flexibly control for the underlying characteristics of counties as well as nation-wide changes over time using county, monthly, and state-year fixed effects. After controlling for these underlying characteristics, the hometown of the fatality is arguably exogenous. I use this source of variation to analyze the causal effects of local deaths on local military recruiting.\footnote{I find that the recruiting response is always significantly different
 for local deaths (deaths in the same county) than for deaths from
 more distant locales (deaths from outside the county but in the same
 state, and deaths from outside the state). Coefficients on deaths from outside the state (national deaths) cannot be estimated due to the monthly fixed effects in most models, however in (possibly misspecified) models without the fixed effects, local deaths
@@ -138,10 +136,6 @@ a wide geographic recruiting base, or if they desire to minimize costs,
 they could use the findings in this paper to help in their decision
 to reallocate recruiting funding and manpower. 
 
-%The rest of the paper is as follows: section \ref{sec:Literature-Review} describes the military recruitment process and places my work in the literature.
-%Section \ref{sec:Model} presents a very simple model of occupational choice that helps to frame the empirical results, 
-%Section \ref{sec:Data} describes the data used for my analysis, section \ref{sec:Analysis} presents the analysis, and section \ref{sec:Conclusion} concludes.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Background\label{sec:Literature-Review}}
@@ -190,7 +184,7 @@ prepared would soon travel to a regional processing center (at a location
 other than the storefront recruiting center they've been visiting)
 and take the ASVAB, in some cases as soon as the day after expressing
 initial interest. Four of the 11 sections of the ASVAB are used as
-the AFQT. Assuming that a potential soldier passes the examination
+the Armed Forces Qualification Test (AFQT). Assuming that a potential soldier passes the examination
 (one needs a score of 31 or higher to enlist in the Army) the applicant will
 then return to the recruiting center and be shown by their recruiter
 what jobs are available and when. All recruits in the data have AFQT scores, so potential recruits are only entered into my data set as soon as they have taken the test.
@@ -324,12 +318,11 @@ set has 3.6 million active duty observations. I am able to match roughly 96\% of
 
 The main fatality data come from a publicly available list compiled by the Defense Manpower Data Center. Starting October 7, 2001, every fatality in Operation Iraqi Freedom
 and Operation Enduring Freedom is listed, and includes the service branch, component (active/reserve/guard), name, rank,
-pay grade, date of death, hostile status of death, age, gender, home of record city, home of record county, home of record state, home
-of record country, unit, incident geographic code, fatality geographic code, fatality county, city of loss, and race/ethnicity of the deceased.
+pay grade, date of death, hostile status of death, age, gender, location of home of record, unit, incident geographic code, fatality geographic code, and race/ethnicity of the deceased.
 
 The data includes {}``home of record'' which is where the soldier lived on the day they joined the service, and generally does not change over the course of a single military enlistment contract, but can change at the time of reenlistment. It is separate and distinct from a legal residence for tax purposes. Still, this is important with regards to my claim of plausible random assignment of death with respect to county after controlling for military population levels---service-men and women with especially dangerous military professions and long military careers could buy homes near their duty-base and changing their Home of Record to the county in which the base sits. This should still not be a problem for identification due to the inclusion of county fixed effects, but to test this, I have looked separately at deaths of low paygrade soldiers compared to deaths of high paygrade soldiers (who may have reenlisted and changed their home of record). These regressions are shown in the appendix; there are no significant differences in the deterrent effect by paygrade of the soldier who was killed. 
 
-Since the focus of this paper is recent combat deaths, the main 2001-2006 fatality data used in the majority of this paper does not include the fairly common deaths of military members unrelated to combat abroad, or unrelated to the military at all (heart attacks, car accidents).  After earlier drafts of this paper were completed, a FOIA request for detailed death data for all deaths in the military (not just those in the wars) for the entire period for which I had recruiting data (1990-2006) was granted. I use these deaths as placebo tests of my analysis and find that, as expected, there is no significant recruiting effect of local non-combat deaths. This is discussed in the appendix and shown in Table~\ref{Flo:LNlinear90}.
+Since the focus of this paper is recent combat deaths, the main 2001-2006 fatality data used in the majority of this paper does not include the fairly common deaths of military members unrelated to combat abroad, or unrelated to the military at all (e.g. heart attacks, car accidents).  After earlier drafts of this paper were completed, a FOIA request for detailed death data for all deaths in the military (not just those in the wars) for the entire period for which I had recruiting data (1990-2006) was granted. I use these deaths as placebo tests of my analysis and find that, as expected, there is no significant recruiting effect of local non-combat deaths. This is discussed in the appendix and shown in Table~\ref{Flo:LNlinear90}.
 %and \ref{Flo:alldeaths90}.
 
 To summarize the data, Table \ref{Flo:Simple Deaths} shows total annual military deaths and the subsets of those recorded as hostile action from the FOIA data and those considered part of the Iraqi/Enduring Freedom operations as reported publicly by the DMDC (i.e. the data used for the majority of this paper). One can see that at most in any year, less than 50\% of the deaths of active duty US military members during the relevant time period (2001-2006) are classified as part of the Iraq/Afghanistan wars. Also, the Iraq/Afghanistan deaths outnumber the hostile deaths, so friendly fire or accidental deaths in the battle area can be considered part of the war data. During the entire period for which I have data, 1999---two years prior to the beginning of my analysis---experienced the lowest number of deaths, with 796, of which zero were classified as hostile. 
@@ -461,8 +454,7 @@ unemployment rate, or the military wage rate are also flexibly controlled for an
 
 Table \ref{Flo:loglinear}
 shows the results when linear regression is used to analyze the data
-at the county-month level. The left half of these regressions show the analysis done for applicants, the right hand side for contracts, one step further in the recruiting
-process. %The first specification, for applicants in column one and contracts in column five, is the `horse race' specification, comparing in-county deaths, out-of-county but in-state deaths,  and out-of-state deaths. Of course this precludes the inclusion of monthly fixed effects, so this model is mis-specified to the extent that there is temporal heterogeneity in the recruiting response to deaths over the course of the wars, nevertheless, I find it illustrative that the coefficient for lagged in-county deaths is nearly five times that of the coefficient for an out-of-state death (1\% compared to 0.2\%). (A more detailed analysis of deaths at the national level is presented in the appendix.)
+at the county-month level. The left half of these regressions show the analysis done for applicants, the right hand side for contracts. %The first specification, for applicants in column one and contracts in column five, is the `horse race' specification, comparing in-county deaths, out-of-county but in-state deaths,  and out-of-state deaths. Of course this precludes the inclusion of monthly fixed effects, so this model is mis-specified to the extent that there is temporal heterogeneity in the recruiting response to deaths over the course of the wars, nevertheless, I find it illustrative that the coefficient for lagged in-county deaths is nearly five times that of the coefficient for an out-of-state death (1\% compared to 0.2\%). (A more detailed analysis of deaths at the national level is presented in the appendix.)
 Fixed effects for each county and for each month are included in all specifications, as well as state-year fixed effects  in specifications 3 and 6.
 Observations are weighted by county population, and standard errors
 are clustered by county. The results indicate that one additional
@@ -524,8 +516,7 @@ Despite the inclusion of fixed effects, the potential for omitted
 variable bias still exists. One of the most obvious ways this might
 occur is through the action of the military's production recruiters.
 It seems likely that the number of production recruiters is positively
-correlated with the number of recruits, and in the extreme this is
-clearly true mechanically. If the number of recruiters (or their level
+correlated with the number of recruits, and in the extreme this is true mechanically. If the number of recruiters (or their level
 of effort) were also correlated with the number of deaths, my estimates
 would be biased. 
 
@@ -550,7 +541,7 @@ fixed effects are included. The estimates are similar in this restricted time pe
 \label{Flo:LNRec&Mort}\input{../Output/LNcontrolW.tex}
 \end{table}
 
-Table \ref{Flo:Media} another interesting test of these results. Here I have included the number of deaths that occurred in contiguous counties and the number of deaths that occurred in counties that share
+Table \ref{Flo:Media} probes the robustness further. Here I have included the number of deaths that occurred in contiguous counties and the number of deaths that occurred in counties that share
 the same media market as the main county of interest. County contiguity
 is defined using the 1991 ICPSR contiguous county file.\footnote{U.S. Dept. of Commerce, Bureau of the Census. CONTIGUOUS COUNTY FILE,
 1991: {[}UNITED STATES{]} {[}Computer file{]}. Washington, DC: U.S.
@@ -600,7 +591,9 @@ deaths result in a significant decrease in county recruiting. An important
 corollary question concerns the heterogeneity of this effect.
 All counties are unlikely to observe the same deterrent effect of
 death. Here I analyze the recruiting response to deaths based
-on different characteristics of counties, the deaths, or the recruits. First, I test the effect of differences in a county's demographic and cultural makeup, specifically, its population, unemployment, racial makeup, rural/urban status, and political alignment. Second, I test the response for different types of recruits, and third, for different types of deaths. I have also tested the difference for different service branches in the armed forces, for both deaths and recruits. I find weak evidence that recruits to some service branches respond differently than recruits to other branches, but the patterns are not consistent across the stages of recruiting. I also find limited evidence that recruits respond based on the branch in which the service branch occurred. These results are shown in the Appendix section~\ref{sec:servicebranch}.   
+on different characteristics of counties, the deaths, or the recruits. First, I test the effect of differences in a county's demographic and cultural makeup, specifically, its population, unemployment, racial makeup, rural/urban status, and political alignment. Second, I test the response for different types of recruits, and third, for different types of deaths.
+
+In the Appendix section~\ref{sec:servicebranch} I have also tested the difference for different service branches in the armed forces, for both deaths and recruits. I find weak evidence that recruits to some service branches respond differently than recruits to other branches, but the patterns are not consistent across the stages of recruiting. I also find limited evidence that recruits respond based on the branch in which the service branch occurred.  
 
 \subsubsection{Heterogeneity by County Characteristics}
 
@@ -691,7 +684,7 @@ with the needs of the services.
 \begin{table}
 \caption{Recruits by Quality}
 \label{Flo: Recs by QualityLN}
-\scalebox{0.75}{\rotatebox{90}{
+\scalebox{0.70}{\rotatebox{90}{
 {\input{../Output/highqualitybytypeLN}}}}
 \end{table}
 
@@ -985,27 +978,18 @@ Appendix Table \ref{Flo:Poisson Basic} shows the Poisson semi-elasticity estimat
 \scalebox{0.9}{\input{../Output/redefPbasic}}
 \end{table}
 
-%Square Root
-%\pagebreak{}
-%\clearpage{}
-%\begin{table}
-%\caption{}
-%\label{Flo:sqrt}
-%\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/sqrt}
-%\end{table}
-
 %Negative Binomial
+%built by negbinom.do
 \pagebreak{}
 \clearpage{}
 \begin{table}
 \caption{}
 \label{Flo:negbinom}
-\includegraphics[bb=45bp 0bp 612bp 730bp,clip,scale=0.95]{../Output/PDF/negbinom}
+\scalebox{0.9}{\input{../Output/negbinom}}
 \end{table}
 
 Additional specifications include modeling %the left hand side variable as 
 with a negative binomial conditional fixed effects regression, with results shown in Table~\ref{Flo:negbinom}. Again, results are very similar: by far the largest deterrant effect comes from in-county deaths. Problems exist with negative binomial fixed effects regression, as explained in \cite{negbinom}, so these results are presented only to exhaustively test other functional forms and show that results are robust. 
-%the square root of recruits, with results shown in Table~\ref{Flo:sqrt}, and
 
 \paragraph{Tests of Additional Data}
 In additionally to exhaustively testing functional forms and getting similarly robust results, I also obtain extremely similar results when I test only subsets on the data. For instance 
