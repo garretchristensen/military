@@ -80,7 +80,7 @@ foreach TYPE in LQ HQ50 HQ50alt HQ75 {
  if "`TYPE'"=="HQ75" local header2="HQ75 "
  reghdfe LN`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
 	[aweight=avgcountypop], cluster(fips) absorb(fips month)
- outreg2 using ./Output/highqualitybytypeLN.txt, lab tex ct(`header2'`header1') bdec(3) tdec(3) bracket se append ///
+ outreg2 using ./Output/highqualitybytypeLN.txt, lab tex ct(`header2', `header1') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative ", ///
 	"lagged deaths. Fixed effects are included separately by county and month as indiciated,", ///
 	"The first four columns show applicants and the last four show contracts.", Filename:highqualitybytypeLN.tex) ///
@@ -89,12 +89,16 @@ foreach TYPE in LQ HQ50 HQ50alt HQ75 {
 
 /*RECRUITS OF DIFFERENT QUALITY--POISSON*/
 foreach TYPE in LQ HQ50 HQ50alt HQ75 {
+ if "`TYPE'"=="LQ" local header2="LQ "
+ if "`TYPE'"=="HQ50" local header2="HQ50 "
+ if "`TYPE'"=="HQ50alt" local header2="HQ50-Alt. "
+ if "`TYPE'"=="HQ75" local header2="HQ75 "
  xtpoisson R`TYPE'monthcounty monthcountydeath L1monthcountydeath outofcounty L1outofcounty stateunemp countyunemp ///
 	monthfe3-monthfe58 /*statetrend2-statetrend51*/, fe exposure(avgcountypop) vce(robust)
- outreg2  using ./Output/highqualitybytypeP.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append ///
+ outreg2  using ./Output/highqualitybytypeP.txt, lab tex ct(`header2', `header1') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows Poisson regression estimates of log (national active duty recruits +1) on cumulative ", ///
 	"lagged deaths. Fixed effects are included separately by county and month as indiciated,", ///
-	"The first four columns show applicants and the last four show contracts.", Filename:highqualitybytypeLN.tex) ///
+	"The first four columns show applicants and the last four show contracts.", Filename:highqualitybytypeP.tex) ///
 	addtext(County FE, YES, Month FE, YES, State Trend, NO)
  /*ADDED 1/3/11-JUSTIN GALLAGHER ASKED WHY SMARTER KIDS RESPOND _MORE_ TO LOCAL DEATHS. IF THEY'RE SMARTER
   SHOULDN'T THEY BE RESPONDING LESS TO LOCAL INFO BECAUSE THEY READ THE NYT? MAYBE THEY JUST RESPOND MORE TO TOTAL DEATHS*/
