@@ -44,7 +44,7 @@ xtnbreg active monthcountydeath L1monthcountydeath monthfe3-monthfe58, fe exposu
 outreg2 using ./Output/negbinom.txt, lab tex keep(monthcountydeath L1monthcountydeath) ///
 	ct(`header') addnote("Notes: Table shows Negative Binomial regression of national active duty recruits on deaths.", ///
 	"Fixed effects are included separately by county and month, and linear state trends, as indicated,", ///
-	"The first four columns show applicants and the last three show contracts.", Filename:negbinom.tex) ///
+	Filename:negbinom.tex) ///
 	ti(Negative Binomial Regressions of Recruits vs Deaths and Unemployment) ///
 	addtext(County FE, YES, Month FE, YES, State Trends, NO) append bdec(3) tdec(3) bracket se addstat(Likelihood, e(ll))
 

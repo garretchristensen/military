@@ -117,7 +117,7 @@ test L1IRAQmonthcountydeath=L1AFGHANmonthcountydeath
 outreg2  using ./Output/redefLNwar.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on cumulative ", ///
 	"lagged deaths by war. Fixed effects are included separately by county and month as indiciated,", ///
-	"The first four columns show applicants and the last four show contracts.", Filename:redefLNwar.tex) ///
+	Filename:redefLNwar.tex) ///
 	addstat("Test In-County", r(p)) addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 	
 /*BOTH*/
@@ -177,7 +177,7 @@ test `var'IRAQ=`var'AFGHAN
 outreg2 using ./Output/redefLNwarINT.txt, lab tex ct(`header1') bdec(3) tdec(3) bracket se append ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths ", ///
 	"from different wars, interacted. Fixed effects are included separately by county and month as indiciated,", ///
-	"The first four columns show applicants and the last four show contracts.", Filename:redefLNwar.tex) ///
+	Filename:redefLNwarINT.tex) ///
 	addstat("Test In-County", `incounty', "Test Interaction", r(p)) ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, YES)
 }

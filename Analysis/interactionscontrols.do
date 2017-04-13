@@ -143,7 +143,7 @@ reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcoun
 outreg2 using ./Output/LNcontrolW`type'.txt, lab tex ct(`header') bdec(3) tdec(3) bracket se append  ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"The first four columns show applicants and the last three show contracts.", Filename:LNcontrolW`type'.tex) ///
+	Filename:LNcontrolW`type'.tex) ///
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO)
 
 reghdfe LNactive `type'monthcountydeath L1`type'monthcountydeath `type'outofcounty L1`type'outofcounty stateunemp ///
@@ -186,7 +186,7 @@ outreg2 using ./Output/LNinteractCOMBINE.txt, ct(`header') bdec(3) tdec(3) brack
 	addtext(County FE, YES, Month FE, YES, Stateyear FE, NO) tex lab ///
 	addnote("Notes: Table shows linear regression estimates of log (national active duty recruits +1) on deaths.", ///
 	"Fixed effects are included separately by county and month, and for each state-year, as indiciated,", ///
-	"The first three columns show applicants and the last three show contracts.", Filename:LNinteractCOMBINE.tex)
+	"The first column shows applicants and the last shows contracts.", Filename:LNinteractCOMBINE.tex)
 
 	
 /**************************************/
